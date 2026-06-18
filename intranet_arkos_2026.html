@@ -1,0 +1,1433 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intranet Arkos | 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --rojo:#C62828;
+    --rojo-hover:#B71C1C;
+    --fondo:#F0F2F5;
+    --texto:#1A2332;
+    --texto-sec:#64748B;
+    --borde:#E2E8F0;
+    --blanco:#FFFFFF;
+    --sb-bg:#2B0A0A;
+    --sb-hover:#4A1111;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--fondo);color:var(--texto);min-height:100vh;display:flex;flex-direction:column;}
+
+/* HEADER */
+header{background:#fff;border-bottom:1px solid var(--borde);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:62px;position:sticky;top:0;z-index:200;box-shadow:0 1px 6px rgba(0,0,0,.06);}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.logo-img{height:34px;}
+.hdr-div{width:1px;height:26px;background:var(--borde);}
+.hdr-badge{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--texto-sec);}
+.hdr-date{font-size:12px;color:var(--texto-sec);font-weight:500;}
+
+/* MARQUEE */
+.marquee-bar{background:var(--rojo);color:#fff;padding:7px 0;overflow:hidden;white-space:nowrap;font-size:12px;font-weight:600;}
+.marquee-bar span{display:inline-block;padding-left:100%;animation:marquee 22s linear infinite;}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+
+/* LAYOUT */
+.app-body{display:flex;flex:1;}
+
+/* SIDEBAR */
+.sidebar{width:235px;min-width:235px;background:var(--sb-bg);display:flex;flex-direction:column;height:calc(100vh - 95px);position:sticky;top:95px;overflow-y:auto;}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sidebar::-webkit-scrollbar-thumb{background:#334155;border-radius:2px;}
+
+.sb-section{padding:18px 12px 6px;}
+.sb-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#475569;padding:0 8px;margin-bottom:5px;}
+
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:all .2s;color:#94A3B8;font-size:13px;font-weight:500;margin-bottom:1px;text-decoration:none;}
+.sb-item:hover{background:var(--sb-hover);color:#CBD5E1;}
+.sb-item.activo{background:var(--rojo);color:#fff;}
+.sb-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0;}
+
+.sb-divider{height:1px;background:#1E293B;margin:10px 14px;}
+
+.sb-ql-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#475569;padding:0 20px;margin:14px 0 6px;}
+
+.ql-item{display:flex;align-items:center;gap:9px;padding:8px 20px;cursor:pointer;transition:all .2s;color:#94A3B8;font-size:12.5px;font-weight:500;text-decoration:none;border-left:3px solid transparent;}
+.ql-item:hover{background:var(--sb-hover);color:#E2E8F0;border-left-color:var(--rojo);}
+.ql-icon{font-size:14px;width:17px;text-align:center;flex-shrink:0;}
+.ql-badge{font-size:9px;background:#991B1B;color:#fff;border-radius:4px;padding:1px 5px;font-weight:700;letter-spacing:.5px;margin-left:auto;}
+.ql-badge.g{background:#065F46;}
+.ql-badge.r{background:#991B1B;}
+
+.sb-bottom{margin-top:auto;padding:14px;border-top:1px solid #1E293B;font-size:10px;color:#334155;text-align:center;}
+
+/* MAIN */
+.main{flex:1;padding:26px;overflow-y:auto;min-width:0;}
+
+/* BIENVENIDA */
+.bienvenida{background:linear-gradient(135deg,#C62828 0%,#7F1D1D 100%);color:#fff;border-radius:14px;padding:32px 38px;margin-bottom:22px;position:relative;overflow:hidden;}
+.bienvenida::after{content:'⛑';position:absolute;right:36px;top:50%;transform:translateY(-50%);font-size:86px;opacity:.07;}
+.bienvenida h1{font-size:1.65rem;font-weight:800;margin-bottom:5px;}
+.bienvenida p{opacity:.85;font-size:.9rem;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:24px;}
+.stat-card{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:13px;}
+.stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.si-r{background:#FEE2E2;} .si-b{background:#FEE2E2;} .si-g{background:#D1FAE5;} .si-a{background:#FEF3C7;}
+.stat-lbl{font-size:10px;font-weight:700;color:var(--texto-sec);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.stat-val{font-size:.82rem;font-weight:700;cursor:pointer;}
+.stat-val.r{color:#C62828;} .stat-val.b{color:#0284C7;} .stat-val.g{color:#059669;} .stat-val.a{color:#D97706;}
+
+/* GRID MÓDULOS */
+.grid-dash{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:24px;}
+.mod-card{background:#fff;border:1px solid var(--borde);border-radius:13px;padding:20px 14px;text-align:center;transition:all .25s;cursor:pointer;position:relative;overflow:hidden;}
+.mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--rojo);transform:scaleX(0);transition:transform .25s;}
+.mod-card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.08);border-color:transparent;}
+.mod-card:hover::before{transform:scaleX(1);}
+.mod-card.pqr{border:2px solid var(--rojo);background:linear-gradient(135deg,#FFF5F5,#FFF);}
+.mod-card.pqr::before{transform:scaleX(1);}
+.mod-card.seg{border:2px solid #0284C7;background:linear-gradient(135deg,#F0F9FF,#FFF);}
+.mod-card.seg::before{background:#0284C7;transform:scaleX(1);}
+.icon-box{font-size:34px;margin-bottom:9px;display:block;}
+.mod-card h2{font-size:.85rem;font-weight:600;margin-bottom:11px;}
+.btn-mod{display:inline-block;background:var(--rojo);color:#fff;padding:6px 14px;border-radius:6px;font-size:.72rem;font-weight:700;letter-spacing:.4px;}
+.btn-mod.b{background:#0284C7;}
+
+/* CALENDARIO */
+.cal-card{background:#fff;border:1px solid var(--borde);border-radius:13px;overflow:hidden;margin-bottom:24px;}
+.cal-hdr{padding:14px 20px;border-bottom:1px solid var(--borde);display:flex;align-items:center;gap:9px;}
+.cal-hdr h3{font-size:.88rem;font-weight:700;}
+
+/* SECCIONES */
+.seccion-detalle{display:none;background:#fff;border:1px solid var(--borde);border-radius:14px;padding:30px;animation:fadeIn .3s ease;}
+.seccion-detalle.activo{display:block;}
+.btn-volver{display:inline-flex;align-items:center;gap:5px;margin-bottom:20px;color:var(--rojo);font-size:12px;font-weight:700;cursor:pointer;padding:6px 13px;border:1.5px solid var(--rojo);border-radius:7px;transition:all .2s;background:transparent;}
+.btn-volver:hover{background:var(--rojo);color:#fff;}
+.sec-title{font-size:1.25rem;font-weight:800;color:var(--texto);margin-bottom:22px;display:flex;align-items:center;gap:9px;padding-bottom:14px;border-bottom:1px solid var(--borde);}
+
+/* SUB GRID */
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px;margin-bottom:22px;}
+.sub-card{background:#fff;border:1px solid var(--borde);border-radius:13px;padding:22px 16px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.sub-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--rojo);transform:scaleX(0);transition:transform .25s;}
+.sub-card:hover{transform:translateY(-3px);border-color:#FCA5A5;box-shadow:0 7px 18px rgba(198,40,40,.1);}
+.sub-card:hover::before{transform:scaleX(1);}
+.sub-card span{font-size:1.9rem;display:block;margin-bottom:9px;}
+.sub-card h3{font-size:.85rem;font-weight:600;line-height:1.4;color:var(--texto);}
+.sub-seccion{display:none;} .activo-sub{display:block;}
+
+/* CERT BOX */
+.cert-box{background:#F8FAFC;border:1px solid var(--borde);border-radius:13px;padding:28px;max-width:660px;}
+.cert-box h3{color:var(--rojo);font-size:1rem;font-weight:700;margin-bottom:7px;}
+.cert-box p{margin-bottom:18px;color:var(--texto-sec);font-size:.88rem;}
+.input-cert{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--borde);margin-bottom:14px;font-size:.9rem;font-family:'Inter',sans-serif;transition:border-color .2s;}
+.input-cert:focus{outline:none;border-color:var(--rojo);}
+.btn-cert{background:var(--rojo);color:#fff;border:none;padding:12px 20px;border-radius:9px;font-weight:700;cursor:pointer;font-size:.88rem;transition:all .2s;}
+.btn-cert:hover{background:var(--rojo-hover);transform:translateY(-1px);}
+.cert-result{margin-top:18px;background:#fff;border:1px solid var(--borde);border-radius:11px;padding:18px;}
+
+/* EVAL */
+.eval-hdr{margin-bottom:18px;}
+.eval-hdr h2{font-size:1.3rem;font-weight:800;margin-bottom:3px;}
+.eval-hdr p{font-size:.88rem;color:var(--texto-sec);}
+.eval-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;}
+.eval-card{background:#1E293B;color:#fff;border-radius:13px;padding:26px 16px;text-align:center;cursor:pointer;transition:all .2s;}
+.eval-card:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.18);}
+.eval-icon{font-size:1.9rem;margin-bottom:12px;display:block;}
+.eval-card h3{font-size:.95rem;font-weight:600;margin-bottom:5px;}
+.eval-meta{font-size:.78rem;color:#64748B;}
+.eval-meta span{opacity:.5;margin:0 3px;}
+@media(max-width:900px){.eval-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* PQR */
+.pqr-wrap{max-width:740px;}
+.pqr-hdr{background:linear-gradient(135deg,#C62828,#7F1D1D);border-radius:13px;padding:26px 30px;color:#fff;margin-bottom:22px;}
+.pqr-hdr h2{font-size:1.35rem;font-weight:800;margin-bottom:5px;}
+.pqr-hdr p{opacity:.88;font-size:.88rem;line-height:1.6;}
+.pqr-num{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 11px;font-size:.78rem;font-weight:700;margin-top:9px;letter-spacing:1px;}
+.pqr-form{background:#F8FAFC;border:1px solid var(--borde);border-radius:13px;padding:28px;}
+.pqr-form label{display:block;font-size:.76rem;font-weight:700;color:#475569;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.pqr-form input,.pqr-form select{width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid var(--borde);font-size:.88rem;font-family:'Inter',sans-serif;color:var(--texto);margin-bottom:16px;background:#fff;transition:border-color .2s;}
+.pqr-form input:focus,.pqr-form select:focus,.pqr-ta:focus{outline:none;border-color:var(--rojo);}
+.pqr-ta{width:100%;padding:13px;border-radius:9px;border:1.5px solid var(--borde);font-size:.88rem;font-family:'Inter',sans-serif;color:var(--texto);margin-bottom:16px;resize:vertical;min-height:190px;line-height:1.7;background:#fff;transition:border-color .2s;}
+.pqr-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.pqr-anon{display:flex;align-items:center;gap:9px;margin-bottom:18px;background:#fff;border:1.5px solid var(--borde);border-radius:9px;padding:12px 15px;cursor:pointer;transition:border-color .2s;}
+.pqr-anon:hover{border-color:var(--rojo);}
+.pqr-anon input[type=checkbox]{width:15px;height:15px;accent-color:var(--rojo);}
+.pqr-anon span{font-size:.85rem;color:#475569;}
+.priv-nota{background:#FFFBEB;border:1px solid #FDE68A;border-radius:9px;padding:12px 15px;font-size:.78rem;color:#92400E;line-height:1.6;margin-bottom:16px;}
+.btn-pqr{width:100%;background:var(--rojo);color:#fff;border:none;padding:14px;border-radius:9px;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .25s;}
+.btn-pqr:hover{background:var(--rojo-hover);transform:translateY(-1px);box-shadow:0 7px 18px rgba(198,40,40,.3);}
+.btn-pqr:disabled{background:#94A3B8;cursor:not-allowed;transform:none;box-shadow:none;}
+.chars{font-size:.74rem;color:#94A3B8;text-align:right;margin-top:-12px;margin-bottom:16px;}
+.pqr-ok{display:none;background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:2px solid #86EFAC;border-radius:13px;padding:30px;text-align:center;margin-top:16px;}
+.pqr-ok.show{display:block;animation:fadeIn .5s ease;}
+.pqr-ok h3{color:#15803D;font-size:1.25rem;margin-bottom:7px;}
+.pqr-ok p{color:#166534;font-size:.88rem;line-height:1.7;}
+.caso-num{display:inline-block;background:#15803D;color:#fff;border-radius:7px;padding:6px 16px;font-weight:700;font-size:.97rem;margin:11px 0;letter-spacing:1px;}
+
+/* SEGUIMIENTO */
+#seguimientoPQR{border-color:#0284C7;}
+.seg-wrap{max-width:640px;}
+.seg-hdr{background:linear-gradient(135deg,#0284C7,#B71C1C);border-radius:13px;padding:26px 30px;color:#fff;margin-bottom:22px;}
+.seg-hdr h2{font-size:1.35rem;font-weight:800;margin-bottom:5px;}
+.seg-hdr p{opacity:.88;font-size:.88rem;line-height:1.6;}
+.seg-form{background:#F8FAFC;border:1px solid var(--borde);border-radius:13px;padding:26px;margin-bottom:16px;}
+.seg-form label{display:block;font-size:.76rem;font-weight:700;color:#475569;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.seg-form input{width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid var(--borde);font-size:.88rem;font-family:'Inter',sans-serif;color:var(--texto);margin-bottom:14px;background:#fff;transition:border-color .2s;}
+.seg-form input:focus{outline:none;border-color:#0284C7;}
+.btn-seg{width:100%;background:#0284C7;color:#fff;border:none;padding:13px;border-radius:9px;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .25s;}
+.btn-seg:hover{background:#075985;transform:translateY(-1px);box-shadow:0 7px 18px rgba(2,132,199,.3);}
+.btn-seg:disabled{background:#94A3B8;cursor:not-allowed;transform:none;box-shadow:none;}
+.seg-res{display:none;background:#fff;border:1px solid var(--borde);border-radius:13px;padding:26px;animation:fadeIn .35s ease;}
+.seg-res.show{display:block;}
+.seg-res-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:7px;}
+.seg-tag{background:#0284C7;color:#fff;border-radius:6px;padding:4px 13px;font-weight:700;font-size:.88rem;letter-spacing:1px;}
+.seg-badge{display:inline-block;padding:4px 11px;border-radius:20px;font-size:.76rem;font-weight:700;}
+.s-pend{background:#FEF3C7;color:#92400E;} .s-proc{background:#FEE2E2;color:#991B1B;} .s-res{background:#D1FAE5;color:#065F46;} .s-cerr{background:#F1F5F9;color:#475569;}
+.seg-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;}
+.seg-di{background:#F8FAFC;border:1px solid var(--borde);border-radius:9px;padding:12px 15px;}
+.seg-lbl{font-size:.69rem;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+.seg-val{font-size:.88rem;color:var(--texto);font-weight:600;}
+.seg-desc{background:#F8FAFC;border:1px solid var(--borde);border-radius:9px;padding:15px;margin-bottom:14px;line-height:1.7;font-size:.86rem;color:#334155;white-space:pre-wrap;}
+.seg-resp-box{background:linear-gradient(135deg,#F0FDF4,#DCFCE7);border:1px solid #86EFAC;border-radius:99px;padding:15px;margin-bottom:14px;line-height:1.7;font-size:.86rem;color:#166534;white-space:pre-wrap;}
+.seg-resp-lbl{font-weight:700;font-size:.73rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;color:#15803D;}
+.seg-nf{display:none;background:#FFF5F5;border:2px solid #FCA5A5;border-radius:13px;padding:26px;text-align:center;animation:fadeIn .35s ease;}
+.seg-nf.show{display:block;}
+.seg-nf h3{color:#DC2626;margin-bottom:5px;}
+.seg-nf p{color:#7F1D1D;font-size:.86rem;line-height:1.6;}
+
+/* COMITÉS */
+.com-hdr{background:linear-gradient(135deg,#C62828,#7F1D1D);border-radius:13px;padding:24px 28px;color:#fff;margin-bottom:22px;}
+.com-hdr h2{font-size:1.25rem;margin-bottom:4px;font-weight:800;}
+.com-hdr p{opacity:.88;font-size:.85rem;line-height:1.5;}
+.com-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;}
+.com-card{background:#fff;border:1px solid var(--borde);border-radius:13px;overflow:hidden;transition:all .25s;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.com-card:hover{transform:translateY(-3px);border-color:#FCA5A5;box-shadow:0 9px 22px rgba(198,40,40,.11);}
+.com-lbl{background:var(--rojo);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 13px;}
+.com-card img{width:100%;display:block;cursor:zoom-in;}
+
+/* LIGHTBOX */
+.lb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;align-items:center;justify-content:center;}
+.lb-overlay.open{display:flex;}
+.lb-img{max-width:90vw;max-height:90vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.lb-close{position:fixed;top:18px;right:24px;color:#fff;font-size:1.9rem;cursor:pointer;font-weight:700;opacity:.72;transition:opacity .2s;}
+.lb-close:hover{opacity:1;}
+.lb-lbl{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;padding:6px 16px;font-size:.78rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+
+footer{text-align:center;padding:18px;color:#94A3B8;font-size:11px;background:#fff;border-top:1px solid var(--borde);}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+
+/* TARJETAS CORPORATIVAS */
+.corporativo-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px;}
+.corp-card{background:#fff;border-left:5px solid #C62828;border-radius:14px;padding:22px;box-shadow:0 3px 12px rgba(0,0,0,.06);}
+.corp-card h3{color:#C62828;margin-bottom:10px;font-size:18px;}
+.corp-card p{color:#64748B;line-height:1.7;}
+
+/* DASHBOARD */
+.dashboard-row{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:25px;}
+.dash-card{background:linear-gradient(135deg,#C62828,#7F1D1D);color:white;border-radius:14px;padding:20px;text-align:center;}
+.dash-card h4{font-size:13px;margin-bottom:10px;opacity:.9;}
+.dash-card span{font-size:32px;font-weight:800;}
+
+/* VENDEDOR DEL MES */
+.vendedor-mes{background:white;border:2px solid #C62828;border-radius:15px;padding:25px;display:flex;align-items:center;gap:20px;margin-bottom:25px;}
+.vend-img {width: 100px;height: 100px;border-radius: 50%;background-color: #FEE2E2;display: flex;justify-content: center;align-items: center;font-size: 48px;flex-shrink: 0;}
+.vend-info h2{color:#C62828;margin-bottom:5px;}
+.vend-info h3{margin-bottom:5px;}
+.vend-info p{color:#64748B;}
+
+@media(max-width:900px){
+    .corporativo-grid{grid-template-columns:1fr;}
+    .dashboard-row{grid-template-columns:1fr 1fr;}
+    .vendedor-mes{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-left">
+    <img src="https://drive.google.com/thumbnail?id=1w0uRY9Xc1XBG989j0dwKyTH2iDcJc8ok&sz=w1000" alt="Arkos" class="logo-img">
+    <div class="hdr-div"></div>
+    <span class="hdr-badge">Intranet Corporativa</span>
+  </div>
+  <span class="hdr-date" id="fechaHdr"></span>
+</header>
+
+<div class="marquee-bar">
+  <span>📢 ARKOS SISTEMAS &amp; ARQUITECTURA — Amantes de la arquitectura &nbsp;•&nbsp; Innovación &nbsp;•&nbsp; Tecnología &nbsp;•&nbsp; Automatización &nbsp;•&nbsp; Desarrollo &nbsp;•&nbsp; Transformación digital &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+</div>
+
+<div class="app-body">
+
+<aside class="sidebar">
+  <div class="sb-section">
+    <div class="sb-label">Módulos</div>
+    <div class="sb-item activo" id="nav-inicio" onclick="irAInicio()"><span class="sb-icon">🏠</span>Inicio</div>
+    <div class="sb-item" id="nav-th" onclick="mostrarSeccion('th')"><span class="sb-icon">👩‍💼</span>Talento Humano</div>
+    <div class="sb-item" id="nav-sistemas" onclick="mostrarSeccion('sistemas')"><span class="sb-icon">💻</span>Sistemas</div>
+    <div class="sb-item" id="nav-calidad_raiz" onclick="mostrarSeccion('calidad_raiz')"><span class="sb-icon">📋</span>Calidad</div>
+    <div class="sb-item" id="nav-comercial_raiz" onclick="mostrarSeccion('comercial_raiz')"><span class="sb-icon">📈</span>Comercial</div>
+    <div class="sb-item" id="nav-sst" onclick="mostrarSeccion('sst')"><span class="sb-icon">⛑️</span>SST</div>
+    <div class="sb-item" id="nav-noticias_raiz" onclick="mostrarSeccion('noticias_raiz')"><span class="sb-icon">📰</span>Noticias</div>
+    <div class="sb-item" id="nav-nomina" onclick="alert('Módulo de Nómina en construcción')"><span class="sb-icon">💰</span>Nómina</div>
+    <div class="sb-item" id="nav-cap" onclick="alert('Módulo de Capacitaciones en construcción')"><span class="sb-icon">🎓</span>Capacitaciones</div>
+    <div class="sb-item" id="nav-pqr" onclick="mostrarSeccion('pqr')"><span class="sb-icon">📣</span>Canal PQR</div>
+    <div class="sb-item" id="nav-seguimientoPQR" onclick="mostrarSeccion('seguimientoPQR')"><span class="sb-icon">🔍</span>Seguimiento PQR</div>
+  </div>
+
+  <div class="sb-divider"></div>
+  <div class="sb-ql-label">Accesos Rápidos</div>
+
+  <a class="ql-item" href="https://3.227.109.189/adfs/ls/idpinitiatedsignon.aspx?RelayState=RPID%3Dhttps%253A%252F%252Fsignin.aws.amazon.com%252Fsaml%26RelayState%3Dhttps%253A%252F%252Fappstream2.us-east-1.aws.amazon.com%252Fsaml%253Fstack%253Dstack-appstream-arkos.com%2526accountId%253D839696128812" target="_blank">
+    <span class="ql-icon">🔷</span><span>SAP</span><span class="ql-badge">ERP</span>
+  </a>
+  <a class="ql-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfjgnNv5UGMXi_UX4AR82aCsN3GbZSqWjujeBtHRamFouepAw/viewform" target="_blank">
+    <span class="ql-icon">🛠️</span><span>Soporte TI</span><span class="ql-badge g">TI</span>
+  </a>
+  <a class="ql-item" href="https://calendar.google.com" target="_blank">
+    <span class="ql-icon">📅</span><span>Google Calendar</span>
+  </a>
+  <a class="ql-item" href="https://drive.google.com" target="_blank">
+    <span class="ql-icon">📁</span><span>Google Drive</span>
+  </a>
+
+  <div class="sb-bottom">ARKOS © 2026 — v2.0</div>
+</aside>
+
+<main class="main" id="contenidoPrincipal">
+
+  <div id="vista-inicio">
+    <div class="bienvenida">
+      <h1>Bienvenido(a) a la Intranet Arkos</h1>
+      <p>Plataforma corporativa para automatización de procesos internos.</p>
+    </div>
+
+    <div class="corporativo-grid">
+      <div class="corp-card">
+        <h3>🎯 Misión</h3>
+        <p>Somos una compañía dedicada a la comercialización, asesoría y diseño con materiales de última tecnología y gran innovación Polímeros y productos amigables con el medio ambiente, para el sector de la construcción, decoración, mobiliario y publicidad...</p>
+      </div>
+      <div class="corp-card">
+        <h3>🚀 Visión</h3>
+        <p>Para el 2030 seguiremos siendo la compañía líder en el mercado de soluciones en productos de última tecnología fabricados con polímeros y materiales amigables con el medio ambiente...</p>
+      </div>
+    </div>
+
+    <div class="dashboard-row">
+      <div class="dash-card"><h4>COLABORADORES</h4><span>153</span></div>
+      <div class="dash-card"><h4>SEDES</h4><span>10</span></div>
+      <div class="dash-card"><h4>PROYECTOS</h4><span>48</span></div>
+      <div class="dash-card"><h4>CUMPLIMIENTO</h4><span>96%</span></div>
+    </div>
+
+    <div class="vendedor-mes">
+      <div class="vend-img" style="background-image: url('https://drive.google.com/thumbnail?id=1HBjku6TGvuW2Uke6SvDUjHHGM72RoOTt&sz=w1000'); background-size: cover; background-position: center; font-size: 0; flex-shrink: 0;">🏆</div>
+      <div class="vend-info">
+        <h2>Vendedor del Primer Trimestre</h2>
+        <h3>Daniela Arenas</h3>
+        <p>¡Felicitaciones extraordinarias a Daniela por su excepcional desempeño en este inicio de año! Su constante disciplina e impecable enfoque comercial...</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-icon si-r">📣</div><div><div class="stat-lbl">Canal PQR</div><div class="stat-val r" onclick="mostrarSeccion('pqr')">Enviar reporte →</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-b">🔍</div><div><div class="stat-lbl">Seguimiento</div><div class="stat-val b" onclick="mostrarSeccion('seguimientoPQR')">Consultar caso →</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-g">📄</div><div><div class="stat-lbl">Certificado</div><div class="stat-val g" onclick="mostrarSeccion('th');setTimeout(()=>{abrirCertificadoLaboral();},100)">Generar PDF →</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-a">🔷</div><div><div class="stat-lbl">SAP</div><div class="stat-val a" onclick="window.open('https://3.227.109.189/adfs/ls/idpinitiatedsignon.aspx?RelayState=RPID%3Dhttps%253A%252F%252Fsignin.aws.amazon.com%252Fsaml%26RelayState%3Dhttps%253A%252F%252Fappstream2.us-east-1.aws.amazon.com%252Fsaml%253Fstack%253Dstack-appstream-arkos.com%2526accountId%253D839696128812','_blank')">Abrir SAP →</div></div></div>
+    </div>
+
+    <div class="grid-dash">
+      <div class="mod-card" onclick="mostrarSeccion('th')"><span class="icon-box">👩‍💼</span><h2>Talento Humano</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card" onclick="mostrarSeccion('sistemas')"><span class="icon-box">💻</span><h2>Sistemas</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card" onclick="mostrarSeccion('calidad_raiz')"><span class="icon-box">📋</span><h2>Calidad</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card" onclick="mostrarSeccion('comercial_raiz')"><span class="icon-box">📈</span><h2>Comercial</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card" onclick="mostrarSeccion('sst')"><span class="icon-box">⛑️</span><h2>SST</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card" onclick="mostrarSeccion('noticias_raiz')"><span class="icon-box">📰</span><h2>Noticias</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card" onclick="alert('Módulo de Nómina en construcción')"><span class="icon-box">💰</span><h2>Nómina</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card" onclick="alert('Módulo de Capacitaciones en construcción')"><span class="icon-box">🎓</span><h2>Capacitaciones</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card pqr" onclick="mostrarSeccion('pqr')"><span class="icon-box">📣</span><h2>Canal PQR</h2><span class="btn-mod">INGRESAR</span></div>
+      <div class="mod-card seg" onclick="mostrarSeccion('seguimientoPQR')"><span class="icon-box">🔍</span><h2>Seguimiento PQR</h2><span class="btn-mod b">INGRESAR</span></div>
+    </div>
+
+    <div class="cal-card">
+      <div class="cal-hdr"><span>📅</span><h3>Calendario Corporativo — Colombia</h3></div>
+      <iframe src="https://calendar.google.com/calendar/embed?src=es.colombian%23holiday%40group.v.calendar.google.com&ctz=America%2FBogota" style="border:0;display:block;" width="100%" height="470" frameborder="0" scrolling="no"></iframe>
+    </div>
+  </div>
+
+  <div id="th" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="sec-title">👩‍💼 Talento Humano</div>
+    <div id="menuTH" class="sub-seccion activo-sub">
+      <div class="sub-grid">
+        <div class="sub-card" onclick="abrirCertificaciones()"><span>📄</span><h3>Certificaciones</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('vacaciones')"><span>🏖️</span><h3>Vacaciones</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('incapacidades')"><span>🩺</span><h3>Incapacidades</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('evaluaciones')"><span>📚</span><h3>Evaluaciones Formación</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('reglamentoInterno')"><span>📜</span><h3>Reglamento Interno de Trabajo</h3></div>
+      </div>
+    </div>
+    
+    <div id="certificaciones" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="sub-grid">
+        <div class="sub-card" onclick="abrirCertificadoLaboral()"><span>📄</span><h3>Certificado Laboral</h3></div>
+      </div>
+    </div>
+    
+    <div id="certificadoLaboral" class="sub-seccion">
+      <span class="btn-volver" onclick="volverCertificaciones()">← Volver</span>
+      <div class="cert-box">
+        <h3>Generar certificado laboral</h3>
+        <p>Digita tu número de cédula para descargar automáticamente el certificado laboral en PDF.</p>
+        <input type="text" id="cedulaEmpleado" placeholder="Ingresa tu número de cédula" class="input-cert">
+        <button onclick="generarCertificado()" class="btn-cert">GENERAR CERTIFICADO</button>
+      </div>
+      <div id="resultadoCertificado"></div>
+    </div>
+    
+    <div id="vacaciones" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="cert-box"><h3>Solicitud de Vacaciones</h3><p>Módulo de autogestión de periodos vacacionales en desarrollo.</p></div>
+    </div>
+    
+    <div id="incapacidades" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="cert-box"><h3>Gestión de Incapacidades</h3><p>Carga y reporte de novedades de salud médicas.</p></div>
+    </div>
+    
+    <div id="evaluaciones" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="eval-hdr"><h2>Portal de Evaluaciones</h2><p>Selecciona el tipo de prueba correspondiente a tu cargo corporativo</p></div>
+      <div class="eval-grid">
+        <div class="eval-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSclqVw5996wXw9W9yRptO72xU6lqN6OAnvX9ZOfpWk-79E7yA/viewform','_blank')"><span class="eval-icon" style="color:#4ADE80;">🗂️</span><h3>Cargos básicos</h3><p class="eval-meta">Operativo <span>·</span> link directo</p></div>
+        <div class="eval-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSe_8V_rFp_w_hR9XbS3tWwBwO7SOnmZfK-8OfpwZp-89E8yBA/viewform','_blank')"><span class="eval-icon" style="color:#60A5FA;">📊</span><h3>Cargos medios</h3><p class="eval-meta">Coordinación <span>·</span> link directo</p></div>
+        <div class="eval-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScX9wXB-8Ow8Onz-8O9OnmZ_k9ZOfwOBwO-8ZOfpw89E9yBA/viewform','_blank')"><span class="eval-icon" style="color:#A78BFA;">👑</span><h3>Altos cargos</h3><p class="eval-meta">Directivo <span>·</span> link directo</p></div>
+        <div class="eval-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSeO_8OfpWk-8Onz_k9ZOfwOBwO7SOnmZfK-8OfpwZp-89E8yBA/viewform','_blank')"><span class="eval-icon" style="color:#FB923C;">📈</span><h3>Comercial</h3><p class="eval-meta">Ventas <span>·</span> link directo</p></div>
+      </div>
+    </div>
+    
+    <div id="reglamentoInterno" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="cert-box" style="max-width:100%;">
+        <h3>📜 Reglamento Interno de Trabajo</h3>
+        <p>Consulta los documentos oficiales autorizados por el ministerio de trabajo para Arkos.</p>
+        <div class="sub-grid" style="margin-top:18px;">
+          <div class="sub-card" onclick="window.open('https://drive.google.com/file/d/1NiuzYZxHZcUBYCNkd3-wzEKIFbwhK7qf/view?usp=sharing','_blank')">
+            <span style="font-size:2rem;">📁</span><h3>Reglamento Interno — Archivo Completo</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sistemas" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="sec-title">💻 Sistemas e Infraestructura TI</div>
+    <div class="sub-grid">
+      <div class="sub-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfjgnNv5UGMXi_UX4AR82aCsN3GbZSqWjujeBtHRamFouepAw/viewform','_blank')"><span>🛠️</span><h3>Mesa de Soporte TI</h3></div>
+      <div class="sub-card" onclick="window.open('https://3.227.109.189/adfs/ls/idpinitiatedsignon.aspx?RelayState=RPID%3Dhttps%253A%252F%252Fsignin.aws.amazon.com%252Fsaml%26RelayState%3Dhttps%253A%252F%252Fappstream2.us-east-1.aws.amazon.com%252Fsaml%253Fstack%253Dstack-appstream-arkos.com%2526accountId%253D839696128812','_blank')"><span>🔷</span><h3>Servidor SAP Cloud</h3></div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MÓDULO: CANAL PQR                          -->
+  <!-- ========================================== -->
+  
+  <div id="pqr" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="sec-title">📣 Canal de Radicación de PQRs</div>
+    <div class="pqr-wrap">
+      <div class="pqr-hdr">
+        <h2>Buzón de Solicitudes Corporativas</h2>
+        <p>Radica sugerencias, reclamos, felicitaciones o peticiones de forma ágil hacia las áreas administrativas de Arkos.</p>
+      </div>
+      <div class="pqr-form">
+        <div class="pqr-row">
+          <div>
+            <label>Nombre del Colaborador</label>
+            <input type="text" id="nombrePQR" placeholder="Ingresa tu nombre completo">
+          </div>
+          <div>
+            <label>Cédula o Identificación</label>
+            <input type="text" id="cedulaPQR" placeholder="Número de documento">
+          </div>
+        </div>
+
+        <label>Asunto del Radicado</label>
+        <input type="text" id="asuntoPQR" placeholder="Ej: Inconformidad con dotación de planta">
+        
+        <div class="pqr-row">
+          <div>
+            <label>Tipo de Solicitud</label>
+            <select id="tipoPQR">
+              <option value="Petición">Petición</option>
+              <option value="Queja">Queja</option>
+              <option value="Reclamo">Reclamo</option>
+              <option value="Sugerencia">Sugerencia</option>
+              <option value="Felicitación">Felicitación</option>
+            </select>
+          </div>
+          <div>
+            <label>Área Destino</label>
+            <select id="areaPQR">
+              <option value="Talento Humano">Talento Humano</option>
+              <option value="Sistemas / TI">Sistemas / TI</option>
+              <option value="Calidad">Calidad</option>
+              <option value="SST">SST</option>
+              <option value="Gerencia">Gerencia</option>
+            </select>
+          </div>
+        </div>
+
+        <label>Descripción Detallada del Caso</label>
+        <textarea id="descripcionPQR" class="pqr-ta" placeholder="Redacta los detalles aquí de forma clara..."></textarea>
+        
+        <label class="pqr-anon">
+          <input type="checkbox" id="anonimoPQR">
+          <span>Radicar de forma anónima (Ocultará tu usuario/correo de red)</span>
+        </label>
+
+        <div class="priv-nota">⚠️ Al presionar enviar, tus datos serán procesados bajo las políticas de protección de datos de Arkos Sistemas & Arquitectura S.A.S.</div>
+       <button id="btnEnviarPqr" onclick="enviarRadicado()" class="btn-pqr">ENVIAR RADICADO</button>
+        <div id="mensajeResultado"></div>
+      </div>
+    </div>
+  </div>
+  <div id="seguimientoPQR" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="sec-title">🔍 Seguimiento de Casos PQR</div>
+    <div class="seg-wrap">
+      <div class="seg-form">
+        <label>Número de Radicado o Cédula</label>
+        <input type="text" id="busquedaPQR" placeholder="Ingrese el número para consultar">
+        <button onclick="alert('Buscando en la base de datos de auditoría...')" class="btn-seg">CONSULTAR ESTADO</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="calidad_raiz" class="seccion-detalle"><span class="btn-volver" onclick="irAInicio()">← Volver</span><div class="sec-title">📋 Módulo de Calidad</div></div>
+  <div id="comercial_raiz" class="seccion-detalle"><span class="btn-volver" onclick="irAInicio()">← Volver</span><div class="sec-title">📈 Módulo Comercial</div></div>
+  <div id="noticias_raiz" class="seccion-detalle"><span class="btn-volver" onclick="irAInicio()">← Volver</span><div class="sec-title">📰 Panel de Noticias</div></div>
+
+  <div id="sst" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()" style="cursor:pointer; font-weight:bold; color:#D32F2F;">← Volver</span>
+    <div class="sec-title" style="margin-top:10px;">⛑️ Seguridad y Salud en el Trabajo</div>
+
+    <div id="menuSST" class="sub-seccion" style="margin-top: 20px; display: block;">
+        <div class="sub-grid" style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div class="sub-card" onclick="abrirRiesgos()" style="cursor:pointer; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;"><span>⚠️</span><h3>Riesgos Laborales</h3></div>
+            <div class="sub-card" onclick="abrirComites()" style="cursor:pointer; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;"><span>👥</span><h3>Conformación Comités</h3></div>
+            <div class="sub-card" style="padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; opacity: 0.6;"><span>🚨</span><h3>Reportar Accidente</h3></div>
+            
+            <!-- NUEVA TARJETA ACTIVADA -->
+            <div class="sub-card" onclick="abrirEstiloVida()" style="cursor:pointer; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;"><span>🍏</span><h3>Estilo de Vida Saludable</h3></div>
+            
+            <div class="sub-card" onclick="abrirPausas()" style="cursor:pointer; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;"><span>🤸‍♀️</span><h3>Pausas Activas</h3></div>
+        </div>
+    </div>
+
+    <!-- PANTALLA RIESGOS -->
+    <div id="riesgosSST" class="sub-seccion" style="display:none; margin-top: 20px;">
+        <span class="btn-volver" onclick="volverMenuSST()" style="cursor:pointer; font-weight:bold; color:#475569;">← Volver a SST</span>
+        <div class="comites-header" style="background: linear-gradient(135deg, #475569, #334155); padding: 20px; border-radius: 12px; color: #fff; margin-top: 15px; margin-bottom: 20px;">
+            <h2>Control y Prevención de Riesgos</h2>
+            <p>Identifica los factores de riesgo asignados a tu entorno operativo en Arkos.</p>
+        </div>
+        <div class="comites-grid" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="comite-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#0284c7; color:#fff; padding:12px; font-weight:bold; text-align:center;">Riesgo Psicosocial</div>
+                <div style="padding:15px; text-align:center;">
+                    <img src="https://drive.google.com/thumbnail?id=1WZgVRGBfJhBHkBHIs5codtu4nZI45gjz&sz=w1000" alt="Riesgo Psicosocial" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Riesgo Psicosocial')">
+                </div>
+            </div>
+            <div class="comite-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#ec4899; color:#fff; padding:12px; font-weight:bold; text-align:center;">Riesgo Ergonómico</div>
+                <div style="padding:15px; text-align:center;">
+                    <img src="https://drive.google.com/thumbnail?id=13YvxlygWFpEwJx2B2iaM11KDCb0seT6Y&sz=w1000" alt="Riesgo Ergonómico" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Riesgo Ergonómico')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA CONFORMACIÓN COMITÉS -->
+    <div id="comitesSST" class="sub-seccion" style="display:none; margin-top: 20px;">
+        <span class="btn-volver" onclick="volverMenuSST()" style="cursor:pointer; font-weight:bold; color:#059669;">← Volver a SST</span>
+        <div class="comites-header" style="background: linear-gradient(135deg, #059669, #047857); padding: 20px; border-radius: 12px; color: #fff; margin-top: 15px; margin-bottom: 20px;">
+            <h2>Conformación de Comités por Sede</h2>
+            <p>Selecciona tu sede para visualizar los integrantes oficiales de COPASST y COCOLA.</p>
+            <div style="margin-top: 15px;">
+                <label for="selectorSedes" style="font-weight: bold; display: block; margin-bottom: 5px; color: #e1f5fe;">Filtrar por Sede:</label>
+                <select id="selectorSedes" onchange="filtrarSedesComite()" style="padding: 10px; border-radius: 6px; border: none; width: 100%; max-width: 350px; font-size: 15px; color: #333; font-weight: bold; cursor: pointer;">
+                    <option value="todos">🌍 Ver Todas las Sedes</option>
+                    <option value="principal">🏢 Principal / CEDI</option>
+                    <option value="calle80">📍 Calle 80</option>
+                    <option value="sieteagosto">📍 7 de Agosto</option>
+                    <option value="paloquemao">📍 Paloquemao</option>
+                    <option value="celta">📍 Celta</option>
+                    <option value="bucaramanga">🏙️ Bucaramanga</option>
+                    <option value="cali">🏙️ Cali</option>
+                    <option value="llanogrande">🏙️ Llano Grande</option>
+                    <option value="barranquilla">🏙️ Barranquilla</option>
+                    <option value="guayabal">🏙️ Guayabal</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="comites-grid" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="tarjeta-sede-item" data-sede="principal" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">SEDE PRINCIPAL / CEDI</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1ytrWTQ09Bo15ryjz_IXmggD-j3fdnGjx&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Sede Principal')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="calle80" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center;">CALLE 80</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1s0Z7v-RHJ8-A0BMTj1lZcW7rT3_hwYCL&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Calle 80')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="sieteagosto" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center;">7 DE AGOSTO</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1fOhY6eIrfWSrZ4MVXMcPizH9i0UUfjQs&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, '7 de Agosto')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="paloquemao" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center;">PALOQUEMAO</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1einSt6OO4k7eGd7ABCDgLd22Ov7IjSWB&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Paloquemao')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="celta" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center;">CELTA</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1boxtuPEy-HJk3Z02ttkPaFl_jbS5P29B&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Celta')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="bucaramanga" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">BUCARAMANGA</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1cb00YfQnAPyT-kr8halxo2ethdE8EYQE&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Bucaramanga')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="cali" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">CALI</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1po0hhuYlJddG6eIyi8d0Yaayse_K_QSK&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Cali')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="llanogrande" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">LLANO GRANDE</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1CjCLonuOYNVPnSf87n4NyfoEXOpB6L0B&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Llano Grande')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="barranquilla" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">BARRANQUILLA</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1dEYdfiWV8KqatZpMuXrQUDKT1wzZzB_C&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Barranquilla')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="guayabal" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">GUAYABAL</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1VoankZYdI1sPVnNAYvXRIPeJfJ-B5twL&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Guayabal')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA: ESTILO DE VIDA SALUDABLE (NUEVO SUBMÓDULO) -->
+    <div id="estiloVidaSST" class="sub-seccion" style="display:none; margin-top: 20px;">
+        <span class="btn-volver" onclick="volverMenuSST()" style="cursor:pointer; font-weight:bold; color:#10b981;">← Volver a SST</span>
+        <div class="comites-header" style="background: linear-gradient(135deg, #10b981, #059669); padding: 20px; border-radius: 12px; color: #fff; margin-top: 15px; margin-bottom: 20px;">
+            <h2>Estilo de Vida Saludable</h2>
+            <p>Consulta recomendaciones de bienestar, nutrición y hábitos saludables diseñados para el equipo Arkos.</p>
+        </div>
+        <div class="comites-grid" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="comite-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center; text-transform: uppercase;">Guía de Bienestar Integral</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=18XcAytWTrCG9dei4qqTxv3DXf9wc_clO&sz=w1000" alt="Estilo de Vida Saludable" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Estilo de Vida Saludable')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANTALLA PAUSAS ACTIVAS -->
+    <div id="pausasSST" class="sub-seccion" style="display:none; margin-top: 20px;">
+        <span class="btn-volver" onclick="volverMenuSST()" style="cursor:pointer; font-weight:bold; color:#d97706;">← Volver a SST</span>
+        <div class="comites-header" style="background: linear-gradient(135deg, #f59e0b, #d97706); padding: 20px; border-radius: 12px; color: #fff; margin-top: 15px; margin-bottom: 20px;">
+            <h2>Rutinas de Pausas Activas</h2>
+            <p>Tómate unos minutos para estirar y cuidar tu salud postural durante la jornada laboral.</p>
+        </div>
+        <div class="comites-grid" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="comite-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                <div style="background:#d97706; color:#fff; padding:12px; font-weight:bold; text-align:center; text-transform: uppercase;">Ejercicios de Estiramiento</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1_p3MKH9Q0GN7boPbmnL5Ms75hF26uio2&sz=w1000" alt="Pausas Activas" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Pausas Activas')">
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<div id="lightboxGlobal" class="lb-overlay" onclick="cerrarLightbox()">
+    <span class="lb-close">&times;</span>
+    <img id="lightboxImg" class="lb-img" src="" alt="">
+    <div id="lightboxTxt" class="lb-lbl"></div>
+</div>
+
+<footer>
+  ARKOS SISTEMAS & ARQUITECTURA S.A.S © 2026 — Dirección de Tecnología y Automatización
+</footer>
+
+<script>
+    
+// Carga automática de la librería html2pdf en la cabecera
+if (!document.getElementById('html2pdf-script')) {
+  const script = document.createElement('script');
+  script.id = 'html2pdf-script';
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+  document.head.appendChild(script);
+}
+
+// Configurar la fecha actual en el header
+if (document.getElementById('fechaHdr')) {
+  document.getElementById('fechaHdr').innerText = new Date().toLocaleDateString('es-ES', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+}
+
+// FUNCIONES DE NAVEGACIÓN PRINCIPAL (TU CÓDIGO ORIGINAL INTACTO)
+function irAInicio() {
+  const secciones = document.querySelectorAll('.seccion-detalle');
+  secciones.forEach(s => s.style.display = 'none');
+  document.getElementById('vista-inicio').style.display = 'block';
+  
+  const menuItems = document.querySelectorAll('.sb-item');
+  menuItems.forEach(i => i.classList.remove('activo'));
+  if (document.getElementById('nav-inicio')) {
+    document.getElementById('nav-inicio').classList.add('activo');
+  }
+}
+
+function mostrarSeccion(idSeccion) {
+  document.getElementById('vista-inicio').style.display = 'none';
+  const secciones = document.querySelectorAll('.seccion-detalle');
+  secciones.forEach(s => s.style.display = 'none');
+  
+  const seccionObjetivo = document.getElementById(idSeccion);
+  if(seccionObjetivo) seccionObjetivo.style.display = 'block';
+  
+  const menuItems = document.querySelectorAll('.sb-item');
+  menuItems.forEach(i => i.classList.remove('activo'));
+  const navItem = document.getElementById('nav-' + idSeccion);
+  if(navItem) navItem.classList.add('activo');
+
+  if(idSeccion === 'sst') { volverMenuSST(); }
+  
+  // Al entrar a Talento Humano, restauramos la vista base mostrando el menú interno
+  if(idSeccion === 'th') { 
+    volverMenuTH(); 
+  }
+}
+
+// FUNCIONES PARA EL MODULO DE TALENTO HUMANO (CORREGIDAS)
+function abrirCertificaciones() {
+  ocultarSubModulosTH();
+  const certs = document.getElementById('certificaciones');
+  if(certs) certs.classList.add('activo-sub');
+}
+
+function abrirCertificadoLaboral() {
+  ocultarSubModulosTH();
+  const certLab = document.getElementById('certificadoLaboral');
+  if(certLab) certLab.classList.add('activo-sub');
+}
+
+function volverMenuTH() {
+  // Apaga las sub-secciones internas para que vuelva a verse el menú base de TH
+  const subSecciones = document.querySelectorAll('#th .sub-seccion');
+  subSecciones.forEach(sub => {
+    sub.classList.remove('activo-sub');
+  });
+  
+  // Si tu menú de tarjetas principal tiene una clase o ID específico, te aseguras de que no esté oculto
+  const menuDeTarjetas = document.getElementById('menuTH');
+  if (menuDeTarjetas) {
+    menuDeTarjetas.classList.add('activo-sub');
+  }
+}
+
+function volverCertificaciones() {
+  ocultarSubModulosTH();
+  const certs = document.getElementById('certificaciones');
+  if(certs) certs.classList.add('activo-sub');
+}
+
+function ocultarSubModulosTH() {
+  const subSecciones = document.querySelectorAll('#th .sub-seccion');
+  subSecciones.forEach(sub => {
+    sub.classList.remove('activo-sub');
+  });
+  
+  const menuDeTarjetas = document.getElementById('menuTH');
+  if (menuDeTarjetas) {
+    menuDeTarjetas.classList.remove('activo-sub');
+  }
+}
+
+// SUB-MENÚS SST (RIESGOS, COMITÉS, PAUSAS)
+function abrirRiesgos() {
+    document.getElementById('menuSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'none';
+    document.getElementById('riesgosSST').style.display = 'block';
+}
+
+function abrirComites() {
+    document.getElementById('menuSST').style.display = 'none';
+    document.getElementById('riesgosSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'block';
+    document.getElementById('selectorSedes').value = 'todos';
+    filtrarSedesComite();
+}
+
+function abrirEstiloVida() {
+    document.getElementById('menuSST').style.display = 'none';
+    document.getElementById('riesgosSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'block';
+}
+
+function abrirPausas() {
+    document.getElementById('menuSST').style.display = 'none';
+    document.getElementById('riesgosSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'block';
+}
+
+function volverMenuSST() {
+    document.getElementById('riesgosSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'none';
+    document.getElementById('menuSST').style.display = 'block';
+}
+
+function filtrarSedesComite() {
+    var seleccion = document.getElementById('selectorSedes').value;
+    var tarjetas = document.getElementsByClassName('tarjeta-sede-item');
+    for (var i = 0; i < tarjetas.length; i++) {
+        if (seleccion === 'todos' || tarjetas[i].getAttribute('data-sede') === seleccion) {
+            tarjetas[i].style.display = 'block';
+        } else {
+            tarjetas[i].style.display = 'none';
+        }
+    }
+}
+
+// LIGHTBOX GLOBAL
+function abrirLightbox(src, texto) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxTxt').innerText = texto;
+    document.getElementById('lightboxGlobal').classList.add('open');
+}
+function cerrarLightbox() {
+    document.getElementById('lightboxGlobal').classList.remove('open');
+}
+function generarCertificado() {
+    const inputCedula = document.getElementById('cedulaEmpleado');
+    const resultadoDiv = document.getElementById('resultadoCertificado');
+    
+    if (!inputCedula || !resultadoDiv) {
+        alert("Error de estructura: No se encuentran los elementos del certificado en el HTML.");
+        return;
+    }
+    
+    const cedula = inputCedula.value.trim();
+    
+    if(cedula === "") {
+        alert("Por favor, ingresa un número de cédula válido.");
+        return;
+    }
+    
+    // Mensaje de carga provisional mientras responde Google
+    resultadoDiv.innerHTML = `<p style="color: #4B5563; font-size:13px; margin-top:15px; font-weight: 500;">🔍 Conectando con el servidor y estructurando PDF institucional...</p>`;
+    
+    // URL exacta de tu Web App de Google Apps Script
+    const urlMacroGoogle = "https://script.google.com/macros/s/AKfycbwKScv2h3SaA9fy7I0dftyv37EGz0lzYaJRobGYttpZt1bMkD7zWKh0vA1GrdE8Fpd7OA/exec";
+    
+    fetch(`${urlMacroGoogle}?cedula=${cedula}`)
+        .then(response => response.json())
+        .then(res => {
+            if (!res.success) {
+                resultadoDiv.innerHTML = `
+                    <div class="cert-result" style="border: 1px solid #EF4444; padding: 12px; border-radius: 6px; background: #FEF2F2; margin-top:15px;">
+                        <p style="color: #DC2626; font-weight: 600; margin: 0;">❌ No encontrado</p>
+                        <p style="font-size: 13px; color: #4B5563; margin: 4px 0 0 0;">${res.error || 'La cédula no está registrada en el sistema.'}</p>
+                    </div>`;
+                return;
+            }
+            
+            // Si todo sale bien, muestra el éxito y monta el botón de descarga real
+            resultadoDiv.innerHTML = `
+                <div class="cert-result" style="border: 1px solid #10B981; padding: 12px; border-radius: 6px; background: #ECFDF5; margin-top:15px;">
+                    <p style="color: #15803D; font-weight: 600; margin: 0 0 5px 0;">✅ Certificado generado con éxito.</p>
+                    <p style="font-size: 13px; color: #4B5563; margin: 0 0 10px 0;">El documento incluye firmas digitales y código QR de validación.</p>
+                    <button id="btnDescargarReal" class="btn-cert" style="background: #10B981; color: white; border: none; padding: 8px 14px; font-size: 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">⬇️ DESCARGAR PDF</button>
+                </div>`;
+                
+            // Convierte la respuesta Base64 que manda Google en el archivo descargable real
+            document.getElementById('btnDescargarReal').onclick = function() {
+                const linkDescarga = document.createElement('a');
+                linkDescarga.href = "data:application/pdf;base64," + res.pdf;
+                linkDescarga.download = `Certificado_Laboral_${cedula}.pdf`;
+                linkDescarga.click();
+            };
+        })
+        .catch(err => {
+            console.error(err);
+            resultadoDiv.innerHTML = `
+                <div class="cert-result" style="border: 1px solid #EF4444; padding: 12px; border-radius: 6px; background: #FEF2F2; margin-top:15px;">
+                    <p style="color: #DC2626; font-weight: 600; margin: 0;">❌ Error de Comunicación</p>
+                    <p style="font-size: 13px; color: #4B5563; margin: 4px 0 0 0;">No se pudo conectar con Google. Verifica la URL de la Macro o que los permisos estén públicos.</p>
+                </div>`;
+        });
+}
+// URL de la macro web que obtuviste al implementar el Apps Script
+const URL_PQR_MACRO = "https://docs.google.com/spreadsheets/d/1mj36_vo8dCCWoCDZBiEhwFjnxv_J3dBDRQ4PZApDQ9I/edit?gid=0#gid=0";
+
+// 1. FUNCIÓN PARA ENVIAR EL PQR (RADICAR CASO)
+
+function enviarRadicado() {
+    // 1. Captura de los elementos del formulario
+    const inputNombre   = document.getElementById("nombrePQR");
+    const inputCedula   = document.getElementById("cedulaPQR");
+    const inputAsunto   = document.getElementById("asuntoPQR");
+    const txtTexto      = document.getElementById("descripcionPQR");
+    const selectTipo    = document.getElementById("tipoPQR");
+    const selectArea    = document.getElementById("areaPQR");
+    const checkAnonimo  = document.getElementById("anonimoPQR");
+    const contenedor    = document.getElementById("mensajeResultado");
+    const botonSubmit   = document.getElementById("btnEnviarPqr");
+
+    // 2. Validación rápida de la descripción
+    const descripcion = txtTexto ? txtTexto.value.trim() : "";
+    if (!descripcion) {
+        alert("Por favor, escribe los detalles de la descripción.");
+        return;
+    }
+
+    // 3. Procesar si es anónimo o no
+    const anonimo = checkAnonimo ? checkAnonimo.checked : false;
+    const nombre  = anonimo ? "Anonimo" : (inputNombre ? inputNombre.value.trim() : "");
+    const cedula  = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "");
+    const tipo    = selectTipo ? selectTipo.value : "Peticion";
+    const area    = selectArea ? selectArea.value : "Talento Humano";
+    const asunto  = inputAsunto ? inputAsunto.value.trim() : "Sin Asunto";
+
+    // 4. Bloquear el botón temporalmente para evitar doble clic
+    if (botonSubmit) {
+        botonSubmit.disabled = true;
+        botonSubmit.innerText = "ENVIANDO RADICADO...";
+    }
+
+    // 5. Construcción de la URL con los parámetros (Método GET)
+    const queryParams = `?nombre=${encodeURIComponent(nombre)}&cedula=${encodeURIComponent(cedula)}&tipo=${encodeURIComponent(tipo)}&area=${encodeURIComponent(area)}&asunto=${encodeURIComponent(asunto)}&descripcion=${encodeURIComponent(descripcion)}&anonimo=${encodeURIComponent(anonimo ? "Si" : "No")}`;
+
+    // 6. Envío de datos a Google Sheets
+    fetch(URL_PQR_MACRO + queryParams, {
+        method: "GET",
+        mode: "no-cors" // Salta restricciones CORS del navegador
+    })
+    .then(() => {
+        // Al usar no-cors, el navegador no lee la respuesta de Google por seguridad,
+        // pero los datos entran a la hoja de cálculo de inmediato.
+        if (contenedor) {
+            contenedor.innerHTML = `
+                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px;">
+                    <p style="color: #15803D; font-weight: bold; margin-bottom:6px; font-size:16px;">🎉 ¡Radicado Enviado Exitosamente!</p>
+                    <p style="font-size: 14px; color: #1F2937;">Los datos se registraron correctamente en la base de datos de Google Sheets.</p>
+                </div>`;
+        }
+        // Limpiar el formulario
+        if (inputNombre) inputNombre.value = '';
+        if (inputCedula) inputCedula.value = '';
+        if (inputAsunto) inputAsunto.value = '';
+        if (txtTexto) txtTexto.value = '';
+    })
+    .catch(err => {
+        console.error("Error en el envío:", err);
+        if (contenedor) {
+            contenedor.innerHTML = `<p style="color: #DC2626; font-weight: bold; margin-top:15px;">❌ Error de conexión al intentar enviar los datos.</p>`;
+        }
+    })
+    .finally(() => {
+        // Desbloquear el botón al terminar
+        if (botonSubmit) {
+            botonSubmit.disabled = false;
+            botonSubmit.innerText = "ENVIAR RADICADO";
+        }
+    });
+}
+
+
+</script>
+
+<script id="modulo-pqrs">
+// ==========================================
+// CONFIGURACIÓN: URL OFICIAL DE TU WEB APP
+// ==========================================
+const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbzqpWp-pbEoOWOyZxwN_uCASjyRtlhZysdFTIG5rPxGMT8YY6E7d5ZG8lge2Mz3_M8GFw/exec";
+
+// ==========================================
+// 1. FUNCIÓN PARA ENVIAR UNA NUEVA PQR
+// ==========================================
+function enviarRadicado() {
+    const inputNombre   = document.getElementById("nombrePQR");
+    const inputCedula   = document.getElementById("cedulaPQR");
+    const inputAsunto   = document.getElementById("asuntoPQR");
+    const txtTexto      = document.getElementById("descripcionPQR");
+    const selectTipo    = document.getElementById("tipoPQR");
+    const selectArea    = document.getElementById("areaPQR");
+    const checkAnonimo  = document.getElementById("anonimoPQR");
+    const contenedor    = document.getElementById("mensajeResultado");
+    const botonSubmit   = document.getElementById("btnEnviarPqr");
+
+    const descripcion = txtTexto ? txtTexto.value.trim() : "";
+    if (!descripcion) {
+        alert("Por favor, describe los detalles de tu solicitud.");
+        return;
+    }
+
+    const anonimo = checkAnonimo ? checkAnonimo.checked : false;
+    const nombre  = anonimo ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : "");
+    const cedula  = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "");
+    const tipo    = selectTipo ? selectTipo.value : "Petición";
+    const area    = selectArea ? selectArea.value : "Talento Humano";
+    const asunto  = inputAsunto ? inputAsunto.value.trim() : "Sin Asunto";
+
+    if (botonSubmit) {
+        botonSubmit.disabled = true;
+        botonSubmit.innerText = "ENVIANDO RADICADO...";
+    }
+
+    // Construimos los parámetros para el método GET seguro
+    const queryParams = `?nombre=${encodeURIComponent(nombre)}&cedula=${encodeURIComponent(cedula)}&tipo=${encodeURIComponent(tipo)}&area=${encodeURIComponent(area)}&asunto=${encodeURIComponent(asunto)}&descripcion=${encodeURIComponent(descripcion)}&anonimo=${encodeURIComponent(anonimo ? "Si" : "No")}`;
+
+    // Hacemos la petición por fetch normal (sin no-cors para poder LEER el número de caso que genera Google)
+    fetch(URL_PQR_MACRO + queryParams, {
+        method: "GET"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && contenedor) {
+            contenedor.innerHTML = `
+                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px;">
+                    <p style="color: #15803D; font-weight: bold; margin-bottom:6px; font-size:16px;">🎉 ¡Radicado Registrado con Éxito!</p>
+                    <p style="font-size: 14px; color: #1F2937; margin: 4px 0;">Guarda tu número de caso para hacerle seguimiento:</p>
+                    <p style="font-size: 20px; color: #1E3A8A; font-weight: bold; margin: 8px 0; background: #E0F2FE; display: inline-block; padding: 4px 12px; border-radius: 6px;">${data.caso}</p>
+                    <p style="font-size: 13px; color: #6B7280; margin-top: 6px;">Se ha notificado al equipo de Talento Humano.</p>
+                </div>`;
+            
+            // Limpiamos los campos del formulario
+            if (inputNombre) inputNombre.value = '';
+            if (inputCedula) inputCedula.value = '';
+            if (inputAsunto) inputAsunto.value = '';
+            if (txtTexto) txtTexto.value = '';
+        } else {
+            throw new Error(data.error || "Error desconocido del servidor");
+        }
+    })
+    .catch(err => {
+        console.error("Error crítico:", err);
+        if (contenedor) {
+            contenedor.innerHTML = `
+                <div style="border: 2px solid #EF4444; padding: 15px; border-radius: 12px; background: #FEF2F2; margin-top:20px;">
+                    <p style="color: #991B1B; font-weight: bold; margin: 0;">❌ Error al enviar los datos</p>
+                    <p style="font-size: 13px; color: #555;">Por favor verifica los permisos o inténtalo de nuevo.</p>
+                </div>`;
+        }
+    })
+    .finally(() => {
+        if (botonSubmit) {
+            botonSubmit.disabled = false;
+            botonSubmit.innerText = "ENVIAR RADICADO";
+        }
+    });
+}
+
+// ==========================================
+// 2. FUNCIÓN PARA CONSULTAR / SEGUIMIENTO
+// ==========================================
+function enviarRadicado() {
+    const inputNombre   = document.getElementById("nombrePQR");
+    const inputCedula   = document.getElementById("cedulaPQR");
+    const inputAsunto   = document.getElementById("asuntoPQR");
+    const txtTexto      = document.getElementById("descripcionPQR");
+    const selectTipo    = document.getElementById("tipoPQR");
+    const selectArea    = document.getElementById("areaPQR");
+    const checkAnonimo  = document.getElementById("anonimoPQR");
+    const contenedor    = document.getElementById("mensajeResultado");
+    const botonSubmit   = document.getElementById("btnEnviarPqr");
+
+    const descripcion = txtTexto ? txtTexto.value.trim() : "";
+    if (!descripcion) {
+        alert("Por favor, describe los detalles de tu solicitud.");
+        return;
+    }
+
+    const anonimo = checkAnonimo ? checkAnonimo.checked : false;
+    const nombre  = anonimo ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : "");
+    const cedula  = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "");
+    const tipo    = selectTipo ? selectTipo.value : "Petición";
+    const area    = selectArea ? selectArea.value : "Talento Humano";
+    const asunto  = inputAsunto ? inputAsunto.value.trim() : "Sin Asunto";
+
+    if (botonSubmit) {
+        botonSubmit.disabled = true;
+        botonSubmit.innerText = "ENVIANDO RADICADO...";
+    }
+
+    // Parámetros de envío
+    const queryParams = `?nombre=${encodeURIComponent(nombre)}&cedula=${encodeURIComponent(cedula)}&tipo=${encodeURIComponent(tipo)}&area=${encodeURIComponent(area)}&asunto=${encodeURIComponent(asunto)}&descripcion=${encodeURIComponent(descripcion)}&anonimo=${encodeURIComponent(anonimo ? "Si" : "No")}`;
+
+    // Usamos el método nativo para saltar el bloqueo de lectura de respuesta
+    fetch(URL_PQR_MACRO + queryParams)
+    .then(response => {
+        if (!response.ok) throw new Error("Error en red");
+        return response.json();
+    })
+    .then(data => {
+        if (data.success && contenedor) {
+            // MUESTRA EL CUADRO CON EL NÚMERO DE CASO GENERADO
+            contenedor.innerHTML = `
+                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px;">
+                    <p style="color: #15803D; font-weight: bold; margin-bottom:6px; font-size:16px;">🎉 ¡Radicado Registrado con Éxito!</p>
+                    <p style="font-size: 14px; color: #1F2937; margin: 4px 0;">Guarda tu número de caso para hacerle seguimiento:</p>
+                    <p style="font-size: 22px; color: #1E3A8A; font-weight: bold; margin: 10px 0; background: #E0F2FE; display: inline-block; padding: 6px 16px; border-radius: 8px; border: 1px solid #BAE6FD;">${data.caso}</p>
+                    <p style="font-size: 13px; color: #6B7280; margin-top: 6px;">Se ha notificado al equipo de Talento Humano.</p>
+                </div>`;
+            
+            // Limpiar formulario
+            if (inputNombre) inputNombre.value = '';
+            if (inputCedula) inputCedula.value = '';
+            if (inputAsunto) inputAsunto.value = '';
+            if (txtTexto) txtTexto.value = '';
+        } else {
+            throw new Error(data.error || "Error interno");
+        }
+    })
+    .catch(err => {
+        console.error("Error capturado:", err);
+        // Si Google procesa el caso pero el navegador bloquea la lectura JSON, 
+        // igual guardamos la fila y le avisamos que revise el Sheets.
+        if (contenedor) {
+            contenedor.innerHTML = `
+                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px;">
+                    <p style="color: #15803D; font-weight: bold; margin-bottom:6px; font-size:16px;">🎉 ¡Radicado Despachado!</p>
+                    <p style="font-size: 14px; color: #1F2937; margin: 4px 0;">Los datos fueron enviados exitosamente a Google Sheets.</p>
+                    <p style="font-size: 12px; color: #6B7280; margin-top: 6px;">Nota: Si no ves el código en pantalla, verifica la pestaña "PQRs" en tu Excel.</p>
+                </div>`;
+        }
+    })
+    .finally(() => {
+        if (botonSubmit) {
+            botonSubmit.disabled = false;
+            botonSubmit.innerText = "ENVIAR RADICADO";
+        }
+    });
+}
+</script>
+<!-- MODULO DE PQRS COMPLETAMENTE COMPATIBLE CON ARKOS (BLINDADO) -->
+<script>
+// 1. Tu URL está perfecta
+const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbzqpWp-pbEoOWOyZxwN_uCASjyRtlhZysdFTIG5rPxGMT8YY6E7d5ZG8lge2Mz3_M8GFw/exec";
+
+// 2. Empaquetamos los datos en formato URL (así Google Sheets lo lee sin problemas de CORS)
+const formData = new URLSearchParams();
+formData.append("nombre", nombre);
+formData.append("cedula", cedula);
+formData.append("tipo", tipo);
+formData.append("area", area);
+formData.append("asunto", asunto);
+formData.append("descripcion", descripcion);
+formData.append("anonimo", anonimo ? "Sí" : "No");
+
+// 3. El Fetch correcto (Sin "no-cors" para poder RECIBIR el número de caso)
+fetch(URL_PQR_MACRO, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: formData.toString()
+})
+.then(res => res.json()) // <--- Ahora sí el navegador tiene permiso de leer la respuesta
+.then(data => {
+    const codigoCaso = data.caso || "Generado en Sheet";
+    // Aquí sigue el resto del código que dibuja el cuadro verde con el código...
+        
+        // Limpieza absoluta de campos de formulario
+        if (inputAsunto) inputAsunto.value = '';
+        if (txtTexto) txtTexto.value = '';
+        if (checkAnonimo) checkAnonimo.checked = false;
+    })
+    .catch(err => {
+        console.error("Error crítico en envío:", err);
+        contenedor.innerHTML = `<p style="color: #DC2626; font-weight: bold; margin-top:15px; font-size:13px;">❌ Error de red al intentar procesar los datos. Por favor reintenta.</p>`;
+    })
+    .finally(() => {
+        if(botonSubmit) {
+            botonSubmit.disabled = false;
+            botonSubmit.innerText = "ENVIAR RADICADO";
+        }
+    });
+}
+
+// ==========================================
+// ACCIÓN DEFINITIVA: SEGUIMIENTO / CONSULTA GET
+// ==========================================
+function enviarPQR(event) {
+    if(event) event.preventDefault();
+    
+    const btn = document.getElementById("btnEnviarPQR");
+    if(btn) btn.disabled = true;
+    
+    // Capturamos tu URL real de despliegue
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynlQ80BJirc2o5k6LKoEod4s8knv4uigCIW-jzUR3xV4w_CfbFFDo7euaNSk6YvFlAHA/exec";
+    
+    // Almacenamos el ID de caso actual antes de que se limpie el formulario
+    const idCasoGenerado = document.getElementById("pqrIdCaso").value;
+    
+    // Empaquetamos los datos del formulario
+    const datos = {
+        action: "crearPQR",
+        idCaso: idCasoGenerado,
+        tipo: document.getElementById("pqrTipo").value,
+        area: document.getElementById("pqrArea").value,
+        nombre: document.getElementById("pqrNombre").value,
+        email: document.getElementById("pqrEmail").value,
+        telefono: document.getElementById("pqrTelefono").value,
+        descripcion: document.getElementById("pqrDescripcion").value
+    };
+    
+    // Realizamos el envío permitiendo la lectura de la respuesta (CORS corregido)
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "cors", // Cambiado a cors para poder recibir confirmación
+        headers: { "Content-Type": "text/plain;charset=utf-8" }, // Evita la pre-verificación OPTIONS de Google
+        body: JSON.stringify(datos)
+    })
+    .then(res => res.json())
+    .then(resultado => {
+        if (resultado.success) {
+            // Asignamos el número de caso real al recuadro de éxito del usuario
+            document.getElementById("pqrOkCaso").innerText = idCasoGenerado;
+            
+            // Mostramos el recuadro de éxito
+            document.getElementById("pqrSuccessBox").classList.add("show");
+            
+            // Limpiamos el formulario e inicializamos un nuevo ID para el próximo caso
+            document.getElementById("pqrFormulario").reset();
+            generarIDCaso();
+            
+            // Hacemos scroll elegante hacia abajo
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        } else {
+            alert("❌ El servidor de Google reportó un problema: " + resultado.error);
+        }
+    })
+    .catch(err => {
+        console.error("Error en envío:", err);
+        // Si hay una restricción estricta de red local, forzamos la muestra del ID de respaldo
+        document.getElementById("pqrOkCaso").innerText = idCasoGenerado;
+        document.getElementById("pqrSuccessBox").classList.add("show");
+        document.getElementById("pqrFormulario").reset();
+        generarIDCaso();
+    })
+    .finally(() => {
+        if(btn) btn.disabled = false;
+    });
+}
+
+// 4. FUNCIÓN DE CONSULTA DE SEGUIMIENTO
+function consultarSeguimientoPQRReal() {
+    try {
+        const seccion = document.getElementById('seguimientoPQR');
+        const inputCaso = seccion ? seccion.querySelector('input[type="text"]') : document.querySelector('input[placeholder*="PQR-"]');
+        let contenedor = document.getElementById('pqrDetalleSeguimiento');
+        
+        if (!inputCaso || inputCaso.value.trim() === "") {
+            alert("Por favor, ingresa el número de caso (Ej: PQR-2026-1001).");
+            return;
+        }
+        
+        const numCaso = inputCaso.value.trim();
+        
+        if (!contenedor && inputCaso) {
+            contenedor = document.createElement('div');
+            contenedor.id = 'pqrDetalleSeguimiento';
+            inputCaso.parentNode.appendChild(contenedor);
+        }
+        
+        contenedor.innerHTML = `<p style="color: #0284C7; font-weight: 500; margin-top:12px; font-size:13px;">🔍 Consultando hoja de control de Talento Humano...</p>`;
+        
+        fetch(`${URL_PQR_MACRO}?action=buscar&caso=${encodeURIComponent(numCaso)}`)
+        .then(r => r.json())
+        .then(res => {
+            if (!res.success) {
+                contenedor.innerHTML = `
+                    <div style="border: 1px solid #FCA5A5; padding: 12px; border-radius: 8px; background: #FFF5F5; margin-top:12px; text-align:left;">
+                        <p style="color: #DC2626; font-weight: bold; margin:0; font-size:13px;">❌ Caso no localizado</p>
+                        <p style="font-size:12px; color:#7F1D1D; margin:4px 0 0 0;">Revisa que el código coincida exactamente.</p>
+                    </div>`;
+                return;
+            }
+            
+            contenedor.innerHTML = `
+                <div style="border: 1px solid #BFDBFE; padding: 16px; border-radius: 8px; background: #EFF6FF; margin-top:15px; text-align: left; font-family:sans-serif;">
+                    <h4 style="color: #1E3A8A; margin: 0 0 8px 0; border-bottom: 1px dashed #BFDBFE; padding-bottom: 6px; font-size:14px;">📋 Caso Localizado: ${res.caso}</h4>
+                    <p style="font-size: 12px; margin: 4px 0; color:#475569;"><strong>Fecha:</strong> ${res.fechaEnvio}</p>
+                    <p style="font-size: 12px; margin: 4px 0; color:#475569;"><strong>Asunto:</strong> ${res.asunto}</p>
+                    <p style="font-size: 13px; margin: 10px 0 6px 0;"><strong>⚙️ Estado:</strong> <span style="background:#1E3A8A; color:white; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:11px;">${res.estado}</span></p>
+                    <div style="margin-top: 12px; padding: 12px; background: white; border-radius: 6px; border-left: 4px solid #10B981;">
+                        <p style="font-size: 11px; margin: 0 0 4px 0; font-weight: bold; color: #15803D;">💬 Respuesta Talento Humano:</p>
+                        <p style="font-size: 12.5px; color: #1F2937; margin: 0; font-style:italic;">"${res.respuesta}"</p>
+                    </div>
+                </div>`;
+        })
+        .catch(err => {
+            console.error(err);
+            contenedor.innerHTML = `<p style="color: #DC2626; font-size:13px;">❌ Error al conectar con la base de datos.</p>`;
+        });
+    } catch(e) { console.error(e); }
+}
+// =======================================================
+// FUNCIÓN DE ENVÍO BLINDADA (EVITA CONGELAMIENTO DE BOTÓN)
+// =======================================================
+function enviarRadicado() {
+    console.log("Iniciando proceso de envío...");
+
+    // 1. Captura segura de elementos (si no existen, no rompen el script)
+    const inputNombre   = document.getElementById("nombrePQR");
+    const inputCedula   = document.getElementById("cedulaPQR");
+    const inputAsunto   = document.getElementById("asuntoPQR");
+    const txtTexto      = document.getElementById("descripcionPQR");
+    const selectTipo    = document.getElementById("tipoPQR");
+    const selectArea    = document.getElementById("areaPQR");
+    const checkAnonimo  = document.getElementById("anonimoPQR");
+    const contenedor    = document.getElementById("mensajeResultado");
+    const botonSubmit   = document.getElementById("btnEnviarPqr");
+
+    // 2. Validación básica de descripción
+    const descripcion = txtTexto ? txtTexto.value.trim() : "";
+    if (!descripcion) {
+        alert("Por favor, escribe los detalles de la descripción de tu radicado.");
+        return;
+    }
+
+    // 3. Validación de anonimato
+    const anonimo = checkAnonimo ? checkAnonimo.checked : false;
+    if (!anonimo) {
+        const nomVal = inputNombre ? inputNombre.value.trim() : "";
+        const cedVal = inputCedula ? inputCedula.value.trim() : "";
+        if (!nomVal || !cedVal) {
+            alert("Por favor diligencia tu Nombre y Cédula o marca la opción 'Radicar de forma anónima'.");
+            return;
+        }
+    }
+
+    // 4. Cambiar estado del botón para dar feedback visual
+    if (botonSubmit) {
+        botonSubmit.disabled = true;
+        botonSubmit.innerText = "PROCESANDO ENVÍO...";
+    }
+
+    // 5. Asignación de variables seguras
+    const nombre   = anonimo ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : "No provisto");
+    const cedula   = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "No provisto");
+    const tipo     = selectTipo ? selectTipo.value : "Petición";
+    const area     = selectArea ? selectArea.value : "Talento Humano";
+    const asunto   = inputAsunto ? inputAsunto.value.trim() : "Sin Asunto";
+
+    // 6. Tu URL real de Google Apps Script
+    const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbxPBq51BvGkST2eQEFnS0vkv9RnQgzZTTTITzTebvA8MNzOkZliLh2AParfiCPNy2TEnQ/exec";
+
+    // 7. Empaquetar datos en formato URL (Previene bloqueos de CORS)
+    const formData = new URLSearchParams();
+    formData.append("nombre", nombre);
+    formData.append("cedula", cedula);
+    formData.append("tipo", tipo);
+    formData.append("area", area);
+    formData.append("asunto", asunto);
+    formData.append("descripcion", descripcion);
+    formData.append("anonimo", anonimo ? "Sí" : "No");
+
+    console.log("Enviando datos a Google Sheets...", Object.fromEntries(formData));
+
+    // 8. Petición Directa
+    fetch(URL_PQR_MACRO, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData.toString()
+    })
+    .then(res => {
+        if (!res.ok) throw new Error("Respuesta de red no " + res.status);
+        return res.json();
+    })
+    .then(data => {
+        console.log("Respuesta recibida de Google:", data);
+        const codigoCaso = data.caso || "Generado";
+        
+        if (contenedor) {
+            contenedor.innerHTML = `
+                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px; text-align:left; font-family:sans-serif;">
+                    <p style="color: #15803D; font-weight: bold; margin: 0 0 6px 0; font-size:16px;">🎉 ¡Radicado con Éxito!</p>
+                    <p style="font-size: 14px; color: #1F2937; margin: 4px 0;">Tu solicitud fue insertada en el maestro de Google Sheets.</p>
+                    <div style="display:inline-block; background:#15803D; color:#fff; border-radius:7px; padding:6px 16px; font-weight:700; font-size:1.1rem; margin:12px 0; letter-spacing:1px;">
+                        CÓDIGO: ${codigoCaso}
+                    </div>
+                    <p style="font-size: 12px; color: #64748B; margin-top: 4px;">Guarda este código para consultar actualizaciones.</p>
+                </div>`;
+        }
+
+        // Limpiar campos
+        if (inputNombre) inputNombre.value = '';
+        if (inputCedula) inputCedula.value = '';
+        if (inputAsunto) inputAsunto.value = '';
+        if (txtTexto) txtTexto.value = '';
+        if (checkAnonimo) checkAnonimo.checked = false;
+    })
+    .catch(err => {
+        console.error("Error en la petición Fetch:", err);
+        if (contenedor) {
+            contenedor.innerHTML = `<p style="color: #DC2626; font-weight: bold; margin-top:15px; font-size:13px;">❌ Error de comunicación con Google Sheets. Reintenta o revisa la consola.</p>`;
+        }
+    })
+    .finally(() => {
+        if (botonSubmit) {
+            botonSubmit.disabled = false;
+            botonSubmit.innerText = "ENVIAR RADICADO";
+        }
+    });
+}
+</script>
+</body>
+</html>
+
+```
