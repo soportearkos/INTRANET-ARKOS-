@@ -873,11 +873,11 @@ function generarCertificado() {
     // Mensaje de carga adaptado a la nueva acción de envío por correo
     resultadoDiv.innerHTML = `<p style="color: #4B5563; font-size:13px; margin-top:15px; font-weight: 500;">🔍 Conectando con el servidor y despachando certificado por correo...</p>`;
     
-    // URL exacta de tu Web App de Google Apps Script (Mantenemos la tuya)
-    const urlMacroGoogle = "https://script.google.com/macros/s/AKfycbyQSYMMxCqBSzaOWoFbuo7naSRCaNB5VM1Qh_k2i8GSf8dCspOAt_otwkuTdD2Hu1NA/exec";
+    // ⬇️ REEMPLAZADA CON TU URL REAL Y ACTUALIZADA DE CERTIFICADOS ⬇️
+    const urlMacroGoogle = "https://script.google.com/macros/s/AKfycbzwhcBReZjFvXoCaYz-VR0nwha7Jow9mJ8tXmOoGGCjLdc71qJM5HT3cMZblsj3KVTg/exec";
     
-    // Le añadimos el parámetro "action=enviarCorreo" para que Google Apps Script sepa qué hacer
-    fetch(`${urlMacroGoogle}?action=enviarCorreo&cedula=${cedula}`)
+    // Hacemos el fetch normal agregando la cédula
+    fetch(`${urlMacroGoogle}?cedula=${cedula}`)
         .then(response => response.json())
         .then(res => {
             if (!res.success) {
@@ -896,7 +896,7 @@ function generarCertificado() {
                 correoOculto = partes[0].substring(0, 3) + "...•@" + partes[1];
             }
             
-            // Si todo sale bien, muestra el éxito sin el botón de descarga anterior
+            // Muestra el éxito de envío por correo
             resultadoDiv.innerHTML = `
                 <div class="cert-result" style="border: 1px solid #10B981; padding: 12px; border-radius: 6px; background: #ECFDF5; margin-top:15px;">
                     <p style="color: #15803D; font-weight: 600; margin: 0 0 5px 0;">🎉 ¡Envío Procesado con Éxito!</p>
@@ -905,7 +905,7 @@ function generarCertificado() {
                     <p style="font-size: 11px; color: #059669; margin-top: 6px; font-style: italic;">*Recuerda revisar la bandeja de entrada y la carpeta de Correo no deseado (Spam).</p>
                 </div>`;
                 
-            inputCedula.value = ""; // Limpia el campo de texto tras un envío exitoso
+            inputCedula.value = ""; 
         })
         .catch(err => {
             console.error(err);
@@ -1089,8 +1089,8 @@ function consultarRadicado() {
 // ==========================================
 // CONFIGURACIÓN: URL OFICIAL DE TU WEB APP
 // ==========================================
-cfunction enviarRadicado() {
-  const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbyP5KIPKDVgAxiIV_0-F_wY_GGdHoQXGCFFv7ybWQJ3V40lyS0aa5R8Itj_ImXdmL867Q/exec";
+function enviarRadicado() {
+  const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbzwhcBReZjFvXoCaYz-VR0nwha7Jow9mJ8tXmOoGGCjLdc71qJM5HT3cMZblsj3KVTg/exec";
 
 function enviarRadicado() {
     const inputNombre   = document.getElementById("nombrePQR");
