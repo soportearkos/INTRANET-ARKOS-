@@ -442,62 +442,64 @@ footer{text-align:center;padding:18px;color:#94A3B8;font-size:11px;background:#f
   
   <div id="pqr" class="seccion-detalle">
     <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
-    <div class="sec-title">📣 Canal de Radicación de PQRs</div>
     <div class="pqr-wrap">
       <div class="pqr-hdr">
-        <h2>Buzón de Solicitudes Corporativas</h2>
-        <p>Radica sugerencias, reclamos, felicitaciones o peticiones de forma ágil hacia las áreas administrativas de Arkos.</p>
+        <h2>Canal de PQRs Oficial</h2>
+        <p>Registra de manera formal tus solicitudes, quejas o reclamos ante la administración.</p>
       </div>
-      <div class="pqr-form">
-        <div class="pqr-row">
-          <div>
-            <label>Nombre del Colaborador</label>
-            <input type="text" id="nombrePQR" placeholder="Ingresa tu nombre completo">
-          </div>
-          <div>
-            <label>Cédula o Identificación</label>
-            <input type="text" id="cedulaPQR" placeholder="Número de documento">
-          </div>
+      <form id="pqrFormulario" class="pqr-form" onsubmit="event.preventDefault(); enviarRadicado();">
+        <label>Nombre Completo</label>
+        <input type="text" id="nombrePQR" placeholder="Ingresa tu nombre">
+        
+        <label>Documento de Identidad / Teléfono</label>
+        <input type="text" id="cedulaPQR" placeholder="Ingresa tu identificación o contacto">
+
+        <label>Tipo de Solicitud</label>
+        <select id="tipoPQR">
+          <option value="Petición">Petición</option>
+          <option value="Queja">Queja</option>
+          <option value="Reclamo">Reclamo</option>
+          <option value="Sugerencia">Sugerencia</option>
+        </select>
+
+        <label>Área Destino</label>
+        <select id="areaPQR">
+          <option value="General">General</option>
+          <option value="Talento Humano">Talento Humano</option>
+          <option value="Sistemas">Sistemas</option>
+          <option value="Comercial">Comercial</option>
+        </select>
+
+        <label>Asunto Breve</label>
+        <input type="text" id="asuntoPQR" placeholder="Título corto de la solicitud" required>
+
+        <label>Descripción de los Hechos</label>
+        <textarea id="descripcionPQR" class="pqr-ta" placeholder="Describe de forma detallada tu solicitud..." required></textarea>
+
+        <div class="pqr-anon">
+          <input type="checkbox" id="anonimoPQR" onchange="toggleAnonimo(this)">
+          <span>Enviar esta PQR de forma anónima</span>
         </div>
 
-        <label>Asunto del Radicado</label>
-        <input type="text" id="asuntoPQR" placeholder="Ej: Inconformidad con dotación de planta">
-        
-        <div class="pqr-row">
-          <div>
-            <label>Tipo de Solicitud</label>
-            <select id="tipoPQR">
-              <option value="Petición">Petición</option>
-              <option value="Queja">Queja</option>
-              <option value="Reclamo">Reclamo</option>
-              <option value="Sugerencia">Sugerencia</option>
-              <option value="Felicitación">Felicitación</option>
-            </select>
-          </div>
-          <div>
-            <label>Área Destino</label>
-            <select id="areaPQR">
-              <option value="Talento Humano">Talento Humano</option>
-              <option value="Sistemas / TI">Sistemas / TI</option>
-              <option value="Calidad">Calidad</option>
-              <option value="SST">SST</option>
-              <option value="Gerencia">Gerencia</option>
-            </select>
-          </div>
-        </div>
+        <button type="submit" id="btnEnviarPqr" class="btn-pqr">ENVIAR RADICADO</button>
+      </form>
+      <div id="mensajeResultado"></div>
+    </div>
+  </div>
 
-        <label>Descripción Detallada del Caso</label>
-        <textarea id="descripcionPQR" class="pqr-ta" placeholder="Redacta los detalles aquí de forma clara..."></textarea>
-        
-        <label class="pqr-anon">
-          <input type="checkbox" id="anonimoPQR">
-          <span>Radicar de forma anónima (Ocultará tu usuario/correo de red)</span>
-        </label>
-
-        <div class="priv-nota">⚠️ Al presionar enviar, tus datos serán procesados bajo las políticas de protección de datos de Arkos Sistemas & Arquitectura S.A.S.</div>
-       <button id="btnEnviarPqr" onclick="enviarRadicado()" class="btn-pqr">ENVIAR RADICADO</button>
-        <div id="mensajeResultado"></div>
+  <div id="seguimientoPQR" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="seg-wrap">
+      <div class="seg-hdr">
+        <h2>Consulta de Radicados</h2>
+        <p>Escribe tu código para conocer el estado y respuesta de tu caso.</p>
       </div>
+      <div class="seg-form">
+        <label>Código del Radicado</label>
+        <input type="text" id="codigoBusqueda" placeholder="Ej: PQR-1234">
+        <button type="button" class="btn-seg" onclick="consultarRadicado()">CONSULTAR CASO</button>
+      </div>
+      <div id="resultadoSeguimiento"></div>
     </div>
   </div>
   <div id="seguimientoPQR" class="seccion-detalle">
@@ -868,56 +870,99 @@ function generarCertificado() {
         return;
     }
     
-    // Mensaje de carga provisional mientras responde Google
-    resultadoDiv.innerHTML = `<p style="color: #4B5563; font-size:13px; margin-top:15px; font-weight: 500;">🔍 Conectando con el servidor y estructurando PDF institucional...</p>`;
+    // Mensaje de carga adaptado a la nueva acción de envío por correo
+    resultadoDiv.innerHTML = `<p style="color: #4B5563; font-size:13px; margin-top:15px; font-weight: 500;">🔍 Conectando con el servidor y despachando certificado por correo...</p>`;
     
-    // URL exacta de tu Web App de Google Apps Script
-    const urlMacroGoogle = "https://script.google.com/macros/s/AKfycbwKScv2h3SaA9fy7I0dftyv37EGz0lzYaJRobGYttpZt1bMkD7zWKh0vA1GrdE8Fpd7OA/exec";
+    // URL exacta de tu Web App de Google Apps Script (Mantenemos la tuya)
+    const urlMacroGoogle = "https://script.google.com/macros/s/AKfycbyQSYMMxCqBSzaOWoFbuo7naSRCaNB5VM1Qh_k2i8GSf8dCspOAt_otwkuTdD2Hu1NA/exec";
     
-    fetch(`${urlMacroGoogle}?cedula=${cedula}`)
+    // Le añadimos el parámetro "action=enviarCorreo" para que Google Apps Script sepa qué hacer
+    fetch(`${urlMacroGoogle}?action=enviarCorreo&cedula=${cedula}`)
         .then(response => response.json())
         .then(res => {
             if (!res.success) {
                 resultadoDiv.innerHTML = `
                     <div class="cert-result" style="border: 1px solid #EF4444; padding: 12px; border-radius: 6px; background: #FEF2F2; margin-top:15px;">
-                        <p style="color: #DC2626; font-weight: 600; margin: 0;">❌ No encontrado</p>
+                        <p style="color: #DC2626; font-weight: 600; margin: 0;">❌ No encontrado / Error</p>
                         <p style="font-size: 13px; color: #4B5563; margin: 4px 0 0 0;">${res.error || 'La cédula no está registrada en el sistema.'}</p>
                     </div>`;
                 return;
             }
             
-            // Si todo sale bien, muestra el éxito y monta el botón de descarga real
+            // Enmascaramos visualmente el correo que retorne Google (ej: an...•@arkos.com.co) por privacidad
+            let correoOculto = "tu correo registrado";
+            if (res.correoEnviado) {
+                const partes = res.correoEnviado.split("@");
+                correoOculto = partes[0].substring(0, 3) + "...•@" + partes[1];
+            }
+            
+            // Si todo sale bien, muestra el éxito sin el botón de descarga anterior
             resultadoDiv.innerHTML = `
                 <div class="cert-result" style="border: 1px solid #10B981; padding: 12px; border-radius: 6px; background: #ECFDF5; margin-top:15px;">
-                    <p style="color: #15803D; font-weight: 600; margin: 0 0 5px 0;">✅ Certificado generado con éxito.</p>
-                    <p style="font-size: 13px; color: #4B5563; margin: 0 0 10px 0;">El documento incluye firmas digitales y código QR de validación.</p>
-                    <button id="btnDescargarReal" class="btn-cert" style="background: #10B981; color: white; border: none; padding: 8px 14px; font-size: 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">⬇️ DESCARGAR PDF</button>
+                    <p style="color: #15803D; font-weight: 600; margin: 0 0 5px 0;">🎉 ¡Envío Procesado con Éxito!</p>
+                    <p style="font-size: 13px; color: #4B5563; margin: 0 0 5px 0;">El certificado digital con firmas institucionales ha sido generado.</p>
+                    <p style="font-size: 13px; color: #1f2937; margin: 0; font-weight: 500;">📧 Se envió de forma segura a: <strong style="color: #111827;">${correoOculto}</strong></p>
+                    <p style="font-size: 11px; color: #059669; margin-top: 6px; font-style: italic;">*Recuerda revisar la bandeja de entrada y la carpeta de Correo no deseado (Spam).</p>
                 </div>`;
                 
-            // Convierte la respuesta Base64 que manda Google en el archivo descargable real
-            document.getElementById('btnDescargarReal').onclick = function() {
-                const linkDescarga = document.createElement('a');
-                linkDescarga.href = "data:application/pdf;base64," + res.pdf;
-                linkDescarga.download = `Certificado_Laboral_${cedula}.pdf`;
-                linkDescarga.click();
-            };
+            inputCedula.value = ""; // Limpia el campo de texto tras un envío exitoso
         })
         .catch(err => {
             console.error(err);
             resultadoDiv.innerHTML = `
                 <div class="cert-result" style="border: 1px solid #EF4444; padding: 12px; border-radius: 6px; background: #FEF2F2; margin-top:15px;">
                     <p style="color: #DC2626; font-weight: 600; margin: 0;">❌ Error de Comunicación</p>
-                    <p style="font-size: 13px; color: #4B5563; margin: 4px 0 0 0;">No se pudo conectar con Google. Verifica la URL de la Macro o que los permisos estén públicos.</p>
+                    <p style="font-size: 13px; color: #4B5563; margin: 4px 0 0 0;">No se pudo conectar con el servidor. Verifica los activadores o la conexión de red.</p>
                 </div>`;
         });
 }
-// URL de la macro web que obtuviste al implementar el Apps Script
-const URL_PQR_MACRO = "https://docs.google.com/spreadsheets/d/1mj36_vo8dCCWoCDZBiEhwFjnxv_J3dBDRQ4PZApDQ9I/edit?gid=0#gid=0";
+// ==========================================
+// CONFIGURACIÓN DE URL DE GOOGLE SHEETS
+// ==========================================
+const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbxPBq51BvGkST2eQEFnS0vkv9RnQgzZTTTITzTebvA8MNzOkZliLh2AParfiCPNy2TEnQ/exec";
 
-// 1. FUNCIÓN PARA ENVIAR EL PQR (RADICAR CASO)
+// Colocar fecha actual en el Header
+if(document.getElementById('fechaHdr')) {
+    document.getElementById('fechaHdr').innerText = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
 
+// Control visual de anonimato
+function toggleAnonimo(checkbox) {
+    const inputNombre = document.getElementById("nombrePQR");
+    const inputCedula = document.getElementById("cedulaPQR");
+    if(checkbox.checked) {
+        if(inputNombre) { inputNombre.value = "Anónimo"; inputNombre.disabled = true; }
+        if(inputCedula) { inputCedula.value = "Oculto"; inputCedula.disabled = true; }
+    } else {
+        if(inputNombre) { inputNombre.value = ""; inputNombre.disabled = false; }
+        if(inputCedula) { inputCedula.value = ""; inputCedula.disabled = false; }
+    }
+}
+
+// Navegación estructural de la intranet
+function irAInicio() {
+    document.querySelectorAll('.seccion-detalle').forEach(s => s.classList.remove('activo'));
+    document.getElementById('vista-inicio').style.display = 'block';
+    document.querySelectorAll('.sidebar .sb-item').forEach(i => i.classList.remove('activo'));
+    document.getElementById('nav-inicio').classList.add('activo');
+}
+
+function mostrarSeccion(id) {
+    document.getElementById('vista-inicio').style.display = 'none';
+    document.querySelectorAll('.seccion-detalle').forEach(s => s.classList.remove('activo'));
+    document.querySelectorAll('.sidebar .sb-item').forEach(i => i.classList.remove('activo'));
+    
+    const seccion = document.getElementById(id);
+    if(seccion) seccion.classList.add('activo');
+    
+    const navItem = document.getElementById('nav-' + id);
+    if(navItem) navItem.classList.add('activo');
+}
+
+// ==========================================
+// PROCESAMIENTO POST DE PQR CON RESPUESTA DE CASO
+// ==========================================
 function enviarRadicado() {
-    // 1. Captura de los elementos del formulario
     const inputNombre   = document.getElementById("nombrePQR");
     const inputCedula   = document.getElementById("cedulaPQR");
     const inputAsunto   = document.getElementById("asuntoPQR");
@@ -928,63 +973,112 @@ function enviarRadicado() {
     const contenedor    = document.getElementById("mensajeResultado");
     const botonSubmit   = document.getElementById("btnEnviarPqr");
 
-    // 2. Validación rápida de la descripción
-    const descripcion = txtTexto ? txtTexto.value.trim() : "";
-    if (!descripcion) {
-        alert("Por favor, escribe los detalles de la descripción.");
-        return;
-    }
-
-    // 3. Procesar si es anónimo o no
-    const anonimo = checkAnonimo ? checkAnonimo.checked : false;
-    const nombre  = anonimo ? "Anonimo" : (inputNombre ? inputNombre.value.trim() : "");
-    const cedula  = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "");
-    const tipo    = selectTipo ? selectTipo.value : "Peticion";
-    const area    = selectArea ? selectArea.value : "Talento Humano";
-    const asunto  = inputAsunto ? inputAsunto.value.trim() : "Sin Asunto";
-
-    // 4. Bloquear el botón temporalmente para evitar doble clic
     if (botonSubmit) {
         botonSubmit.disabled = true;
-        botonSubmit.innerText = "ENVIANDO RADICADO...";
+        botonSubmit.innerText = "PROCESANDO RADICADO...";
     }
 
-    // 5. Construcción de la URL con los parámetros (Método GET)
-    const queryParams = `?nombre=${encodeURIComponent(nombre)}&cedula=${encodeURIComponent(cedula)}&tipo=${encodeURIComponent(tipo)}&area=${encodeURIComponent(area)}&asunto=${encodeURIComponent(asunto)}&descripcion=${encodeURIComponent(descripcion)}&anonimo=${encodeURIComponent(anonimo ? "Si" : "No")}`;
+    const formData = new URLSearchParams();
+    formData.append("nombre", checkAnonimo && checkAnonimo.checked ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : ""));
+    formData.append("cedula", checkAnonimo && checkAnonimo.checked ? "Oculto" : (inputCedula ? inputCedula.value.trim() : ""));
+    formData.append("tipo", selectTipo ? selectTipo.value : "Petición");
+    formData.append("area", selectArea ? selectArea.value : "General");
+    formData.append("asunto", inputAsunto ? inputAsunto.value.trim() : "");
+    formData.append("descripcion", txtTexto ? txtTexto.value.trim() : "");
+    formData.append("anonimo", checkAnonimo && checkAnonimo.checked ? "Sí" : "No");
 
-    // 6. Envío de datos a Google Sheets
-    fetch(URL_PQR_MACRO + queryParams, {
-        method: "GET",
-        mode: "no-cors" // Salta restricciones CORS del navegador
+    fetch(URL_PQR_MACRO, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData.toString()
     })
-    .then(() => {
-        // Al usar no-cors, el navegador no lee la respuesta de Google por seguridad,
-        // pero los datos entran a la hoja de cálculo de inmediato.
-        if (contenedor) {
-            contenedor.innerHTML = `
-                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px;">
-                    <p style="color: #15803D; font-weight: bold; margin-bottom:6px; font-size:16px;">🎉 ¡Radicado Enviado Exitosamente!</p>
-                    <p style="font-size: 14px; color: #1F2937;">Los datos se registraron correctamente en la base de datos de Google Sheets.</p>
-                </div>`;
+    .then(res => {
+        if(!res.ok) throw new Error("Error de red");
+        return res.json();
+    })
+    .then(data => {
+        if (data.success || data.caso) {
+            const numeroCaso = data.caso || "Registrado";
+            if (contenedor) {
+                contenedor.innerHTML = `
+                    <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px; text-align:center;">
+                        <p style="color: #15803D; font-weight: bold; font-size:16px; margin-bottom: 5px;">🎉 ¡Radicado Generado Exitosamente!</p>
+                        <p style="font-size: 14px; color: #1F2937; margin-bottom:12px;">Guarda tu código para consultar el estado de tu solicitud:</p>
+                        <div style="font-family: monospace; font-size: 22px; font-weight: 800; background: #fff; border: 2px dashed #10B981; display: inline-block; padding: 8px 20px; border-radius: 8px; color: #047857; letter-spacing:1px;">${numeroCaso}</div>
+                    </div>`;
+            }
+            const formulario = document.getElementById("pqrFormulario");
+            if(formulario) formulario.reset();
+            if(checkAnonimo) toggleAnonimo(checkAnonimo);
+        } else {
+            alert("⚠️ El servidor procesó los datos pero devolvió un error: " + (data.error || "Desconocido"));
         }
-        // Limpiar el formulario
-        if (inputNombre) inputNombre.value = '';
-        if (inputCedula) inputCedula.value = '';
-        if (inputAsunto) inputAsunto.value = '';
-        if (txtTexto) txtTexto.value = '';
     })
     .catch(err => {
-        console.error("Error en el envío:", err);
+        console.error("Error crítico de comunicación:", err);
         if (contenedor) {
-            contenedor.innerHTML = `<p style="color: #DC2626; font-weight: bold; margin-top:15px;">❌ Error de conexión al intentar enviar los datos.</p>`;
+            contenedor.innerHTML = `
+                <div style="border: 2px solid #EF4444; padding: 15px; border-radius: 10px; background: #FEF2F2; margin-top:15px; text-align:center;">
+                    <p style="color: #B91C1C; font-weight: bold; font-size:14px;">❌ Error de comunicación con Google Sheets</p>
+                    <p style="font-size: 12px; color: #7F1D1D; margin-top:3px;">Tu solicitud no pudo guardarse. Verifica la publicación de tu Web App de Google Apps Script.</p>
+                </div>`;
         }
     })
     .finally(() => {
-        // Desbloquear el botón al terminar
         if (botonSubmit) {
             botonSubmit.disabled = false;
             botonSubmit.innerText = "ENVIAR RADICADO";
         }
+    });
+}
+
+// ==========================================
+// CONSULTA RÁPIDA DE RADICADOS (GET)
+// ==========================================
+function consultarRadicado() {
+    const inputCodigo = document.getElementById("codigoBusqueda");
+    const contenedor = document.getElementById("resultadoSeguimiento");
+    
+    const codigo = inputCodigo ? inputCodigo.value.trim() : "";
+    if(!codigo) { alert("Por favor escribe un código de radicado."); return; }
+    
+    if (contenedor) contenedor.innerHTML = "<p style='color:#64748B; font-size:13px;'>Buscando caso en el sistema corporativo...</p>";
+    
+    fetch(`${URL_PQR_MACRO}?codigo=${encodeURIComponent(codigo)}`, { method: "GET" })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            if (contenedor) {
+                contenedor.innerHTML = `
+                    <div class="seg-res show" style="margin-top:15px; border:1px solid #E2E8F0; padding:20px; border-radius:12px; background:#FFF;">
+                        <div class="seg-res-hdr" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <span class="seg-tag" style="background:#0284C7; color:#fff; padding:4px 12px; border-radius:6px; font-weight:700; font-family:monospace;">${codigo.toUpperCase()}</span>
+                            <span style="background:#FEF3C7; color:#92400E; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:700;">${data.estado || 'Pendiente'}</span>
+                        </div>
+                        <p style="font-size:12px; color:#94A3B8; font-weight:700; margin-bottom:2px;">DETALLES</p>
+                        <p style="font-size:14px; color:#334155; margin-bottom:12px; background:#F8FAFC; padding:10px; border-radius:6px; border:1px solid #E2E8F0;">${data.descripcion}</p>
+                        
+                        ${data.respuesta ? `
+                            <p style="font-size:11px; color:#15803D; font-weight:700; margin-bottom:2px;">RESPUESTA DE ADMINISTRACIÓN</p>
+                            <div style="background:#F0FDF4; border:1px solid #86EFAC; padding:12px; border-radius:8px; color:#166534; font-size:13px;">${data.respuesta}</div>
+                        ` : `
+                            <div style="background:#FFFBEB; border:1px solid #FDE68A; padding:10px; border-radius:8px; color:#92400E; font-size:12px;">⏳ Tu solicitud está en proceso de revisión por el área encargada.</div>
+                        `}
+                    </div>`;
+            }
+        } else {
+            if (contenedor) {
+                contenedor.innerHTML = `
+                    <div class="seg-nf show" style="background:#FFF5F5; border:1px solid #FCA5A5; padding:15px; border-radius:10px; text-align:center; margin-top:15px;">
+                        <h3 style="color:#DC2626; font-size:14px;">Radicado no encontrado</h3>
+                        <p style="color:#7F1D1D; font-size:12px;">Verifica que el código coincida exactamente (mayúsculas, números y guiones).</p>
+                    </div>`;
+            }
+        }
+    })
+    .catch(() => {
+        if (contenedor) contenedor.innerHTML = "<p style='color:#DC2626; font-size:13px;'>❌ Imposible conectar con el servidor de consulta.</p>";
     });
 }
 
@@ -995,11 +1089,9 @@ function enviarRadicado() {
 // ==========================================
 // CONFIGURACIÓN: URL OFICIAL DE TU WEB APP
 // ==========================================
-const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbzqpWp-pbEoOWOyZxwN_uCASjyRtlhZysdFTIG5rPxGMT8YY6E7d5ZG8lge2Mz3_M8GFw/exec";
+cfunction enviarRadicado() {
+  const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbyP5KIPKDVgAxiIV_0-F_wY_GGdHoQXGCFFv7ybWQJ3V40lyS0aa5R8Itj_ImXdmL867Q/exec";
 
-// ==========================================
-// 1. FUNCIÓN PARA ENVIAR UNA NUEVA PQR
-// ==========================================
 function enviarRadicado() {
     const inputNombre   = document.getElementById("nombrePQR");
     const inputCedula   = document.getElementById("cedulaPQR");
@@ -1011,58 +1103,77 @@ function enviarRadicado() {
     const contenedor    = document.getElementById("mensajeResultado");
     const botonSubmit   = document.getElementById("btnEnviarPqr");
 
+    // Validaciones básicas antes de enviar
+    const asunto = inputAsunto ? inputAsunto.value.trim() : "";
     const descripcion = txtTexto ? txtTexto.value.trim() : "";
-    if (!descripcion) {
-        alert("Por favor, describe los detalles de tu solicitud.");
+
+    if (!asunto || !descripcion) {
+        alert("❌ Por favor completa el Asunto y la Descripción del caso.");
         return;
     }
 
-    const anonimo = checkAnonimo ? checkAnonimo.checked : false;
+    if (botonSubmit) {
+        botonSubmit.disabled = true;
+        botonSubmit.innerText = "PROCESANDO RADICADO...";
+    }
+    
+    if (contenedor) {
+        contenedor.innerHTML = "<p style='color:#64748B; font-size:13px; margin-top:10px;'>Enviando solicitud segura al servidor...</p>";
+    }
+
+    // Recolectar variables de forma limpia
+    const anonimo = checkAnonimo && checkAnonimo.checked;
     const nombre  = anonimo ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : "");
     const cedula  = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "");
     const tipo    = selectTipo ? selectTipo.value : "Petición";
-    const area    = selectArea ? selectArea.value : "Talento Humano";
-    const asunto  = inputAsunto ? inputAsunto.value.trim() : "Sin Asunto";
+    const area    = selectArea ? selectArea.value : "General";
 
-    if (botonSubmit) {
-        botonSubmit.disabled = true;
-        botonSubmit.innerText = "ENVIANDO RADICADO...";
-    }
+    // CONSTRUIR URL CON PARÁMETROS (Esto evade el 100% de los problemas de CORS)
+    const queryParams = `?nombre=${encodeURIComponent(nombre)}` +
+                        `&cedula=${encodeURIComponent(cedula)}` +
+                        `&tipo=${encodeURIComponent(tipo)}` +
+                        `&area=${encodeURIComponent(area)}` +
+                        `&asunto=${encodeURIComponent(asunto)}` +
+                        `&descripcion=${encodeURIComponent(descripcion)}` +
+                        `&anonimo=${encodeURIComponent(anonimo ? "Sí" : "No")}`;
 
-    // Construimos los parámetros para el método GET seguro
-    const queryParams = `?nombre=${encodeURIComponent(nombre)}&cedula=${encodeURIComponent(cedula)}&tipo=${encodeURIComponent(tipo)}&area=${encodeURIComponent(area)}&asunto=${encodeURIComponent(asunto)}&descripcion=${encodeURIComponent(descripcion)}&anonimo=${encodeURIComponent(anonimo ? "Si" : "No")}`;
-
-    // Hacemos la petición por fetch normal (sin no-cors para poder LEER el número de caso que genera Google)
+    // Hacemos un fetch por GET en lugar de POST
     fetch(URL_PQR_MACRO + queryParams, {
         method: "GET"
     })
-    .then(response => response.json())
+    .then(res => {
+        if(!res.ok) throw new Error("Error en la respuesta de la red");
+        return res.json();
+    })
     .then(data => {
-        if (data.success && contenedor) {
-            contenedor.innerHTML = `
-                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px;">
-                    <p style="color: #15803D; font-weight: bold; margin-bottom:6px; font-size:16px;">🎉 ¡Radicado Registrado con Éxito!</p>
-                    <p style="font-size: 14px; color: #1F2937; margin: 4px 0;">Guarda tu número de caso para hacerle seguimiento:</p>
-                    <p style="font-size: 20px; color: #1E3A8A; font-weight: bold; margin: 8px 0; background: #E0F2FE; display: inline-block; padding: 4px 12px; border-radius: 6px;">${data.caso}</p>
-                    <p style="font-size: 13px; color: #6B7280; margin-top: 6px;">Se ha notificado al equipo de Talento Humano.</p>
-                </div>`;
+        if (data.success || data.caso) {
+            const numeroCaso = data.caso || "Registrado en Sheets";
+            if (contenedor) {
+                contenedor.innerHTML = `
+                    <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px; text-align:center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+                        <p style="color: #15803D; font-weight: bold; font-size:16px; margin-bottom: 5px;">🎉 ¡Radicado Generado Exitosamente!</p>
+                        <p style="font-size: 13px; color: #1F2937; margin-bottom:12px;">Conserva este código para consultar el estado de tu solicitud:</p>
+                        <div style="font-family: monospace; font-size: 22px; font-weight: 800; background: #fff; border: 2px dashed #10B981; display: inline-block; padding: 8px 20px; border-radius: 8px; color: #047857; letter-spacing:1px;">${numeroCaso}</div>
+                    </div>`;
+            }
             
-            // Limpiamos los campos del formulario
-            if (inputNombre) inputNombre.value = '';
-            if (inputCedula) inputCedula.value = '';
+            // Limpieza del formulario
+            if (inputNombre) { inputNombre.value = ''; inputNombre.disabled = false; }
+            if (inputCedula) { inputCedula.value = ''; inputCedula.disabled = false; }
             if (inputAsunto) inputAsunto.value = '';
             if (txtTexto) txtTexto.value = '';
+            if (checkAnonimo) checkAnonimo.checked = false;
         } else {
-            throw new Error(data.error || "Error desconocido del servidor");
+            alert("⚠️ El script se ejecutó pero reportó un error interno: " + (data.error || "Desconocido"));
         }
     })
     .catch(err => {
-        console.error("Error crítico:", err);
+        console.error("Error crítico de comunicación:", err);
         if (contenedor) {
             contenedor.innerHTML = `
-                <div style="border: 2px solid #EF4444; padding: 15px; border-radius: 12px; background: #FEF2F2; margin-top:20px;">
-                    <p style="color: #991B1B; font-weight: bold; margin: 0;">❌ Error al enviar los datos</p>
-                    <p style="font-size: 13px; color: #555;">Por favor verifica los permisos o inténtalo de nuevo.</p>
+                <div style="border: 2px solid #EF4444; padding: 15px; border-radius: 10px; background: #FEF2F2; margin-top:15px; text-align:center;">
+                    <p style="color: #B91C1C; font-weight: bold; font-size:14px; margin-bottom:2px;">❌ Error de conexión persistente</p>
+                    <p style="font-size: 12px; color: #7F1D1D;">Revisa que la URL de la macro sea la correcta y que esté publicada para 'Cualquiera'.</p>
                 </div>`;
         }
     })
@@ -1159,7 +1270,7 @@ function enviarRadicado() {
 <!-- MODULO DE PQRS COMPLETAMENTE COMPATIBLE CON ARKOS (BLINDADO) -->
 <script>
 // 1. Tu URL está perfecta
-const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbzqpWp-pbEoOWOyZxwN_uCASjyRtlhZysdFTIG5rPxGMT8YY6E7d5ZG8lge2Mz3_M8GFw/exec";
+const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbxPBq51BvGkST2eQEFnS0vkv9RnQgzZTTTITzTebvA8MNzOkZliLh2AParfiCPNy2TEnQ/exec";";
 
 // 2. Empaquetamos los datos en formato URL (así Google Sheets lo lee sin problemas de CORS)
 const formData = new URLSearchParams();
