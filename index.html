@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -77,10 +76,16 @@ header{background:#fff;border-bottom:1px solid var(--borde);display:flex;align-i
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:24px;}
 .stat-card{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:13px;}
 .stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
-.si-r{background:#FEE2E2;} .si-b{background:#FEE2E2;} .si-g{background:#D1FAE5;} .si-a{background:#FEF3C7;}
+.si-r{background:#FEE2E2;}
+.si-b{background:#FEE2E2;}
+.si-g{background:#D1FAE5;}
+.si-a{background:#FEF3C7;}
 .stat-lbl{font-size:10px;font-weight:700;color:var(--texto-sec);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
 .stat-val{font-size:.82rem;font-weight:700;cursor:pointer;}
-.stat-val.r{color:#C62828;} .stat-val.b{color:#0284C7;} .stat-val.g{color:#059669;} .stat-val.a{color:#D97706;}
+.stat-val.r{color:#C62828;}
+.stat-val.b{color:#0284C7;}
+.stat-val.g{color:#059669;}
+.stat-val.a{color:#D97706;}
 
 /* GRID MÓDULOS */
 .grid-dash{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:24px;}
@@ -117,7 +122,8 @@ header{background:#fff;border-bottom:1px solid var(--borde);display:flex;align-i
 .sub-card:hover::before{transform:scaleX(1);}
 .sub-card span{font-size:1.9rem;display:block;margin-bottom:9px;}
 .sub-card h3{font-size:.85rem;font-weight:600;line-height:1.4;color:var(--texto);}
-.sub-seccion{display:none;} .activo-sub{display:block;}
+.sub-seccion{display:none;}
+.activo-sub{display:block;}
 
 /* CERT BOX */
 .cert-box{background:#F8FAFC;border:1px solid var(--borde);border-radius:13px;padding:28px;max-width:660px;}
@@ -187,7 +193,10 @@ header{background:#fff;border-bottom:1px solid var(--borde);display:flex;align-i
 .seg-res-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:7px;}
 .seg-tag{background:#0284C7;color:#fff;border-radius:6px;padding:4px 13px;font-weight:700;font-size:.88rem;letter-spacing:1px;}
 .seg-badge{display:inline-block;padding:4px 11px;border-radius:20px;font-size:.76rem;font-weight:700;}
-.s-pend{background:#FEF3C7;color:#92400E;} .s-proc{background:#FEE2E2;color:#991B1B;} .s-res{background:#D1FAE5;color:#065F46;} .s-cerr{background:#F1F5F9;color:#475569;}
+.s-pend{background:#FEF3C7;color:#92400E;}
+.s-proc{background:#FEE2E2;color:#991B1B;}
+.s-res{background:#D1FAE5;color:#065F46;}
+.s-cerr{background:#F1F5F9;color:#475569;}
 .seg-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;}
 .seg-di{background:#F8FAFC;border:1px solid var(--borde);border-radius:9px;padding:12px 15px;}
 .seg-lbl{font-size:.69rem;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
@@ -342,17 +351,12 @@ footer{text-align:center;padding:18px;color:#94A3B8;font-size:11px;background:#f
       <div class="stat-card"><div class="stat-icon si-a">🔷</div><div><div class="stat-lbl">SAP</div><div class="stat-val a" onclick="window.open('https://3.227.109.189/adfs/ls/idpinitiatedsignon.aspx?RelayState=RPID%3Dhttps%253A%252F%252Fsignin.aws.amazon.com%252Fsaml%26RelayState%3Dhttps%253A%252F%252Fappstream2.us-east-1.aws.amazon.com%252Fsaml%253Fstack%253Dstack-appstream-arkos.com%2526accountId%253D839696128812','_blank')">Abrir SAP →</div></div></div>
     </div>
 
-    <div class="grid-dash">
-      <div class="mod-card" onclick="mostrarSeccion('th')"><span class="icon-box">👩‍💼</span><h2>Talento Humano</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card" onclick="mostrarSeccion('sistemas')"><span class="icon-box">💻</span><h2>Sistemas</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card" onclick="mostrarSeccion('calidad_raiz')"><span class="icon-box">📋</span><h2>Calidad</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card" onclick="mostrarSeccion('comercial_raiz')"><span class="icon-box">📈</span><h2>Comercial</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card" onclick="mostrarSeccion('sst')"><span class="icon-box">⛑️</span><h2>SST</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card" onclick="mostrarSeccion('noticias_raiz')"><span class="icon-box">📰</span><h2>Noticias</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card" onclick="alert('Módulo de Nómina en construcción')"><span class="icon-box">💰</span><h2>Nómina</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card" onclick="alert('Módulo de Capacitaciones en construcción')"><span class="icon-box">🎓</span><h2>Capacitaciones</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card pqr" onclick="mostrarSeccion('pqr')"><span class="icon-box">📣</span><h2>Canal PQR</h2><span class="btn-mod">INGRESAR</span></div>
-      <div class="mod-card seg" onclick="mostrarSeccion('seguimientoPQR')"><span class="icon-box">🔍</span><h2>Seguimiento PQR</h2><span class="btn-mod b">INGRESAR</span></div>
+    <div class="cal-card" id="vacantesHomeCard">
+      <div class="cal-hdr" style="justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:9px;"><span>📢</span><h3>Vacantes Disponibles</h3></div>
+        <span style="font-size:.72rem;font-weight:700;color:var(--rojo);cursor:pointer;" onclick="mostrarSeccion('th');setTimeout(()=>{mostrarSubMod('vacantes');},100)">Ver todas →</span>
+      </div>
+      <div class="com-grid" id="vacantesGridHome" style="padding:16px;"></div>
     </div>
 
     <div class="cal-card">
@@ -368,6 +372,7 @@ footer{text-align:center;padding:18px;color:#94A3B8;font-size:11px;background:#f
       <div class="sub-grid">
         <div class="sub-card" onclick="abrirCertificaciones()"><span>📄</span><h3>Certificaciones</h3></div>
         <div class="sub-card" onclick="mostrarSubMod('vacaciones')"><span>🏖️</span><h3>Vacaciones</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('vacantes')"><span>📢</span><h3>Vacantes</h3></div>
         <div class="sub-card" onclick="mostrarSubMod('incapacidades')"><span>🩺</span><h3>Incapacidades</h3></div>
         <div class="sub-card" onclick="mostrarSubMod('evaluaciones')"><span>📚</span><h3>Evaluaciones Formación</h3></div>
         <div class="sub-card" onclick="mostrarSubMod('reglamentoInterno')"><span>📜</span><h3>Reglamento Interno de Trabajo</h3></div>
@@ -394,7 +399,97 @@ footer{text-align:center;padding:18px;color:#94A3B8;font-size:11px;background:#f
     
     <div id="vacaciones" class="sub-seccion">
       <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
-      <div class="cert-box"><h3>Solicitud de Vacaciones</h3><p>Módulo de autogestión de periodos vacacionales en desarrollo.</p></div>
+
+      <!-- PASO 1: CONSULTA DE DÍAS DISPONIBLES -->
+      <div style="background:linear-gradient(135deg,#059669,#047857);border-radius:13px;padding:26px 30px;color:#fff;margin-bottom:22px;">
+        <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:5px;">🏖️ Mis Vacaciones</h2>
+        <p style="opacity:.88;font-size:.88rem;line-height:1.6;">Consulta tus días pendientes por periodo y, si tienes disponibilidad, solicita tus vacaciones en línea.</p>
+      </div>
+
+      <div class="cert-box">
+        <h3>Consultar días disponibles</h3>
+        <p>Digita tu número de cédula para ver tus periodos y saldos de vacaciones.</p>
+        <input type="text" id="vacCedulaConsulta" placeholder="Ingresa tu número de cédula" class="input-cert">
+        <button onclick="vac_consultarDias()" class="btn-cert" style="background:#059669;">CONSULTAR DÍAS</button>
+      </div>
+      <div id="vacResultado"></div>
+
+      <!-- PASO 2: FORMULARIO DE SOLICITUD (oculto hasta que haya días disponibles) -->
+      <div id="vacFormWrap" style="display:none;margin-top:22px;">
+        <div class="pqr-form" style="background:#F0FDF4;border-color:#86EFAC;">
+          <h3 style="color:#059669;font-size:1rem;font-weight:700;margin-bottom:16px;">📝 Formato de Solicitud de Vacaciones</h3>
+          <form id="vacFormularioSolicitud" onsubmit="event.preventDefault(); vac_enviarSolicitud();">
+            <div class="pqr-row">
+              <div>
+                <label>Nombre del colaborador</label>
+                <input type="text" id="vacNombreForm" readonly style="background:#F1F5F9;">
+              </div>
+              <div>
+                <label>Documento de identidad</label>
+                <input type="text" id="vacCedulaForm" readonly style="background:#F1F5F9;">
+              </div>
+            </div>
+
+            <label>Tipo de documento</label>
+            <select id="vacTipoDocForm">
+              <option value="CC">Cédula de Ciudadanía (CC)</option>
+              <option value="CE">Cédula de Extranjería (CE)</option>
+              <option value="PEP">Permiso Especial de Permanencia (PEP)</option>
+            </select>
+
+            <label>Periodo causado</label>
+            <select id="vacPeriodoForm" onchange="vac_actualizarDiasMax()"></select>
+            <p id="vacDiasMaxNota" style="font-size:.76rem;color:#059669;font-weight:700;margin:-10px 0 16px;"></p>
+
+            <label>Tipo de solicitud</label>
+            <select id="vacTipoSolForm">
+              <option value="Vacaciones disfrutadas">Vacaciones disfrutadas</option>
+              <option value="Vacaciones compensadas en dinero">Vacaciones compensadas en dinero</option>
+            </select>
+
+            <div class="pqr-row">
+              <div>
+                <label>Fecha de inicio</label>
+                <input type="date" id="vacFechaInicioForm">
+              </div>
+              <div>
+                <label>Fecha de fin</label>
+                <input type="date" id="vacFechaFinForm">
+              </div>
+            </div>
+
+            <label>Número de días hábiles a disfrutar / compensar</label>
+            <input type="number" id="vacDiasForm" min="1" placeholder="Ej: 5">
+
+            <label>Tu correo electrónico (para notificarte el estado)</label>
+            <input type="email" id="vacCorreoColabForm" placeholder="tucorreo@arkos.com.co">
+
+            <label>Correo electrónico de tu jefe inmediato</label>
+            <input type="email" id="vacCorreoJefeForm" placeholder="jefe@arkos.com.co" required>
+
+            <button type="submit" id="vacBtnEnviar" class="btn-pqr" style="background:#059669;">ENVIAR SOLICITUD</button>
+          </form>
+          <div id="vacResultadoForm"></div>
+        </div>
+      </div>
+
+      <!-- PASO 3: SEGUIMIENTO DE SOLICITUDES -->
+      <div class="seg-form" style="margin-top:26px;border-color:#86EFAC;">
+        <h3 style="color:#059669;font-size:1rem;font-weight:700;margin-bottom:10px;">🔍 Ver estado de mi solicitud</h3>
+        <label>Número de cédula</label>
+        <input type="text" id="vacCedulaEstado" placeholder="Ingresa tu número de cédula">
+        <button type="button" class="btn-seg" style="background:#059669;" onclick="vac_consultarEstado()">CONSULTAR ESTADO</button>
+      </div>
+      <div id="vacEstadoResultado"></div>
+    </div>
+
+    <div id="vacantes" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="com-hdr">
+        <h2>📢 Vacantes Disponibles</h2>
+        <p>Conoce las posiciones abiertas actualmente en Arkos. Haz clic en una imagen para verla en grande.</p>
+      </div>
+      <div class="com-grid" id="vacantesGridTH"></div>
     </div>
     
     <div id="incapacidades" class="sub-seccion">
@@ -500,17 +595,6 @@ footer{text-align:center;padding:18px;color:#94A3B8;font-size:11px;background:#f
         <button type="button" class="btn-seg" onclick="consultarRadicado()">CONSULTAR CASO</button>
       </div>
       <div id="resultadoSeguimiento"></div>
-    </div>
-  </div>
-  <div id="seguimientoPQR" class="seccion-detalle">
-    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
-    <div class="sec-title">🔍 Seguimiento de Casos PQR</div>
-    <div class="seg-wrap">
-      <div class="seg-form">
-        <label>Número de Radicado o Cédula</label>
-        <input type="text" id="busquedaPQR" placeholder="Ingrese el número para consultar">
-        <button onclick="alert('Buscando en la base de datos de auditoría...')" class="btn-seg">CONSULTAR ESTADO</button>
-      </div>
     </div>
   </div>
 
@@ -695,8 +779,8 @@ footer{text-align:center;padding:18px;color:#94A3B8;font-size:11px;background:#f
 </footer>
 
 <script>
-    
-// Carga automática de la librería html2pdf en la cabecera
+
+    // Carga automática de la librería html2pdf en la cabecera
 if (!document.getElementById('html2pdf-script')) {
   const script = document.createElement('script');
   script.id = 'html2pdf-script';
@@ -788,6 +872,12 @@ function ocultarSubModulosTH() {
   if (menuDeTarjetas) {
     menuDeTarjetas.classList.remove('activo-sub');
   }
+}
+
+function mostrarSubMod(id) {
+  ocultarSubModulosTH();
+  const destino = document.getElementById(id);
+  if (destino) destino.classList.add('activo-sub');
 }
 
 // SUB-MENÚS SST (RIESGOS, COMITÉS, PAUSAS)
@@ -904,8 +994,8 @@ function generarCertificado() {
                     <p style="font-size: 13px; color: #1f2937; margin: 0; font-weight: 500;">📧 Se envió de forma segura a: <strong style="color: #111827;">${correoOculto}</strong></p>
                     <p style="font-size: 11px; color: #059669; margin-top: 6px; font-style: italic;">*Recuerda revisar la bandeja de entrada y la carpeta de Correo no deseado (Spam).</p>
                 </div>`;
-                
-            inputCedula.value = ""; 
+            
+            inputCedula.value = "";
         })
         .catch(err => {
             console.error(err);
@@ -937,26 +1027,6 @@ function toggleAnonimo(checkbox) {
         if(inputNombre) { inputNombre.value = ""; inputNombre.disabled = false; }
         if(inputCedula) { inputCedula.value = ""; inputCedula.disabled = false; }
     }
-}
-
-// Navegación estructural de la intranet
-function irAInicio() {
-    document.querySelectorAll('.seccion-detalle').forEach(s => s.classList.remove('activo'));
-    document.getElementById('vista-inicio').style.display = 'block';
-    document.querySelectorAll('.sidebar .sb-item').forEach(i => i.classList.remove('activo'));
-    document.getElementById('nav-inicio').classList.add('activo');
-}
-
-function mostrarSeccion(id) {
-    document.getElementById('vista-inicio').style.display = 'none';
-    document.querySelectorAll('.seccion-detalle').forEach(s => s.classList.remove('activo'));
-    document.querySelectorAll('.sidebar .sb-item').forEach(i => i.classList.remove('activo'));
-    
-    const seccion = document.getElementById(id);
-    if(seccion) seccion.classList.add('activo');
-    
-    const navItem = document.getElementById('nav-' + id);
-    if(navItem) navItem.classList.add('activo');
 }
 
 // ==========================================
@@ -1082,463 +1152,291 @@ function consultarRadicado() {
     });
 }
 
-
-</script>
-
-<script id="modulo-pqrs">
 // ==========================================
-// CONFIGURACIÓN: URL OFICIAL DE TU WEB APP
+// MÓDULO: VACACIONES (Consulta + Solicitud + Seguimiento)
 // ==========================================
-function enviarRadicado() {
-  const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbzwhcBReZjFvXoCaYz-VR0nwha7Jow9mJ8tXmOoGGCjLdc71qJM5HT3cMZblsj3KVTg/exec";
 
-function enviarRadicado() {
-    const inputNombre   = document.getElementById("nombrePQR");
-    const inputCedula   = document.getElementById("cedulaPQR");
-    const inputAsunto   = document.getElementById("asuntoPQR");
-    const txtTexto      = document.getElementById("descripcionPQR");
-    const selectTipo    = document.getElementById("tipoPQR");
-    const selectArea    = document.getElementById("areaPQR");
-    const checkAnonimo  = document.getElementById("anonimoPQR");
-    const contenedor    = document.getElementById("mensajeResultado");
-    const botonSubmit   = document.getElementById("btnEnviarPqr");
+// ID y GID de la hoja "DIAS PENDIENTES DE VACACIONES" (lectura pública vía gviz)
+const VAC_SHEET_ID = "1veTYWoPOyLTTf3Swesfgr9pkcjnlEe2m2EqUwI8ALmw";
+const VAC_GID = "1861906860";
 
-    // Validaciones básicas antes de enviar
-    const asunto = inputAsunto ? inputAsunto.value.trim() : "";
-    const descripcion = txtTexto ? txtTexto.value.trim() : "";
+// ⬇️ REEMPLAZA ESTA URL con la de tu Web App de Apps Script una vez la despliegues (ver Code.gs) ⬇️
+const VAC_MACRO_URL = "https://script.google.com/macros/s/AKfycbyFAQWYZjagcjHD2iQvjhQtp5vqxOrbMK60NEY7GOrFvbc_ELwkCscDLBKQIz4da_2JBA/exec";
 
-    if (!asunto || !descripcion) {
-        alert("❌ Por favor completa el Asunto y la Descripción del caso.");
-        return;
-    }
+let vacDatosEmpleado = null;
 
-    if (botonSubmit) {
-        botonSubmit.disabled = true;
-        botonSubmit.innerText = "PROCESANDO RADICADO...";
-    }
-    
-    if (contenedor) {
-        contenedor.innerHTML = "<p style='color:#64748B; font-size:13px; margin-top:10px;'>Enviando solicitud segura al servidor...</p>";
-    }
+function vac_consultarDias() {
+    const inputCed = document.getElementById('vacCedulaConsulta');
+    const resultado = document.getElementById('vacResultado');
+    const cedula = inputCed ? inputCed.value.trim() : '';
 
-    // Recolectar variables de forma limpia
-    const anonimo = checkAnonimo && checkAnonimo.checked;
-    const nombre  = anonimo ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : "");
-    const cedula  = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "");
-    const tipo    = selectTipo ? selectTipo.value : "Petición";
-    const area    = selectArea ? selectArea.value : "General";
+    if (!cedula) { alert('Por favor ingresa tu número de cédula.'); return; }
 
-    // CONSTRUIR URL CON PARÁMETROS (Esto evade el 100% de los problemas de CORS)
-    const queryParams = `?nombre=${encodeURIComponent(nombre)}` +
-                        `&cedula=${encodeURIComponent(cedula)}` +
-                        `&tipo=${encodeURIComponent(tipo)}` +
-                        `&area=${encodeURIComponent(area)}` +
-                        `&asunto=${encodeURIComponent(asunto)}` +
-                        `&descripcion=${encodeURIComponent(descripcion)}` +
-                        `&anonimo=${encodeURIComponent(anonimo ? "Sí" : "No")}`;
+    document.getElementById('vacFormWrap').style.display = 'none';
+    resultado.innerHTML = '<p style="color:#64748B;font-size:13px;margin-top:12px;">🔍 Consultando tus periodos de vacaciones...</p>';
 
-    // Hacemos un fetch por GET en lugar de POST
-    fetch(URL_PQR_MACRO + queryParams, {
-        method: "GET"
-    })
-    .then(res => {
-        if(!res.ok) throw new Error("Error en la respuesta de la red");
-        return res.json();
-    })
-    .then(data => {
-        if (data.success || data.caso) {
-            const numeroCaso = data.caso || "Registrado en Sheets";
-            if (contenedor) {
-                contenedor.innerHTML = `
-                    <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px; text-align:center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-                        <p style="color: #15803D; font-weight: bold; font-size:16px; margin-bottom: 5px;">🎉 ¡Radicado Generado Exitosamente!</p>
-                        <p style="font-size: 13px; color: #1F2937; margin-bottom:12px;">Conserva este código para consultar el estado de tu solicitud:</p>
-                        <div style="font-family: monospace; font-size: 22px; font-weight: 800; background: #fff; border: 2px dashed #10B981; display: inline-block; padding: 8px 20px; border-radius: 8px; color: #047857; letter-spacing:1px;">${numeroCaso}</div>
-                    </div>`;
-            }
-            
-            // Limpieza del formulario
-            if (inputNombre) { inputNombre.value = ''; inputNombre.disabled = false; }
-            if (inputCedula) { inputCedula.value = ''; inputCedula.disabled = false; }
-            if (inputAsunto) inputAsunto.value = '';
-            if (txtTexto) txtTexto.value = '';
-            if (checkAnonimo) checkAnonimo.checked = false;
-        } else {
-            alert("⚠️ El script se ejecutó pero reportó un error interno: " + (data.error || "Desconocido"));
-        }
-    })
-    .catch(err => {
-        console.error("Error crítico de comunicación:", err);
-        if (contenedor) {
-            contenedor.innerHTML = `
-                <div style="border: 2px solid #EF4444; padding: 15px; border-radius: 10px; background: #FEF2F2; margin-top:15px; text-align:center;">
-                    <p style="color: #B91C1C; font-weight: bold; font-size:14px; margin-bottom:2px;">❌ Error de conexión persistente</p>
-                    <p style="font-size: 12px; color: #7F1D1D;">Revisa que la URL de la macro sea la correcta y que esté publicada para 'Cualquiera'.</p>
-                </div>`;
-        }
-    })
-    .finally(() => {
-        if (botonSubmit) {
-            botonSubmit.disabled = false;
-            botonSubmit.innerText = "ENVIAR RADICADO";
-        }
-    });
-}
-
-// ==========================================
-// 2. FUNCIÓN PARA CONSULTAR / SEGUIMIENTO
-// ==========================================
-function enviarRadicado() {
-    const inputNombre   = document.getElementById("nombrePQR");
-    const inputCedula   = document.getElementById("cedulaPQR");
-    const inputAsunto   = document.getElementById("asuntoPQR");
-    const txtTexto      = document.getElementById("descripcionPQR");
-    const selectTipo    = document.getElementById("tipoPQR");
-    const selectArea    = document.getElementById("areaPQR");
-    const checkAnonimo  = document.getElementById("anonimoPQR");
-    const contenedor    = document.getElementById("mensajeResultado");
-    const botonSubmit   = document.getElementById("btnEnviarPqr");
-
-    const descripcion = txtTexto ? txtTexto.value.trim() : "";
-    if (!descripcion) {
-        alert("Por favor, describe los detalles de tu solicitud.");
-        return;
-    }
-
-    const anonimo = checkAnonimo ? checkAnonimo.checked : false;
-    const nombre  = anonimo ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : "");
-    const cedula  = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "");
-    const tipo    = selectTipo ? selectTipo.value : "Petición";
-    const area    = selectArea ? selectArea.value : "Talento Humano";
-    const asunto  = inputAsunto ? inputAsunto.value.trim() : "Sin Asunto";
-
-    if (botonSubmit) {
-        botonSubmit.disabled = true;
-        botonSubmit.innerText = "ENVIANDO RADICADO...";
-    }
-
-    // Parámetros de envío
-    const queryParams = `?nombre=${encodeURIComponent(nombre)}&cedula=${encodeURIComponent(cedula)}&tipo=${encodeURIComponent(tipo)}&area=${encodeURIComponent(area)}&asunto=${encodeURIComponent(asunto)}&descripcion=${encodeURIComponent(descripcion)}&anonimo=${encodeURIComponent(anonimo ? "Si" : "No")}`;
-
-    // Usamos el método nativo para saltar el bloqueo de lectura de respuesta
-    fetch(URL_PQR_MACRO + queryParams)
-    .then(response => {
-        if (!response.ok) throw new Error("Error en red");
-        return response.json();
-    })
-    .then(data => {
-        if (data.success && contenedor) {
-            // MUESTRA EL CUADRO CON EL NÚMERO DE CASO GENERADO
-            contenedor.innerHTML = `
-                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px;">
-                    <p style="color: #15803D; font-weight: bold; margin-bottom:6px; font-size:16px;">🎉 ¡Radicado Registrado con Éxito!</p>
-                    <p style="font-size: 14px; color: #1F2937; margin: 4px 0;">Guarda tu número de caso para hacerle seguimiento:</p>
-                    <p style="font-size: 22px; color: #1E3A8A; font-weight: bold; margin: 10px 0; background: #E0F2FE; display: inline-block; padding: 6px 16px; border-radius: 8px; border: 1px solid #BAE6FD;">${data.caso}</p>
-                    <p style="font-size: 13px; color: #6B7280; margin-top: 6px;">Se ha notificado al equipo de Talento Humano.</p>
-                </div>`;
-            
-            // Limpiar formulario
-            if (inputNombre) inputNombre.value = '';
-            if (inputCedula) inputCedula.value = '';
-            if (inputAsunto) inputAsunto.value = '';
-            if (txtTexto) txtTexto.value = '';
-        } else {
-            throw new Error(data.error || "Error interno");
-        }
-    })
-    .catch(err => {
-        console.error("Error capturado:", err);
-        // Si Google procesa el caso pero el navegador bloquea la lectura JSON, 
-        // igual guardamos la fila y le avisamos que revise el Sheets.
-        if (contenedor) {
-            contenedor.innerHTML = `
-                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px;">
-                    <p style="color: #15803D; font-weight: bold; margin-bottom:6px; font-size:16px;">🎉 ¡Radicado Despachado!</p>
-                    <p style="font-size: 14px; color: #1F2937; margin: 4px 0;">Los datos fueron enviados exitosamente a Google Sheets.</p>
-                    <p style="font-size: 12px; color: #6B7280; margin-top: 6px;">Nota: Si no ves el código en pantalla, verifica la pestaña "PQRs" en tu Excel.</p>
-                </div>`;
-        }
-    })
-    .finally(() => {
-        if (botonSubmit) {
-            botonSubmit.disabled = false;
-            botonSubmit.innerText = "ENVIAR RADICADO";
-        }
-    });
-}
-</script>
-<!-- MODULO DE PQRS COMPLETAMENTE COMPATIBLE CON ARKOS (BLINDADO) -->
-<script>
-// 1. Tu URL está perfecta
-const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbxPBq51BvGkST2eQEFnS0vkv9RnQgzZTTTITzTebvA8MNzOkZliLh2AParfiCPNy2TEnQ/exec";";
-
-// 2. Empaquetamos los datos en formato URL (así Google Sheets lo lee sin problemas de CORS)
-const formData = new URLSearchParams();
-formData.append("nombre", nombre);
-formData.append("cedula", cedula);
-formData.append("tipo", tipo);
-formData.append("area", area);
-formData.append("asunto", asunto);
-formData.append("descripcion", descripcion);
-formData.append("anonimo", anonimo ? "Sí" : "No");
-
-// 3. El Fetch correcto (Sin "no-cors" para poder RECIBIR el número de caso)
-fetch(URL_PQR_MACRO, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: formData.toString()
-})
-.then(res => res.json()) // <--- Ahora sí el navegador tiene permiso de leer la respuesta
-.then(data => {
-    const codigoCaso = data.caso || "Generado en Sheet";
-    // Aquí sigue el resto del código que dibuja el cuadro verde con el código...
-        
-        // Limpieza absoluta de campos de formulario
-        if (inputAsunto) inputAsunto.value = '';
-        if (txtTexto) txtTexto.value = '';
-        if (checkAnonimo) checkAnonimo.checked = false;
-    })
-    .catch(err => {
-        console.error("Error crítico en envío:", err);
-        contenedor.innerHTML = `<p style="color: #DC2626; font-weight: bold; margin-top:15px; font-size:13px;">❌ Error de red al intentar procesar los datos. Por favor reintenta.</p>`;
-    })
-    .finally(() => {
-        if(botonSubmit) {
-            botonSubmit.disabled = false;
-            botonSubmit.innerText = "ENVIAR RADICADO";
-        }
-    });
-}
-
-// ==========================================
-// ACCIÓN DEFINITIVA: SEGUIMIENTO / CONSULTA GET
-// ==========================================
-function enviarPQR(event) {
-    if(event) event.preventDefault();
-    
-    const btn = document.getElementById("btnEnviarPQR");
-    if(btn) btn.disabled = true;
-    
-    // Capturamos tu URL real de despliegue
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynlQ80BJirc2o5k6LKoEod4s8knv4uigCIW-jzUR3xV4w_CfbFFDo7euaNSk6YvFlAHA/exec";
-    
-    // Almacenamos el ID de caso actual antes de que se limpie el formulario
-    const idCasoGenerado = document.getElementById("pqrIdCaso").value;
-    
-    // Empaquetamos los datos del formulario
-    const datos = {
-        action: "crearPQR",
-        idCaso: idCasoGenerado,
-        tipo: document.getElementById("pqrTipo").value,
-        area: document.getElementById("pqrArea").value,
-        nombre: document.getElementById("pqrNombre").value,
-        email: document.getElementById("pqrEmail").value,
-        telefono: document.getElementById("pqrTelefono").value,
-        descripcion: document.getElementById("pqrDescripcion").value
-    };
-    
-    // Realizamos el envío permitiendo la lectura de la respuesta (CORS corregido)
-    fetch(SCRIPT_URL, {
-        method: "POST",
-        mode: "cors", // Cambiado a cors para poder recibir confirmación
-        headers: { "Content-Type": "text/plain;charset=utf-8" }, // Evita la pre-verificación OPTIONS de Google
-        body: JSON.stringify(datos)
-    })
-    .then(res => res.json())
-    .then(resultado => {
-        if (resultado.success) {
-            // Asignamos el número de caso real al recuadro de éxito del usuario
-            document.getElementById("pqrOkCaso").innerText = idCasoGenerado;
-            
-            // Mostramos el recuadro de éxito
-            document.getElementById("pqrSuccessBox").classList.add("show");
-            
-            // Limpiamos el formulario e inicializamos un nuevo ID para el próximo caso
-            document.getElementById("pqrFormulario").reset();
-            generarIDCaso();
-            
-            // Hacemos scroll elegante hacia abajo
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-        } else {
-            alert("❌ El servidor de Google reportó un problema: " + resultado.error);
-        }
-    })
-    .catch(err => {
-        console.error("Error en envío:", err);
-        // Si hay una restricción estricta de red local, forzamos la muestra del ID de respaldo
-        document.getElementById("pqrOkCaso").innerText = idCasoGenerado;
-        document.getElementById("pqrSuccessBox").classList.add("show");
-        document.getElementById("pqrFormulario").reset();
-        generarIDCaso();
-    })
-    .finally(() => {
-        if(btn) btn.disabled = false;
-    });
-}
-
-// 4. FUNCIÓN DE CONSULTA DE SEGUIMIENTO
-function consultarSeguimientoPQRReal() {
-    try {
-        const seccion = document.getElementById('seguimientoPQR');
-        const inputCaso = seccion ? seccion.querySelector('input[type="text"]') : document.querySelector('input[placeholder*="PQR-"]');
-        let contenedor = document.getElementById('pqrDetalleSeguimiento');
-        
-        if (!inputCaso || inputCaso.value.trim() === "") {
-            alert("Por favor, ingresa el número de caso (Ej: PQR-2026-1001).");
-            return;
-        }
-        
-        const numCaso = inputCaso.value.trim();
-        
-        if (!contenedor && inputCaso) {
-            contenedor = document.createElement('div');
-            contenedor.id = 'pqrDetalleSeguimiento';
-            inputCaso.parentNode.appendChild(contenedor);
-        }
-        
-        contenedor.innerHTML = `<p style="color: #0284C7; font-weight: 500; margin-top:12px; font-size:13px;">🔍 Consultando hoja de control de Talento Humano...</p>`;
-        
-        fetch(`${URL_PQR_MACRO}?action=buscar&caso=${encodeURIComponent(numCaso)}`)
+    fetch(`${VAC_MACRO_URL}?accion=consultar_dias&cedula=${encodeURIComponent(cedula)}`)
         .then(r => r.json())
-        .then(res => {
-            if (!res.success) {
-                contenedor.innerHTML = `
-                    <div style="border: 1px solid #FCA5A5; padding: 12px; border-radius: 8px; background: #FFF5F5; margin-top:12px; text-align:left;">
-                        <p style="color: #DC2626; font-weight: bold; margin:0; font-size:13px;">❌ Caso no localizado</p>
-                        <p style="font-size:12px; color:#7F1D1D; margin:4px 0 0 0;">Revisa que el código coincida exactamente.</p>
+        .then(data => {
+            if (!data.success) {
+                resultado.innerHTML = `
+                    <div style="border:1px solid #FCA5A5;background:#FFF5F5;padding:15px;border-radius:10px;margin-top:12px;">
+                        <p style="color:#DC2626;font-weight:700;font-size:13px;margin:0;">${data.error}</p>
                     </div>`;
                 return;
             }
-            
-            contenedor.innerHTML = `
-                <div style="border: 1px solid #BFDBFE; padding: 16px; border-radius: 8px; background: #EFF6FF; margin-top:15px; text-align: left; font-family:sans-serif;">
-                    <h4 style="color: #1E3A8A; margin: 0 0 8px 0; border-bottom: 1px dashed #BFDBFE; padding-bottom: 6px; font-size:14px;">📋 Caso Localizado: ${res.caso}</h4>
-                    <p style="font-size: 12px; margin: 4px 0; color:#475569;"><strong>Fecha:</strong> ${res.fechaEnvio}</p>
-                    <p style="font-size: 12px; margin: 4px 0; color:#475569;"><strong>Asunto:</strong> ${res.asunto}</p>
-                    <p style="font-size: 13px; margin: 10px 0 6px 0;"><strong>⚙️ Estado:</strong> <span style="background:#1E3A8A; color:white; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:11px;">${res.estado}</span></p>
-                    <div style="margin-top: 12px; padding: 12px; background: white; border-radius: 6px; border-left: 4px solid #10B981;">
-                        <p style="font-size: 11px; margin: 0 0 4px 0; font-weight: bold; color: #15803D;">💬 Respuesta Talento Humano:</p>
-                        <p style="font-size: 12.5px; color: #1F2937; margin: 0; font-style:italic;">"${res.respuesta}"</p>
+
+            const periodos = data.periodos;
+            vacDatosEmpleado = { cedula, nombre: periodos[0].empleado, periodos };
+            const totalDias = periodos.reduce((a, p) => a + p.dias, 0);
+
+            const filasHtml = periodos.map(p => `
+                <tr>
+                    <td style="padding:8px 10px;border-bottom:1px solid #E2E8F0;font-size:12.5px;">${p.periodo}</td>
+                    <td style="padding:8px 10px;border-bottom:1px solid #E2E8F0;font-size:12.5px;text-align:center;font-weight:700;color:${p.dias > 0 ? '#059669' : '#94A3B8'};">${p.dias}</td>
+                    <td style="padding:8px 10px;border-bottom:1px solid #E2E8F0;font-size:12px;color:#64748B;">${p.observacion || '—'}</td>
+                </tr>`).join('');
+
+            resultado.innerHTML = `
+                <div style="border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;margin-top:14px;">
+                    <div style="background:#059669;color:#fff;padding:12px 16px;font-weight:700;font-size:13px;">👤 ${vacDatosEmpleado.nombre}</div>
+                    <table style="width:100%;border-collapse:collapse;background:#fff;">
+                        <thead><tr style="background:#F8FAFC;">
+                            <th style="padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;color:#475569;">Periodo</th>
+                            <th style="padding:8px 10px;text-align:center;font-size:11px;text-transform:uppercase;color:#475569;">Días pendientes</th>
+                            <th style="padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;color:#475569;">Observación</th>
+                        </tr></thead>
+                        <tbody>${filasHtml}</tbody>
+                    </table>
+                    <div style="padding:14px 16px;background:#F8FAFC;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                        <span style="font-size:13px;font-weight:700;color:#334155;">Total días disponibles: <span style="color:#059669;">${totalDias}</span></span>
+                        ${totalDias > 0
+                            ? `<button onclick="vac_abrirFormulario()" style="background:#059669;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:700;font-size:12.5px;cursor:pointer;">SOLICITAR VACACIONES →</button>`
+                            : `<span style="font-size:12px;color:#94A3B8;">No tienes días disponibles actualmente</span>`}
                     </div>
                 </div>`;
         })
         .catch(err => {
             console.error(err);
-            contenedor.innerHTML = `<p style="color: #DC2626; font-size:13px;">❌ Error al conectar con la base de datos.</p>`;
+            resultado.innerHTML = '<p style="color:#DC2626;font-size:13px;margin-top:12px;">❌ No se pudo conectar con el servidor de vacaciones.</p>';
         });
-    } catch(e) { console.error(e); }
 }
-// =======================================================
-// FUNCIÓN DE ENVÍO BLINDADA (EVITA CONGELAMIENTO DE BOTÓN)
-// =======================================================
-function enviarRadicado() {
-    console.log("Iniciando proceso de envío...");
 
-    // 1. Captura segura de elementos (si no existen, no rompen el script)
-    const inputNombre   = document.getElementById("nombrePQR");
-    const inputCedula   = document.getElementById("cedulaPQR");
-    const inputAsunto   = document.getElementById("asuntoPQR");
-    const txtTexto      = document.getElementById("descripcionPQR");
-    const selectTipo    = document.getElementById("tipoPQR");
-    const selectArea    = document.getElementById("areaPQR");
-    const checkAnonimo  = document.getElementById("anonimoPQR");
-    const contenedor    = document.getElementById("mensajeResultado");
-    const botonSubmit   = document.getElementById("btnEnviarPqr");
+function vac_abrirFormulario() {
+    if (!vacDatosEmpleado) return;
+    document.getElementById('vacFormWrap').style.display = 'block';
+    document.getElementById('vacNombreForm').value = vacDatosEmpleado.nombre;
+    document.getElementById('vacCedulaForm').value = vacDatosEmpleado.cedula;
 
-    // 2. Validación básica de descripción
-    const descripcion = txtTexto ? txtTexto.value.trim() : "";
-    if (!descripcion) {
-        alert("Por favor, escribe los detalles de la descripción de tu radicado.");
+    const sel = document.getElementById('vacPeriodoForm');
+    sel.innerHTML = vacDatosEmpleado.periodos
+        .filter(p => p.dias > 0)
+        .map(p => `<option value="${p.periodo}" data-dias="${p.dias}">${p.periodo} (${p.dias} días disponibles)</option>`)
+        .join('');
+
+    vac_actualizarDiasMax();
+    document.getElementById('vacFormWrap').scrollIntoView({ behavior: 'smooth' });
+}
+
+function vac_actualizarDiasMax() {
+    const sel = document.getElementById('vacPeriodoForm');
+    const opt = sel.options[sel.selectedIndex];
+    const max = opt ? opt.getAttribute('data-dias') : 0;
+
+    const nota = document.getElementById('vacDiasMaxNota');
+    if (nota) nota.innerText = `Máximo disponible en este periodo: ${max} días`;
+
+    const inputDias = document.getElementById('vacDiasForm');
+    if (inputDias) inputDias.max = max;
+}
+
+function vac_enviarSolicitud() {
+    const btn = document.getElementById('vacBtnEnviar');
+    const nombre = document.getElementById('vacNombreForm').value;
+    const cedula = document.getElementById('vacCedulaForm').value;
+    const tipoDoc = document.getElementById('vacTipoDocForm').value;
+    const periodo = document.getElementById('vacPeriodoForm').value;
+    const tipoSolicitud = document.getElementById('vacTipoSolForm').value;
+    const fechaInicio = document.getElementById('vacFechaInicioForm').value;
+    const fechaFin = document.getElementById('vacFechaFinForm').value;
+    const dias = document.getElementById('vacDiasForm').value;
+    const correoColaborador = document.getElementById('vacCorreoColabForm').value.trim();
+    const correoJefe = document.getElementById('vacCorreoJefeForm').value.trim();
+    const resultado = document.getElementById('vacResultadoForm');
+
+    if (!periodo || !fechaInicio || !fechaFin || !dias || !correoJefe) {
+        alert('Por favor completa todos los campos obligatorios, incluyendo el correo de tu jefe inmediato.');
+        return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(correoJefe)) {
+        alert('El correo del jefe inmediato no parece válido.');
         return;
     }
 
-    // 3. Validación de anonimato
-    const anonimo = checkAnonimo ? checkAnonimo.checked : false;
-    if (!anonimo) {
-        const nomVal = inputNombre ? inputNombre.value.trim() : "";
-        const cedVal = inputCedula ? inputCedula.value.trim() : "";
-        if (!nomVal || !cedVal) {
-            alert("Por favor diligencia tu Nombre y Cédula o marca la opción 'Radicar de forma anónima'.");
-            return;
-        }
+    const sel = document.getElementById('vacPeriodoForm');
+    const opt = sel.options[sel.selectedIndex];
+    const maxDias = opt ? Number(opt.getAttribute('data-dias')) : 0;
+    if (Number(dias) > maxDias) {
+        alert(`No puedes solicitar más de ${maxDias} días para este periodo.`);
+        return;
     }
 
-    // 4. Cambiar estado del botón para dar feedback visual
-    if (botonSubmit) {
-        botonSubmit.disabled = true;
-        botonSubmit.innerText = "PROCESANDO ENVÍO...";
-    }
+    btn.disabled = true;
+    btn.innerText = 'ENVIANDO SOLICITUD...';
 
-    // 5. Asignación de variables seguras
-    const nombre   = anonimo ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : "No provisto");
-    const cedula   = anonimo ? "Oculto" : (inputCedula ? inputCedula.value.trim() : "No provisto");
-    const tipo     = selectTipo ? selectTipo.value : "Petición";
-    const area     = selectArea ? selectArea.value : "Talento Humano";
-    const asunto   = inputAsunto ? inputAsunto.value.trim() : "Sin Asunto";
-
-    // 6. Tu URL real de Google Apps Script
-    const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbxPBq51BvGkST2eQEFnS0vkv9RnQgzZTTTITzTebvA8MNzOkZliLh2AParfiCPNy2TEnQ/exec";
-
-    // 7. Empaquetar datos en formato URL (Previene bloqueos de CORS)
     const formData = new URLSearchParams();
-    formData.append("nombre", nombre);
-    formData.append("cedula", cedula);
-    formData.append("tipo", tipo);
-    formData.append("area", area);
-    formData.append("asunto", asunto);
-    formData.append("descripcion", descripcion);
-    formData.append("anonimo", anonimo ? "Sí" : "No");
+    formData.append('accion', 'crear_solicitud');
+    formData.append('nombre', nombre);
+    formData.append('cedula', cedula);
+    formData.append('tipoDoc', tipoDoc);
+    formData.append('periodo', periodo);
+    formData.append('tipoSolicitud', tipoSolicitud);
+    formData.append('fechaInicio', fechaInicio);
+    formData.append('fechaFin', fechaFin);
+    formData.append('dias', dias);
+    formData.append('correoColaborador', correoColaborador);
+    formData.append('correoJefe', correoJefe);
 
-    console.log("Enviando datos a Google Sheets...", Object.fromEntries(formData));
-
-    // 8. Petición Directa
-    fetch(URL_PQR_MACRO, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    fetch(VAC_MACRO_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: formData.toString()
     })
-    .then(res => {
-        if (!res.ok) throw new Error("Respuesta de red no " + res.status);
-        return res.json();
-    })
-    .then(data => {
-        console.log("Respuesta recibida de Google:", data);
-        const codigoCaso = data.caso || "Generado";
-        
-        if (contenedor) {
-            contenedor.innerHTML = `
-                <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px; text-align:left; font-family:sans-serif;">
-                    <p style="color: #15803D; font-weight: bold; margin: 0 0 6px 0; font-size:16px;">🎉 ¡Radicado con Éxito!</p>
-                    <p style="font-size: 14px; color: #1F2937; margin: 4px 0;">Tu solicitud fue insertada en el maestro de Google Sheets.</p>
-                    <div style="display:inline-block; background:#15803D; color:#fff; border-radius:7px; padding:6px 16px; font-weight:700; font-size:1.1rem; margin:12px 0; letter-spacing:1px;">
-                        CÓDIGO: ${codigoCaso}
-                    </div>
-                    <p style="font-size: 12px; color: #64748B; margin-top: 4px;">Guarda este código para consultar actualizaciones.</p>
-                </div>`;
-        }
-
-        // Limpiar campos
-        if (inputNombre) inputNombre.value = '';
-        if (inputCedula) inputCedula.value = '';
-        if (inputAsunto) inputAsunto.value = '';
-        if (txtTexto) txtTexto.value = '';
-        if (checkAnonimo) checkAnonimo.checked = false;
-    })
-    .catch(err => {
-        console.error("Error en la petición Fetch:", err);
-        if (contenedor) {
-            contenedor.innerHTML = `<p style="color: #DC2626; font-weight: bold; margin-top:15px; font-size:13px;">❌ Error de comunicación con Google Sheets. Reintenta o revisa la consola.</p>`;
-        }
-    })
-    .finally(() => {
-        if (botonSubmit) {
-            botonSubmit.disabled = false;
-            botonSubmit.innerText = "ENVIAR RADICADO";
-        }
-    });
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                resultado.innerHTML = `
+                    <div style="border:2px solid #10B981;background:#F0FDF4;padding:20px;border-radius:12px;margin-top:16px;text-align:center;">
+                        <p style="color:#15803D;font-weight:700;font-size:15px;margin-bottom:6px;">🎉 ¡Solicitud enviada!</p>
+                        <p style="font-size:13px;color:#1F2937;margin-bottom:10px;">Se envió un correo a tu jefe inmediato para su autorización.</p>
+                        <div style="display:inline-block;background:#15803D;color:#fff;border-radius:7px;padding:6px 16px;font-weight:700;letter-spacing:1px;">${data.caso}</div>
+                        <p style="font-size:11px;color:#64748B;margin-top:8px;">Guarda este código para consultar el estado más abajo.</p>
+                    </div>`;
+                document.getElementById('vacFormularioSolicitud').reset();
+                document.getElementById('vacFormWrap').style.display = 'none';
+            } else {
+                resultado.innerHTML = `<p style="color:#DC2626;font-size:13px;">❌ ${data.error || 'No se pudo procesar la solicitud.'}</p>`;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            resultado.innerHTML = '<p style="color:#DC2626;font-size:13px;">❌ Error de comunicación con el servidor. Verifica que la URL de Apps Script esté publicada y correctamente pegada en el código.</p>';
+        })
+        .finally(() => {
+            btn.disabled = false;
+            btn.innerText = 'ENVIAR SOLICITUD';
+        });
 }
+
+function vac_consultarEstado() {
+    const input = document.getElementById('vacCedulaEstado');
+    const contenedor = document.getElementById('vacEstadoResultado');
+    const cedula = input ? input.value.trim() : '';
+
+    if (!cedula) { alert('Ingresa tu número de cédula.'); return; }
+    contenedor.innerHTML = '<p style="color:#64748B;font-size:13px;margin-top:12px;">🔍 Consultando tus solicitudes...</p>';
+
+    fetch(`${VAC_MACRO_URL}?accion=estado&cedula=${encodeURIComponent(cedula)}`)
+        .then(r => r.json())
+        .then(data => {
+            if (!data.success || !data.solicitudes || data.solicitudes.length === 0) {
+                contenedor.innerHTML = `
+                    <div style="border:1px solid #E2E8F0;background:#F8FAFC;padding:15px;border-radius:10px;margin-top:12px;">
+                        <p style="font-size:12.5px;color:#64748B;margin:0;">No encontramos solicitudes de vacaciones registradas con esa cédula.</p>
+                    </div>`;
+                return;
+            }
+
+            const pasos = ['Enviada', 'Aprobación jefe', 'Talento Humano', 'Finalizada'];
+            const mapEstadoPaso = {
+                'Pendiente aprobación jefe': 1,
+                'Aprobada por jefe - En Talento Humano': 2,
+                'Rechazada por jefe': -1,
+                'Aprobada Talento Humano': 3,
+                'Rechazada Talento Humano': -2
+            };
+
+            contenedor.innerHTML = data.solicitudes.map(s => {
+                const pasoActual = mapEstadoPaso[s.estado] ?? 0;
+                const rechazado = pasoActual < 0;
+
+                const stepsHtml = pasos.map((nombrePaso, idx) => {
+                    const activo = !rechazado && idx <= pasoActual;
+                    return `<div style="flex:1;text-align:center;">
+                        <div style="width:22px;height:22px;border-radius:50%;background:${activo ? '#059669' : '#E2E8F0'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin:0 auto 4px;">${idx + 1}</div>
+                        <div style="font-size:10px;color:${activo ? '#059669' : '#94A3B8'};font-weight:600;">${nombrePaso}</div>
+                    </div>`;
+                }).join('<div style="flex:0.3;height:2px;background:#E2E8F0;margin-top:10px;"></div>');
+
+                return `
+                <div style="border:1px solid #E2E8F0;border-radius:12px;padding:16px;margin-top:12px;background:#fff;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px;">
+                        <span style="font-family:monospace;font-weight:700;background:#059669;color:#fff;padding:3px 10px;border-radius:6px;font-size:12px;">${s.caso}</span>
+                        <span style="font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;background:${rechazado ? '#FEE2E2' : '#FEF3C7'};color:${rechazado ? '#991B1B' : '#92400E'};">${s.estado}</span>
+                    </div>
+                    <p style="font-size:12px;color:#475569;margin-bottom:12px;">Periodo: <strong>${s.periodo}</strong> · ${s.dias} días · ${s.tipoSolicitud}</p>
+                    ${!rechazado ? `<div style="display:flex;align-items:flex-start;">${stepsHtml}</div>` : `<p style="font-size:12px;color:#991B1B;">Esta solicitud fue rechazada.</p>`}
+                </div>`;
+            }).join('');
+        })
+        .catch(err => {
+            console.error(err);
+            contenedor.innerHTML = '<p style="color:#DC2626;font-size:13px;margin-top:12px;">❌ Error al consultar el estado.</p>';
+        });
+}
+
+// ==========================================
+// MÓDULO: VACANTES (imágenes desde Google Drive)
+// ==========================================
+// Para agregar/editar una vacante: agrega un objeto a este arreglo con:
+//   titulo   -> texto que aparece en la franja superior de la tarjeta
+//   imagenId -> el ID del archivo de imagen en Drive (NO la URL completa)
+//   sede     -> (opcional) texto corto de la sede/ciudad
+//
+// CÓMO OBTENER EL ID DE UNA IMAGEN EN DRIVE:
+// 1. Clic derecho sobre la imagen en la carpeta "VACANTES" > "Compartir" > "Obtener enlace".
+// 2. Asegúrate de que diga "Cualquier persona con el enlace puede ver".
+// 3. El enlace se ve así: https://drive.google.com/file/d/ESTE_ES_EL_ID/view
+// 4. Copia solo ESE_ES_EL_ID y pégalo abajo en "imagenId".
+//
+// Este mismo arreglo alimenta tanto la tarjeta de Inicio como el submódulo
+// de Talento Humano > Vacantes, así que solo necesitas mantenerlo actualizado aquí.
+const VACANTES = [
+    { titulo: "Vacante 1", imagenId: "1hP-Nqhum-qofgx4VcMOoZFdtOv49ga2S", sede: "Arkos" },
+    { titulo: "Vacante 2", imagenId: "1OcOkpuBAwWZGgKLWzxeWmH5v5rAE_ZXV", sede: "Arkos" },
+    { titulo: "Vacante 3", imagenId: "1-FygjvBcDER1gv-0xR-nARqDTY0Kz1Fz", sede: "Arkos" },
+    { titulo: "Vacante 4", imagenId: "1uBm9upVbhQA3V01weC2M6Eq5gVOaJQiN", sede: "Arkos" },
+    { titulo: "Vacante 5", imagenId: "1so-_kxL1ICGUU2XhUkTuDF8h_ruSekaO", sede: "Arkos" },
+    { titulo: "Vacante 6", imagenId: "1Br_L1oMxdXV09jtnHvJRNSkD_Tw9iJN4", sede: "Arkos" }
+];
+
+function renderVacantes(containerId) {
+    const cont = document.getElementById(containerId);
+    if (!cont) return;
+
+    if (!VACANTES || VACANTES.length === 0) {
+        cont.innerHTML = `<p style="color:#94A3B8;font-size:13px;padding:10px 0;">No hay vacantes activas en este momento.</p>`;
+        return;
+    }
+
+    cont.innerHTML = VACANTES.map(v => {
+        const url = `https://drive.google.com/thumbnail?id=${v.imagenId}&sz=w1000`;
+        const tituloEscapado = String(v.titulo).replace(/'/g, "\\'");
+        return `
+            <div class="com-card">
+                <div class="com-lbl">${v.sede || 'Arkos'}</div>
+                <div style="padding:15px;text-align:center;">
+                    <img src="${url}" alt="${v.titulo}" style="max-width:100%;height:auto;border-radius:8px;cursor:pointer;" onclick="abrirLightbox('${url}', '${tituloEscapado}')">
+                </div>
+            </div>`;
+    }).join('');
+}
+
+// Pintamos las vacantes tanto en Inicio como en Talento Humano al cargar la página
+renderVacantes('vacantesGridHome');
+renderVacantes('vacantesGridTH');
+
 </script>
+
 </body>
 </html>
-
-```
