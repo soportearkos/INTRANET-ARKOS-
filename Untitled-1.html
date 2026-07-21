@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intranet Arkos | 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --rojo:#C62828;
+    --rojo-hover:#B71C1C;
+    --fondo:#F0F2F5;
+    --texto:#1A2332;
+    --texto-sec:#64748B;
+    --borde:#E2E8F0;
+    --blanco:#FFFFFF;
+    --sb-bg:#2B0A0A;
+    --sb-hover:#4A1111;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:'Inter',sans-serif;
+    color:var(--texto);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    background-color:#F0F2F5;
+    background-image:
+        radial-gradient(circle at 12% 18%, rgba(198,40,40,0.06) 0%, transparent 42%),
+        radial-gradient(circle at 88% 82%, rgba(198,40,40,0.05) 0%, transparent 42%),
+        repeating-linear-gradient(135deg, rgba(198,40,40,0.025) 0px, rgba(198,40,40,0.025) 1px, transparent 1px, transparent 46px),
+        repeating-linear-gradient(45deg, rgba(43,10,10,0.02) 0px, rgba(43,10,10,0.02) 1px, transparent 1px, transparent 46px);
+    background-attachment:fixed;
+}
+body::before{
+    content:'arkos';
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) rotate(-18deg);
+    font-size:22vw;
+    font-weight:800;
+    color:rgba(198,40,40,0.035);
+    letter-spacing:-4px;
+    white-space:nowrap;
+    pointer-events:none;
+    z-index:0;
+    user-select:none;
+}
+header, .app-body, .marquee-bar, footer{position:relative;z-index:1;}
+
+/* LOGIN CORPORATIVO */
+#loginScreen{
+    position:fixed;inset:0;z-index:5000;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#7F1D1D 0%,#2B0A0A 60%,#1A2332 100%);
+    padding:20px;
+}
+.login-card{
+    background:#fff;border-radius:18px;padding:44px 38px;max-width:400px;width:100%;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);text-align:center;position:relative;overflow:hidden;
+}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#C62828,#7F1D1D);}
+.login-logo{height:38px;margin-bottom:18px;}
+.login-card h2{font-size:1.15rem;font-weight:800;color:var(--texto);margin-bottom:6px;}
+.login-card p{font-size:.84rem;color:var(--texto-sec);margin-bottom:22px;line-height:1.6;}
+.login-input{width:100%;padding:13px 15px;border-radius:9px;border:1.5px solid var(--borde);font-size:.9rem;font-family:'Inter',sans-serif;margin-bottom:8px;transition:border-color .2s;text-align:center;}
+.login-input:focus{outline:none;border-color:var(--rojo);}
+.login-error{color:#DC2626;font-size:.76rem;font-weight:600;min-height:18px;margin-bottom:10px;}
+.btn-login{width:100%;background:var(--rojo);color:#fff;border:none;padding:13px;border-radius:9px;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.btn-login:hover{background:var(--rojo-hover);transform:translateY(-1px);}
+.login-foot{margin-top:18px;font-size:.7rem;color:#94A3B8;}
+#appContainer{display:none;}
+.hdr-logout{font-size:.72rem;font-weight:700;color:var(--rojo);cursor:pointer;margin-left:14px;padding:5px 10px;border:1px solid var(--rojo);border-radius:6px;transition:all .2s;}
+.hdr-logout:hover{background:var(--rojo);color:#fff;}
+
+/* HEADER */
+header{background:#fff;border-bottom:1px solid var(--borde);display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:62px;position:sticky;top:0;z-index:200;box-shadow:0 1px 6px rgba(0,0,0,.06);}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.logo-img{height:34px;}
+.hdr-div{width:1px;height:26px;background:var(--borde);}
+.hdr-badge{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--texto-sec);}
+.hdr-date{font-size:12px;color:var(--texto-sec);font-weight:500;}
+
+/* MARQUEE */
+.marquee-bar{background:var(--rojo);color:#fff;padding:7px 0;overflow:hidden;white-space:nowrap;font-size:12px;font-weight:600;}
+.marquee-bar span{display:inline-block;padding-left:100%;animation:marquee 22s linear infinite;}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+
+/* LAYOUT */
+.app-body{display:flex;flex:1;}
+
+/* SIDEBAR */
+.sidebar{width:235px;min-width:235px;background:var(--sb-bg);display:flex;flex-direction:column;height:calc(100vh - 95px);position:sticky;top:95px;overflow-y:auto;}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sidebar::-webkit-scrollbar-thumb{background:#334155;border-radius:2px;}
+
+.sb-section{padding:18px 12px 6px;}
+.sb-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#475569;padding:0 8px;margin-bottom:5px;}
+
+.sb-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:all .2s;color:#94A3B8;font-size:13px;font-weight:500;margin-bottom:1px;text-decoration:none;}
+.sb-item:hover{background:var(--sb-hover);color:#CBD5E1;}
+.sb-item.activo{background:var(--rojo);color:#fff;}
+.sb-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0;}
+
+.sb-divider{height:1px;background:#1E293B;margin:10px 14px;}
+
+.sb-ql-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#475569;padding:0 20px;margin:14px 0 6px;}
+
+.ql-item{display:flex;align-items:center;gap:9px;padding:8px 20px;cursor:pointer;transition:all .2s;color:#94A3B8;font-size:12.5px;font-weight:500;text-decoration:none;border-left:3px solid transparent;}
+.ql-item:hover{background:var(--sb-hover);color:#E2E8F0;border-left-color:var(--rojo);}
+.ql-icon{font-size:14px;width:17px;text-align:center;flex-shrink:0;}
+.ql-badge{font-size:9px;background:#991B1B;color:#fff;border-radius:4px;padding:1px 5px;font-weight:700;letter-spacing:.5px;margin-left:auto;}
+.ql-badge.g{background:#065F46;}
+.ql-badge.r{background:#991B1B;}
+
+.sb-bottom{margin-top:auto;padding:14px;border-top:1px solid #1E293B;font-size:10px;color:#334155;text-align:center;}
+
+/* MAIN */
+.main{flex:1;padding:26px;overflow-y:auto;min-width:0;}
+
+/* BIENVENIDA */
+.bienvenida{background:linear-gradient(135deg,#C62828 0%,#7F1D1D 100%);color:#fff;border-radius:14px;padding:32px 38px;margin-bottom:22px;position:relative;overflow:hidden;}
+.bienvenida::after{content:'⛑';position:absolute;right:36px;top:50%;transform:translateY(-50%);font-size:86px;opacity:.07;}
+.bienvenida h1{font-size:1.65rem;font-weight:800;margin-bottom:5px;}
+.bienvenida p{opacity:.85;font-size:.9rem;}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:24px;}
+.stat-card{background:#fff;border:1px solid var(--borde);border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:13px;}
+.stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;}
+.si-r{background:#FEE2E2;}
+.si-b{background:#FEE2E2;}
+.si-g{background:#D1FAE5;}
+.si-a{background:#FEF3C7;}
+.stat-lbl{font-size:10px;font-weight:700;color:var(--texto-sec);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.stat-val{font-size:.82rem;font-weight:700;cursor:pointer;}
+.stat-val.r{color:#C62828;}
+.stat-val.b{color:#0284C7;}
+.stat-val.g{color:#059669;}
+.stat-val.a{color:#D97706;}
+
+/* CALENDARIO */
+.cal-card{background:#fff;border:1px solid var(--borde);border-radius:13px;overflow:hidden;margin-bottom:24px;}
+.cal-hdr{padding:14px 20px;border-bottom:1px solid var(--borde);display:flex;align-items:center;gap:9px;}
+.cal-hdr h3{font-size:.88rem;font-weight:700;}
+
+/* SECCIONES */
+.seccion-detalle{display:none;background:#fff;border:1px solid var(--borde);border-radius:14px;padding:30px;animation:fadeIn .3s ease;}
+.seccion-detalle.activo{display:block;}
+.btn-volver{display:inline-flex;align-items:center;gap:5px;margin-bottom:20px;color:var(--rojo);font-size:12px;font-weight:700;cursor:pointer;padding:6px 13px;border:1.5px solid var(--rojo);border-radius:7px;transition:all .2s;background:transparent;}
+.btn-volver:hover{background:var(--rojo);color:#fff;}
+.sec-title{font-size:1.25rem;font-weight:800;color:var(--texto);margin-bottom:22px;display:flex;align-items:center;gap:9px;padding-bottom:14px;border-bottom:1px solid var(--borde);}
+
+/* SUB GRID */
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;margin-bottom:22px;}
+.sub-card{background:#fff;border:1px solid var(--borde);border-radius:13px;padding:22px 16px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.sub-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--rojo);transform:scaleX(0);transition:transform .25s;}
+.sub-card:hover{transform:translateY(-3px);border-color:#FCA5A5;box-shadow:0 7px 18px rgba(198,40,40,.1);}
+.sub-card:hover::before{transform:scaleX(1);}
+.sub-card span{font-size:1.9rem;display:block;margin-bottom:9px;}
+.sub-card h3{font-size:.85rem;font-weight:600;line-height:1.4;color:var(--texto);}
+.sub-seccion{display:none;}
+.activo-sub{display:block;}
+
+/* CERT BOX */
+.cert-box{background:#F8FAFC;border:1px solid var(--borde);border-radius:13px;padding:28px;max-width:100%;}
+.cert-box h3{color:var(--rojo);font-size:1rem;font-weight:700;margin-bottom:7px;}
+.cert-box p{margin-bottom:18px;color:var(--texto-sec);font-size:.88rem;}
+.input-cert{width:100%;padding:12px 14px;border-radius:9px;border:1.5px solid var(--borde);margin-bottom:14px;font-size:.9rem;font-family:'Inter',sans-serif;transition:border-color .2s;}
+.input-cert:focus{outline:none;border-color:var(--rojo);}
+.btn-cert{background:var(--rojo);color:#fff;border:none;padding:12px 20px;border-radius:9px;font-weight:700;cursor:pointer;font-size:.88rem;transition:all .2s;}
+.btn-cert:hover{background:var(--rojo-hover);transform:translateY(-1px);}
+
+/* PQR FORM */
+.pqr-wrap{max-width:740px;}
+.pqr-hdr{background:linear-gradient(135deg,#C62828,#7F1D1D);border-radius:13px;padding:26px 30px;color:#fff;margin-bottom:22px;}
+.pqr-hdr h2{font-size:1.35rem;font-weight:800;margin-bottom:5px;}
+.pqr-hdr p{opacity:.88;font-size:.88rem;line-height:1.6;}
+.pqr-form{background:#F8FAFC;border:1px solid var(--borde);border-radius:13px;padding:28px;}
+.pqr-form label{display:block;font-size:.76rem;font-weight:700;color:#475569;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.pqr-form input,.pqr-form select{width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid var(--borde);font-size:.88rem;font-family:'Inter',sans-serif;color:var(--texto);margin-bottom:16px;background:#fff;transition:border-color .2s;}
+.pqr-form input:focus,.pqr-form select:focus,.pqr-ta:focus{outline:none;border-color:var(--rojo);}
+.pqr-ta{width:100%;padding:13px;border-radius:9px;border:1.5px solid var(--borde);font-size:.88rem;font-family:'Inter',sans-serif;color:var(--texto);margin-bottom:16px;resize:vertical;min-height:190px;line-height:1.7;background:#fff;transition:border-color .2s;}
+.pqr-row{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.pqr-anon{display:flex;align-items:center;gap:9px;margin-bottom:18px;background:#fff;border:1.5px solid var(--borde);border-radius:9px;padding:12px 15px;cursor:pointer;transition:border-color .2s;}
+.pqr-anon:hover{border-color:var(--rojo);}
+.pqr-anon input[type=checkbox]{width:15px;height:15px;accent-color:var(--rojo);}
+.pqr-anon span{font-size:.85rem;color:#475569;}
+.btn-pqr{width:100%;background:var(--rojo);color:#fff;border:none;padding:14px;border-radius:9px;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .25s;}
+.btn-pqr:hover{background:var(--rojo-hover);transform:translateY(-1px);box-shadow:0 7px 18px rgba(198,40,40,.3);}
+
+/* SEGUIMIENTO PQR */
+.seg-wrap{max-width:640px;}
+.seg-hdr{background:linear-gradient(135deg,#0284C7,#B71C1C);border-radius:13px;padding:26px 30px;color:#fff;margin-bottom:22px;}
+.seg-hdr h2{font-size:1.35rem;font-weight:800;margin-bottom:5px;}
+.seg-hdr p{opacity:.88;font-size:.88rem;line-height:1.6;}
+.seg-form{background:#F8FAFC;border:1px solid var(--borde);border-radius:13px;padding:26px;margin-bottom:16px;}
+.seg-form label{display:block;font-size:.76rem;font-weight:700;color:#475569;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.seg-form input{width:100%;padding:11px 13px;border-radius:9px;border:1.5px solid var(--borde);font-size:.88rem;font-family:'Inter',sans-serif;color:var(--texto);margin-bottom:14px;background:#fff;transition:border-color .2s;}
+.seg-form input:focus{outline:none;border-color:#0284C7;}
+.btn-seg{width:100%;background:#0284C7;color:#fff;border:none;padding:13px;border-radius:9px;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .25s;}
+.btn-seg:hover{background:#075985;transform:translateY(-1px);box-shadow:0 7px 18px rgba(2,132,199,.3);}
+
+/* COMITÉS */
+.com-hdr{background:linear-gradient(135deg,#C62828,#7F1D1D);border-radius:13px;padding:24px 28px;color:#fff;margin-bottom:22px;}
+.com-hdr h2{font-size:1.25rem;margin-bottom:4px;font-weight:800;}
+.com-hdr p{opacity:.88;font-size:.85rem;line-height:1.5;}
+.com-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;}
+.com-card{background:#fff;border:1px solid var(--borde);border-radius:13px;overflow:hidden;transition:all .25s;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.com-card:hover{transform:translateY(-3px);border-color:#FCA5A5;box-shadow:0 9px 22px rgba(198,40,40,.11);}
+.com-lbl{background:var(--rojo);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 13px;}
+.com-card img{width:100%;display:block;cursor:zoom-in;}
+
+/* LIGHTBOX */
+.lb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;align-items:center;justify-content:center;}
+.lb-overlay.open{display:flex;}
+.lb-img{max-width:90vw;max-height:90vh;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+.lb-close{position:fixed;top:18px;right:24px;color:#fff;font-size:1.9rem;cursor:pointer;font-weight:700;opacity:.72;transition:opacity .2s;}
+.lb-close:hover{opacity:1;}
+.lb-lbl{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;color:#fff;padding:6px 16px;font-size:.78rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+
+footer{text-align:center;padding:18px;color:#94A3B8;font-size:11px;background:#fff;border-top:1px solid var(--borde);}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+
+/* TARJETAS CORPORATIVAS */
+.corporativo-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px;}
+.corp-card{background:#fff;border-left:5px solid #C62828;border-radius:14px;padding:22px;box-shadow:0 3px 12px rgba(0,0,0,.06);}
+.corp-card h3{color:#C62828;margin-bottom:10px;font-size:18px;}
+.corp-card p{color:#64748B;line-height:1.7;}
+
+/* VENDEDORES DEL MES */
+.vendedores-grid-corp{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-bottom:25px;}
+.vend-card-corp{background:#fff;border-radius:16px;padding:0;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.07);border:1px solid var(--borde);overflow:hidden;transition:all .25s;position:relative;}
+.vend-card-corp:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(198,40,40,.14);}
+.vend-card-corp::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#C62828,#7F1D1D);}
+.vend-rank{position:absolute;top:16px;right:16px;font-size:1.6rem;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15));}
+.vend-photo-corp{width:130px;height:130px;border-radius:50%;overflow:hidden;border:4px solid #fff;box-shadow:0 0 0 3px var(--rojo);margin:28px auto 16px;}
+.vend-photo-corp img{width:100%;height:100%;object-fit:cover;}
+.vend-body-corp{padding:0 20px 26px;}
+.vend-nombre-corp{font-size:1.15rem;font-weight:800;color:var(--texto);margin-bottom:4px;letter-spacing:.2px;}
+.vend-rol-corp{display:inline-block;background:#FEE2E2;color:var(--rojo);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
+.vend-desc-corp{font-size:.85rem;color:var(--texto-sec);line-height:1.6;}
+.vend-section-title{color:var(--rojo);font-size:1.5rem;font-weight:800;margin-bottom:18px;border-bottom:2px solid var(--borde);padding-bottom:10px;display:flex;align-items:center;gap:9px;}
+
+@media(max-width:900px){
+    .corporativo-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <img src="https://drive.google.com/thumbnail?id=1w0uRY9Xc1XBG989j0dwKyTH2iDcJc8ok&sz=w1000" alt="Arkos" class="login-logo">
+    <h2>Acceso a la Intranet Corporativa</h2>
+    <p>Ingresa tu correo institucional <strong>@arkos.com.co</strong> para continuar.</p>
+    <form id="loginForm" onsubmit="event.preventDefault(); iniciarSesion();">
+      <input type="email" id="loginCorreo" class="login-input" placeholder="tunombre@arkos.com.co" autocomplete="email" required>
+      <div class="login-error" id="loginError"></div>
+      <button type="submit" class="btn-login">INGRESAR</button>
+    </form>
+    <div class="login-foot">Acceso exclusivo para colaboradores de Arkos Sistemas &amp; Arquitectura</div>
+  </div>
+</div>
+
+<div id="appContainer">
+
+<header>
+  <div class="hdr-left">
+    <img src="https://drive.google.com/thumbnail?id=1w0uRY9Xc1XBG989j0dwKyTH2iDcJc8ok&sz=w1000" alt="Arkos" class="logo-img">
+    <div class="hdr-div"></div>
+    <span class="hdr-badge">Intranet Corporativa</span>
+  </div>
+  <div style="display:flex;align-items:center;">
+    <span class="hdr-date" id="fechaHdr"></span>
+    <span class="hdr-logout" onclick="cerrarSesion()">Cerrar sesión</span>
+  </div>
+</header>
+
+<div class="marquee-bar">
+  <span>📢 ARKOS SISTEMAS &amp; ARQUITECTURA — Amantes de la arquitectura &nbsp;•&nbsp; Innovación &nbsp;•&nbsp; Tecnología &nbsp;•&nbsp; Automatización &nbsp;•&nbsp; Desarrollo &nbsp;•&nbsp; Transformación digital &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+</div>
+
+<div class="app-body">
+
+<aside class="sidebar">
+  <div class="sb-section">
+    <div class="sb-label">Módulos</div>
+    <div class="sb-item activo" id="nav-inicio" onclick="irAInicio()"><span class="sb-icon">🏠</span>Inicio</div>
+    <div class="sb-item" id="nav-th" onclick="mostrarSeccion('th')"><span class="sb-icon">👩‍💼</span>Talento Humano</div>
+    <div class="sb-item" id="nav-sistemas" onclick="mostrarSeccion('sistemas')"><span class="sb-icon">💻</span>Sistemas</div>
+    <div class="sb-item" id="nav-calidad_raiz" onclick="mostrarSeccion('calidad_raiz')"><span class="sb-icon">📋</span>Calidad</div>
+    <div class="sb-item" id="nav-comercial_raiz" onclick="mostrarSeccion('comercial_raiz')"><span class="sb-icon">📈</span>Comercial</div>
+    <div class="sb-item" id="nav-sst" onclick="mostrarSeccion('sst')"><span class="sb-icon">⛑️</span>SST</div>
+    <div class="sb-item" id="nav-noticias_raiz" onclick="mostrarSeccion('noticias_raiz')"><span class="sb-icon">📰</span>Noticias</div>
+    <div class="sb-item" id="nav-nomina" onclick="alert('Módulo de Nómina en construcción')"><span class="sb-icon">💰</span>Nómina</div>
+    <div class="sb-item" id="nav-cap" onclick="mostrarSeccion('cap')"><span class="sb-icon">🎓</span>Capacitaciones</div>
+    <div class="sb-item" id="nav-pqr" onclick="mostrarSeccion('pqr')"><span class="sb-icon">📣</span>Canal PQR</div>
+    <div class="sb-item" id="nav-seguimientoPQR" onclick="mostrarSeccion('seguimientoPQR')"><span class="sb-icon">🔍</span>Seguimiento PQR</div>
+  </div>
+
+  <div class="sb-divider"></div>
+  <div class="sb-ql-label">Accesos Rápidos</div>
+
+  <a class="ql-item" href="https://3.227.109.189/adfs/ls/idpinitiatedsignon.aspx?RelayState=RPID%3Dhttps%253A%252F%252Fsignin.aws.amazon.com%252Fsaml%26RelayState%3Dhttps%253A%252F%252Fappstream2.us-east-1.aws.amazon.com%252Fsaml%253Fstack%253Dstack-appstream-arkos.com%2526accountId%253D839696128812" target="_blank">
+    <span class="ql-icon">🔷</span><span>SAP</span><span class="ql-badge">ERP</span>
+  </a>
+  <a class="ql-item" href="https://docs.google.com/forms/d/e/1FAIpQLSfjgnNv5UGMXi_UX4AR82aCsN3GbZSqWjujeBtHRamFouepAw/viewform" target="_blank">
+    <span class="ql-icon">🛠️</span><span>Soporte TI</span><span class="ql-badge g">TI</span>
+  </a>
+  <a class="ql-item" href="https://calendar.google.com" target="_blank">
+    <span class="ql-icon">📅</span><span>Google Calendar</span>
+  </a>
+  <a class="ql-item" href="https://drive.google.com" target="_blank">
+    <span class="ql-icon">📁</span><span>Google Drive</span>
+  </a>
+
+  <div class="sb-bottom">ARKOS © 2026 — v2.0</div>
+</aside>
+
+<main class="main" id="contenidoPrincipal">
+
+  <div id="vista-inicio">
+    <div class="bienvenida">
+      <h1>Bienvenido(a) a la Intranet Arkos</h1>
+      <p>Plataforma corporativa para automatización de procesos internos.</p>
+    </div>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <div class="corporativo-grid">
+      <div class="corp-card">
+        <h3>🎯 Misión</h3>
+        <p>Somos una compañía dedicada a la comercialización, asesoría y diseño con materiales de última tecnología y gran innovación, utilizando polímeros y productos amigables con el medio ambiente para los sectores de la construcción, decoración, mobiliario y publicidad.</p>
+      </div>
+      <div class="corp-card">
+        <h3>🚀 Visión</h3>
+        <p>Para el 2030 seguiremos siendo la compañía líder en el mercado de soluciones en productos de última tecnología fabricados con polímeros y materiales amigables con el medio ambiente, destacándonos por la innovación permanente, calidad y desarrollo sostenible.</p>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+      <h2 class="vend-section-title">
+        🏆 Mejores Vendedores del Mes de Junio
+      </h2>
+
+      <div class="vendedores-grid-corp">
+        <div class="vend-card-corp">
+          <span class="vend-rank">🥇</span>
+          <div class="vend-photo-corp">
+            <img src="https://lh3.googleusercontent.com/d/1HBjku6TGvuW2Uke6SvDUjHHGM72RoOTt" alt="Daniela Arenas" onerror="this.onerror=null; this.src='https://placehold.co/130?text=Daniela';">
+          </div>
+          <div class="vend-body-corp">
+            <div class="vend-nombre-corp">Daniela Arenas</div>
+            <span class="vend-rol-corp">Destacado Comercial</span>
+            <p class="vend-desc-corp">Reconocimiento especial por su excelente desempeño y proactividad.</p>
+          </div>
+        </div>
+
+        <div class="vend-card-corp">
+          <span class="vend-rank">🥈</span>
+          <div class="vend-photo-corp">
+            <img src="https://lh3.googleusercontent.com/d/1lkAqRvd-pZH1Vrl96Kx-wicQbK_60xs0" alt="Melissa Nieto" onerror="this.onerror=null; this.src='https://placehold.co/130?text=Melissa';">
+          </div>
+          <div class="vend-body-corp">
+            <div class="vend-nombre-corp">Melissa Nieto</div>
+            <span class="vend-rol-corp">Liderazgo y Gestión</span>
+            <p class="vend-desc-corp">Felicitaciones por la dedicación y excelencia demostrada en el servicio.</p>
+          </div>
+        </div>
+
+        <div class="vend-card-corp">
+          <span class="vend-rank">🥉</span>
+          <div class="vend-photo-corp">
+            <img src="https://lh3.googleusercontent.com/d/17W_kHmExenRH3waDLGADo_gM3ytYA_z8" alt="Angie Martínez" onerror="this.onerror=null; this.src='https://placehold.co/130?text=Angie';">
+          </div>
+          <div class="vend-body-corp">
+            <div class="vend-nombre-corp">Angie Martínez</div>
+            <span class="vend-rol-corp">Compromiso Comercial</span>
+            <p class="vend-desc-corp">Gran ejemplo de constancia y esfuerzo para alcanzar cada meta propuesta.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-icon si-r">📣</div><div><div class="stat-lbl">Canal PQR</div><div class="stat-val r" onclick="mostrarSeccion('pqr')">Enviar reporte →</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-b">🔍</div><div><div class="stat-lbl">Seguimiento</div><div class="stat-val b" onclick="mostrarSeccion('seguimientoPQR')">Consultar caso →</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-g">📄</div><div><div class="stat-lbl">Certificado</div><div class="stat-val g" onclick="mostrarSeccion('th');setTimeout(()=>{abrirCertificadoLaboral();},100)">Generar PDF →</div></div></div>
+      <div class="stat-card"><div class="stat-icon si-a">🔷</div><div><div class="stat-lbl">SAP</div><div class="stat-val a" onclick="window.open('https://3.227.109.189/adfs/ls/idpinitiatedsignon.aspx?RelayState=RPID%3Dhttps%253A%252F%252Fsignin.aws.amazon.com%252Fsaml%26RelayState%3Dhttps%253A%252F%252Fappstream2.us-east-1.aws.amazon.com%252Fsaml%253Fstack%253Dstack-appstream-arkos.com%2526accountId%253D839696128812','_blank')">Abrir SAP →</div></div></div>
+    </div>
+
+    <div class="cal-card" id="vacantesHomeCard">
+      <div class="cal-hdr" style="justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:9px;"><span>📢</span><h3>Vacantes Disponibles</h3></div>
+        <span style="font-size:.72rem;font-weight:700;color:var(--rojo);cursor:pointer;" onclick="mostrarSeccion('th');setTimeout(()=>{mostrarSubMod('vacantes');},100)">Ver todas →</span>
+      </div>
+      <div class="com-grid" id="vacantesGridHome" style="padding:16px;"></div>
+    </div>
+
+    <div class="cal-card">
+      <div class="cal-hdr"><span>📅</span><h3>Calendario Corporativo — Colombia</h3></div>
+      <iframe src="https://calendar.google.com/calendar/embed?src=es.colombian%23holiday%40group.v.calendar.google.com&ctz=America%2FBogota" style="border:0;display:block;" width="100%" height="470" frameborder="0" scrolling="no"></iframe>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: TALENTO HUMANO -->
+  <div id="th" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="sec-title">👩‍💼 Talento Humano</div>
+    
+    <div id="menuTH" class="sub-seccion activo-sub">
+      <div class="sub-grid">
+        <div class="sub-card" onclick="abrirCertificaciones()"><span>📄</span><h3>Certificaciones</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('vacaciones')"><span>🏖️</span><h3>Vacaciones</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('vacantes')"><span>📢</span><h3>Vacantes</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('incapacidades')"><span>🩺</span><h3>Incapacidades</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('reglamentoInterno')"><span>📜</span><h3>Reglamento Interno de Trabajo</h3></div>
+        <div class="sub-card" onclick="mostrarSubMod('codigoVestimenta')"><span>👔</span><h3>Código de Vestimenta</h3></div>
+      </div>
+    </div>
+    
+    <div id="certificaciones" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="sub-grid">
+        <div class="sub-card" onclick="abrirCertificadoLaboral()"><span>📄</span><h3>Certificado Laboral</h3></div>
+      </div>
+    </div>
+    
+    <div id="certificadoLaboral" class="sub-seccion">
+      <span class="btn-volver" onclick="volverCertificaciones()">← Volver</span>
+      <div class="cert-box">
+        <h3>Generar certificado laboral</h3>
+        <p>Digita tu número de cédula para descargar automáticamente el certificado laboral en PDF.</p>
+        <input type="text" id="cedulaEmpleado" placeholder="Ingresa tu número de cédula" class="input-cert">
+        <button onclick="generarCertificado()" class="btn-cert">GENERAR CERTIFICADO</button>
+      </div>
+      <div id="resultadoCertificado"></div>
+    </div>
+    
+    <div id="vacaciones" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+
+      <div style="background:linear-gradient(135deg,#059669,#047857);border-radius:13px;padding:26px 30px;color:#fff;margin-bottom:22px;">
+        <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:5px;">🏖️ Mis Vacaciones</h2>
+        <p style="opacity:.88;font-size:.88rem;line-height:1.6;">Consulta tus días pendientes por periodo y, si tienes disponibilidad, solicita tus vacaciones en línea.</p>
+      </div>
+
+      <div class="cert-box">
+        <h3>Consultar días disponibles</h3>
+        <p>Digita tu número de cédula para ver tus periodos y saldos de vacaciones.</p>
+        <input type="text" id="vacCedulaConsulta" placeholder="Ingresa tu número de cédula" class="input-cert">
+        <button onclick="vac_consultarDias()" class="btn-cert" style="background:#059669;">CONSULTAR DÍAS</button>
+      </div>
+      <div id="vacResultado"></div>
+
+      <div id="vacFormWrap" style="display:none;margin-top:22px;">
+        <div class="pqr-form" style="background:#F0FDF4;border-color:#86EFAC;">
+          <h3 style="color:#059669;font-size:1rem;font-weight:700;margin-bottom:16px;">📝 Formato de Solicitud de Vacaciones</h3>
+          <form id="vacFormularioSolicitud" onsubmit="event.preventDefault(); vac_enviarSolicitud();">
+            <div class="pqr-row">
+              <div>
+                <label>Nombre del colaborador</label>
+                <input type="text" id="vacNombreForm" readonly style="background:#F1F5F9;">
+              </div>
+              <div>
+                <label>Documento de identidad</label>
+                <input type="text" id="vacCedulaForm" readonly style="background:#F1F5F9;">
+              </div>
+            </div>
+
+            <label>Tipo de documento</label>
+            <select id="vacTipoDocForm">
+              <option value="CC">Cédula de Ciudadanía (CC)</option>
+              <option value="CE">Cédula de Extranjería (CE)</option>
+              <option value="PEP">Permiso Especial de Permanencia (PEP)</option>
+            </select>
+
+            <label>Periodo causado</label>
+            <select id="vacPeriodoForm" onchange="vac_actualizarDiasMax()"></select>
+            <p id="vacDiasMaxNota" style="font-size:.76rem;color:#059669;font-weight:700;margin:-10px 0 16px;"></p>
+
+            <label>Tipo de solicitud</label>
+            <select id="vacTipoSolForm">
+              <option value="Vacaciones disfrutadas">Vacaciones disfrutadas</option>
+              <option value="Vacaciones compensadas en dinero">Vacaciones compensadas en dinero</option>
+            </select>
+
+            <div class="pqr-row">
+              <div>
+                <label>Fecha de inicio</label>
+                <input type="date" id="vacFechaInicioForm">
+              </div>
+              <div>
+                <label>Fecha de fin</label>
+                <input type="date" id="vacFechaFinForm">
+              </div>
+            </div>
+
+            <label>Número de días hábiles a disfrutar / compensar</label>
+            <input type="number" id="vacDiasForm" min="1" placeholder="Ej: 5">
+
+            <label>Tu correo electrónico (para notificarte el estado)</label>
+            <input type="email" id="vacCorreoColabForm" placeholder="tucorreo@arkos.com.co">
+
+            <label>Correo electrónico de tu jefe inmediato</label>
+            <input type="email" id="vacCorreoJefeForm" placeholder="jefe@arkos.com.co" required>
+
+            <button type="submit" id="vacBtnEnviar" class="btn-pqr" style="background:#059669;">ENVIAR SOLICITUD</button>
+          </form>
+          <div id="vacResultadoForm"></div>
+        </div>
+      </div>
+
+      <div class="seg-form" style="margin-top:26px;border-color:#86EFAC;">
+        <h3 style="color:#059669;font-size:1rem;font-weight:700;margin-bottom:10px;">🔍 Ver estado de mi solicitud</h3>
+        <label>Número de cédula</label>
+        <input type="text" id="vacCedulaEstado" placeholder="Ingresa tu número de cédula">
+        <button type="button" class="btn-seg" style="background:#059669;" onclick="vac_consultarEstado()">CONSULTAR ESTADO</button>
+      </div>
+      <div id="vacEstadoResultado"></div>
+    </div>
+
+    <div id="vacantes" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="com-hdr">
+        <h2>📢 Vacantes Disponibles</h2>
+        <p>Conoce las posiciones abiertas actualmente en Arkos. Haz clic en una imagen para verla en grande.</p>
+      </div>
+      <div class="com-grid" id="vacantesGridTH"></div>
+    </div>
+    
+    <div id="incapacidades" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="cert-box"><h3>Gestión de Incapacidades</h3><p>Carga y reporte de novedades de salud médicas.</p></div>
+    </div>
+    
+    <!-- SUBSECCIÓN REGLAMENTO INTERNO DE TRABAJO -->
+    <div id="reglamentoInterno" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      <div class="cert-box" style="max-width:100%;">
+        <h3>📜 Reglamento Interno de Trabajo</h3>
+        <p>Consulta el documento oficial del Reglamento Interno de Trabajo de Arkos S.A. y el comunicado oficial de actualización vigente para todos los colaboradores.</p>
+
+        <div class="sub-grid" style="margin-top:18px;">
+          <div class="sub-card" onclick="window.open('https://drive.google.com/file/d/1DWn8Qrd0uULdmAu5GBw_raubx83vH9Iw/view?usp=sharing','_blank')">
+            <span style="font-size:2rem;">📜</span>
+            <h3>Reglamento Interno de Trabajo (PDF Oficial)</h3>
+          </div>
+
+          <div class="sub-card" onclick="window.open('https://drive.google.com/file/d/1NiuzYZxHZcUBYCNkd3-wzEKIFbwhK7qf/view?usp=sharing','_blank')">
+            <span style="font-size:2rem;">📢</span>
+            <h3>Comunicado Oficial de Actualización (PDF)</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANTALLA: CÓDIGO DE VESTIMENTA -->
+    <div id="codigoVestimenta" class="sub-seccion">
+      <span class="btn-volver" onclick="volverMenuTH()">← Volver</span>
+      
+      <div style="background: linear-gradient(135deg, #C62828, #7F1D1D); border-radius: 13px; padding: 26px 30px; color: #fff; margin-bottom: 22px;">
+        <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px;">👔 Código de Vestimenta e Imagen Corporativa</h2>
+        <p style="opacity: .9; font-size: .88rem; line-height: 1.6;">
+          Recordatorio sobre el cumplimiento de los lineamientos de presentación personal y uniformidad institucional.
+        </p>
+      </div>
+
+      <div style="background: #fff; border: 1px solid var(--borde); border-radius: 13px; padding: 26px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+        <div style="background: #F8FAFC; border-left: 4px solid var(--rojo); padding: 16px 20px; border-radius: 6px; margin-bottom: 22px;">
+          <p style="font-size: .92rem; color: #334155; line-height: 1.7; font-weight: 500;">
+            <strong>Estimados colaboradores,</strong><br><br>
+            Reciban un cordial saludo.<br><br>
+            Con el fin de fortalecer nuestra imagen corporativa, promover un ambiente laboral profesional y mantener la uniformidad institucional, queremos recordar la importancia de dar cumplimiento al Código de Vestimenta establecido por la compañía.
+          </p>
+        </div>
+
+        <h3 style="color: var(--texto); font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          📌 Recomendaciones y Lineamientos Principales
+        </h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 24px;">
+          <div style="background: #F8FAFC; border: 1px solid var(--borde); border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem;">✨</span>
+            <span style="font-size: .88rem; color: #334155; line-height: 1.5;">Mantener una adecuada higiene y presentación personal.</span>
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid var(--borde); border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem;">💅</span>
+            <span style="font-size: .88rem; color: #334155; line-height: 1.5;">Uñas limpias, cortas o medianas; preferiblemente en tonos neutros.</span>
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid var(--borde); border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem;">🪒</span>
+            <span style="font-size: .88rem; color: #334155; line-height: 1.5;">Barba arreglada y/o afeitados.</span>
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid var(--borde); border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem;">👔</span>
+            <span style="font-size: .88rem; color: #334155; line-height: 1.5;">Mantener una apariencia pulcra durante toda la jornada laboral.</span>
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid var(--borde); border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem;">👞</span>
+            <span style="font-size: .88rem; color: #334155; line-height: 1.5;">Zapatos preferiblemente de color neutro y en un solo tono.</span>
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid var(--borde); border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem;">🤰</span>
+            <span style="font-size: .88rem; color: #334155; line-height: 1.5;">Si alguna colaboradora se encuentra en embarazo, deberá portar el uniforme correspondiente a su estado.</span>
+          </div>
+          <div style="background: #F8FAFC; border: 1px solid var(--borde); border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem;">❄️</span>
+            <span style="font-size: .88rem; color: #334155; line-height: 1.5;">En clima frío, si se utiliza falda, debe acompañarse con media velada.</span>
+          </div>
+          <div style="background: #FFF5F5; border: 1px solid #FCA5A5; border-radius: 10px; padding: 14px 18px; display: flex; align-items: flex-start; gap: 12px;">
+            <span style="font-size: 1.2rem;">⚠️</span>
+            <span style="font-size: .88rem; color: #991B1B; line-height: 1.5; font-weight: 600;">Evitar el uso de sacos totalmente cerrados, ya que esta prenda impide la correcta identificación de la camiseta institucional.</span>
+          </div>
+        </div>
+
+        <h3 style="color: var(--texto); font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--borde); padding-top: 20px;">
+          🖼️ Guía Visual Corporativa
+        </h3>
+
+        <div class="com-grid">
+          <div class="com-card">
+            <div class="com-lbl">Código de Vestimenta — Guía 1</div>
+            <div style="padding:15px;text-align:center;">
+              <img src="https://drive.google.com/thumbnail?id=1svrd8YJJTV03TGwulF7XNIXariM2Hifx&sz=w1000" alt="Código de Vestimenta Arkos - Guía 1" style="max-width:100%;height:auto;border-radius:8px;cursor:pointer;" onclick="abrirLightbox(this.src, 'Código de Vestimenta Corporativo - Guía 1')">
+            </div>
+          </div>
+          <div class="com-card">
+            <div class="com-lbl">Código de Vestimenta — Guía 2</div>
+            <div style="padding:15px;text-align:center;">
+              <img src="https://drive.google.com/thumbnail?id=13MpIXH6B6Et2VROfVrc0mxFNxEpIMWgT&sz=w1000" alt="Código de Vestimenta Arkos - Guía 2" style="max-width:100%;height:auto;border-radius:8px;cursor:pointer;" onclick="abrirLightbox(this.src, 'Código de Vestimenta Corporativo - Guía 2')">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div id="sistemas" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="sec-title">💻 Sistemas e Infraestructura TI</div>
+    <div class="sub-grid">
+      <div class="sub-card" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfjgnNv5UGMXi_UX4AR82aCsN3GbZSqWjujeBtHRamFouepAw/viewform','_blank')"><span>🛠️</span><h3>Mesa de Soporte TI</h3></div>
+      <div class="sub-card" onclick="window.open('https://3.227.109.189/adfs/ls/idpinitiatedsignon.aspx?RelayState=RPID%3Dhttps%253A%252F%252Fsignin.aws.amazon.com%252Fsaml%26RelayState%3Dhttps%253A%252F%252Fappstream2.us-east-1.aws.amazon.com%252Fsaml%253Fstack%253Dstack-appstream-arkos.com%2526accountId%253D839696128812','_blank')"><span>🔷</span><h3>Servidor SAP Cloud</h3></div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN: CAPACITACIONES -->
+  <div id="cap" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="sec-title">🎓 Plan Estratégico de Capacitaciones</div>
+    
+    <div style="background: linear-gradient(135deg, #1A2332, #2B0A0A); border-radius: 13px; padding: 26px 30px; color: #fff; margin-bottom: 22px;">
+      <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px;">Formación Continua Arkos 2026</h2>
+      <p style="opacity: .9; font-size: .88rem; line-height: 1.6;">
+        Potencia tus habilidades y competencias participando en nuestras jornadas formativas.
+      </p>
+    </div>
+
+    <div class="com-grid" id="capacitacionesGrid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));">
+      <div class="com-card">
+        <div class="com-lbl" style="background:#C62828;">Módulo 1</div>
+        <div style="padding:15px;">
+          <h3 style="font-size:.92rem;font-weight:700;color:var(--texto);margin-bottom:4px;">Venta Consultiva, Comunicación Persuasiva &amp; IA</h3>
+          <p style="font-size:.78rem;color:var(--texto-sec);margin-bottom:12px;line-height:1.5;">Estrategias de alto desempeño para detectar necesidades, comunicar con persuasión y aplicar IA en el proceso comercial.</p>
+          <div style="position:relative;padding-top:56.25%;border-radius:8px;overflow:hidden;border:1px solid var(--borde);">
+            <iframe src="https://docs.google.com/presentation/d/1i3njgS3-8fRuDk55oA6iZjzT7TBT1bKs/embed?start=false&loop=false&delayms=3000" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="com-card">
+        <div class="com-lbl" style="background:#0284C7;">Módulo 2</div>
+        <div style="padding:15px;">
+          <h3 style="font-size:.92rem;font-weight:700;color:var(--texto);margin-bottom:4px;">Comunicación Estratégica para la Venta B2B</h3>
+          <p style="font-size:.78rem;color:var(--texto-sec);margin-bottom:12px;line-height:1.5;">El arte de escuchar, diagnosticar y persuadir en el proceso de consultoría B2B.</p>
+          <div style="position:relative;padding-top:56.25%;border-radius:8px;overflow:hidden;border:1px solid var(--borde);">
+            <iframe src="https://docs.google.com/presentation/d/1Uv1Ug2-licUPYsyUCxgyJQ2ZMHUgu5Iy/embed?start=false&loop=false&delayms=3000" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="com-card">
+        <div class="com-lbl" style="background:#059669;">Módulo 3</div>
+        <div style="padding:15px;">
+          <h3 style="font-size:.92rem;font-weight:700;color:var(--texto);margin-bottom:4px;">Manejo de Objeciones y Técnicas de Cierre</h3>
+          <p style="font-size:.78rem;color:var(--texto-sec);margin-bottom:12px;line-height:1.5;">Transformando barreras comerciales en puentes de valor: cómo superar resistencias y liderar acuerdos.</p>
+          <div style="position:relative;padding-top:56.25%;border-radius:8px;overflow:hidden;border:1px solid var(--borde);">
+            <iframe src="https://docs.google.com/presentation/d/1Dg0WKEN3hKZJomueTPlRQkMH-NOQ6uQ-/embed?start=false&loop=false&delayms=3000" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="com-card">
+        <div class="com-lbl" style="background:#D97706;">Módulo 4</div>
+        <div style="padding:15px;">
+          <h3 style="font-size:.92rem;font-weight:700;color:var(--texto);margin-bottom:4px;">Postventa y Fidelización</h3>
+          <p style="font-size:.78rem;color:var(--texto-sec);margin-bottom:12px;line-height:1.5;">Retención, cross-selling, up-selling ético y gestión de datos comerciales (scorecards).</p>
+          <div style="position:relative;padding-top:56.25%;border-radius:8px;overflow:hidden;border:1px solid var(--borde);">
+            <iframe src="https://docs.google.com/presentation/d/1rpesXcDoixXXJCoGNbAXAOvCaXSzNakO/embed?start=false&loop=false&delayms=3000" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pqr" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="pqr-wrap">
+      <div class="pqr-hdr">
+        <h2>Canal de PQRs Oficial</h2>
+        <p>Registra de manera formal tus solicitudes, quejas o reclamos ante la administración.</p>
+      </div>
+      <form id="pqrFormulario" class="pqr-form" onsubmit="event.preventDefault(); enviarRadicado();">
+        <label>Nombre Completo</label>
+        <input type="text" id="nombrePQR" placeholder="Ingresa tu nombre">
+        
+        <label>Documento de Identidad / Teléfono</label>
+        <input type="text" id="cedulaPQR" placeholder="Ingresa tu identificación o contacto">
+
+        <label>Tipo de Solicitud</label>
+        <select id="tipoPQR">
+          <option value="Petición">Petición</option>
+          <option value="Queja">Queja</option>
+          <option value="Reclamo">Reclamo</option>
+          <option value="Sugerencia">Sugerencia</option>
+        </select>
+
+        <label>Área Destino</label>
+        <select id="areaPQR">
+          <option value="General">General</option>
+          <option value="Talento Humano">Talento Humano</option>
+          <option value="Sistemas">Sistemas</option>
+          <option value="Comercial">Comercial</option>
+        </select>
+
+        <label>Asunto Breve</label>
+        <input type="text" id="asuntoPQR" placeholder="Título corto de la solicitud" required>
+
+        <label>Descripción de los Hechos</label>
+        <textarea id="descripcionPQR" class="pqr-ta" placeholder="Describe de forma detallada tu solicitud..." required></textarea>
+
+        <div class="pqr-anon">
+          <input type="checkbox" id="anonimoPQR" onchange="toggleAnonimo(this)">
+          <span>Enviar esta PQR de forma anónima</span>
+        </div>
+
+        <button type="submit" id="btnEnviarPqr" class="btn-pqr">ENVIAR RADICADO</button>
+      </form>
+      <div id="mensajeResultado"></div>
+    </div>
+  </div>
+
+  <div id="seguimientoPQR" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="seg-wrap">
+      <div class="seg-hdr">
+        <h2>Consulta de Radicados</h2>
+        <p>Escribe tu código para conocer el estado y respuesta de tu caso.</p>
+      </div>
+      <div class="seg-form">
+        <label>Código del Radicado</label>
+        <input type="text" id="codigoBusqueda" placeholder="Ej: PQR-1234">
+        <button type="button" class="btn-seg" onclick="consultarRadicado()">CONSULTAR CASO</button>
+      </div>
+      <div id="resultadoSeguimiento"></div>
+    </div>
+  </div>
+
+  <div id="calidad_raiz" class="seccion-detalle"><span class="btn-volver" onclick="irAInicio()">← Volver</span><div class="sec-title">📋 Módulo de Calidad</div></div>
+
+  <!-- SECCIÓN: COMERCIAL -->
+  <div id="comercial_raiz" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()">← Volver al Inicio</span>
+    <div class="sec-title">📈 Módulo Comercial</div>
+
+    <div style="background: linear-gradient(135deg, #C62828, #7F1D1D); border-radius: 13px; padding: 26px 30px; color: #fff; margin-bottom: 22px;">
+      <h2 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px;">Documentación y Protocolos Comerciales</h2>
+      <p style="opacity: .9; font-size: .88rem; line-height: 1.6;">
+        Consulta las políticas de venta, acuerdos de servicio y los protocolos oficiales de atención al cliente para las Tiendas ArkosCenter.
+      </p>
+    </div>
+
+    <div class="cert-box" style="max-width:100%;">
+      <h3>📁 Documentos Oficiales del Área Comercial</h3>
+      <p>Haz clic en cualquiera de las opciones para abrir el documento PDF correspondiente en Google Drive.</p>
+
+      <div class="sub-grid" style="margin-top:18px;">
+        <div class="sub-card" onclick="window.open('https://drive.google.com/file/d/1ZmlY0OeD9iKvDDe4ZzMp-Lgg_Zv07wwY/view?usp=sharing','_blank')">
+          <span style="font-size:2.2rem;">📋</span>
+          <h3>Política Comercial Oficial (AS-PO-CM-01 PDF)</h3>
+        </div>
+
+        <div class="sub-card" onclick="window.open('https://drive.google.com/file/d/1MLCRFmj5otgyNshyqQg_IcDX9W9R-oe7/view?usp=sharing','_blank')">
+          <span style="font-size:2.2rem;">🏬</span>
+          <h3>Protocolo de Atención Tiendas ArkosCenter (PDF)</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="noticias_raiz" class="seccion-detalle"><span class="btn-volver" onclick="irAInicio()">← Volver</span><div class="sec-title">📰 Panel de Noticias</div></div>
+
+  <div id="sst" class="seccion-detalle">
+    <span class="btn-volver" onclick="irAInicio()" style="cursor:pointer; font-weight:bold; color:#D32F2F;">← Volver</span>
+    <div class="sec-title" style="margin-top:10px;">⛑️ Seguridad y Salud en el Trabajo</div>
+
+    <div id="menuSST" class="sub-seccion" style="margin-top: 20px; display: block;">
+        <div class="sub-grid" style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <div class="sub-card" onclick="abrirRiesgos()" style="cursor:pointer; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;"><span>⚠️</span><h3>Riesgos Laborales</h3></div>
+            <div class="sub-card" onclick="abrirComites()" style="cursor:pointer; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;"><span>👥</span><h3>Conformación Comités</h3></div>
+            <div class="sub-card" style="padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; opacity: 0.6;"><span>🚨</span><h3>Reportar Accidente</h3></div>
+            <div class="sub-card" onclick="abrirEstiloVida()" style="cursor:pointer; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;"><span>🍏</span><h3>Estilo de Vida Saludable</h3></div>
+            <div class="sub-card" onclick="abrirPausas()" style="cursor:pointer; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;"><span>🤸‍♀️</span><h3>Pausas Activas</h3></div>
+        </div>
+    </div>
+
+    <div id="riesgosSST" class="sub-seccion" style="display:none; margin-top: 20px;">
+        <span class="btn-volver" onclick="volverMenuSST()" style="cursor:pointer; font-weight:bold; color:#475569;">← Volver a SST</span>
+        <div class="comites-header" style="background: linear-gradient(135deg, #475569, #334155); padding: 20px; border-radius: 12px; color: #fff; margin-top: 15px; margin-bottom: 20px;">
+            <h2>Control y Prevención de Riesgos</h2>
+            <p>Identifica los factores de riesgo asignados a tu entorno operativo en Arkos.</p>
+        </div>
+        <div class="comites-grid" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="comite-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#0284c7; color:#fff; padding:12px; font-weight:bold; text-align:center;">Riesgo Psicosocial</div>
+                <div style="padding:15px; text-align:center;">
+                    <img src="https://drive.google.com/thumbnail?id=1WZgVRGBfJhBHkBHIs5codtu4nZI45gjz&sz=w1000" alt="Riesgo Psicosocial" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Riesgo Psicosocial')">
+                </div>
+            </div>
+            <div class="comite-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#ec4899; color:#fff; padding:12px; font-weight:bold; text-align:center;">Riesgo Ergonómico</div>
+                <div style="padding:15px; text-align:center;">
+                    <img src="https://drive.google.com/thumbnail?id=13YvxlygWFpEwJx2B2iaM11KDCb0seT6Y&sz=w1000" alt="Riesgo Ergonómico" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Riesgo Ergonómico')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="comitesSST" class="sub-seccion" style="display:none; margin-top: 20px;">
+        <span class="btn-volver" onclick="volverMenuSST()" style="cursor:pointer; font-weight:bold; color:#059669;">← Volver a SST</span>
+        <div class="comites-header" style="background: linear-gradient(135deg, #059669, #047857); padding: 20px; border-radius: 12px; color: #fff; margin-top: 15px; margin-bottom: 20px;">
+            <h2>Conformación de Comités por Sede</h2>
+            <p>Selecciona tu sede para visualizar los integrantes oficiales de COPASST y COCOLA.</p>
+            <div style="margin-top: 15px;">
+                <label for="selectorSedes" style="font-weight: bold; display: block; margin-bottom: 5px; color: #e1f5fe;">Filtrar por Sede:</label>
+                <select id="selectorSedes" onchange="filtrarSedesComite()" style="padding: 10px; border-radius: 6px; border: none; width: 100%; max-width: 350px; font-size: 15px; color: #333; font-weight: bold; cursor: pointer;">
+                    <option value="todos">🌍 Ver Todas las Sedes</option>
+                    <option value="principal">🏢 Principal / CEDI</option>
+                    <option value="calle80">📍 Calle 80</option>
+                    <option value="sieteagosto">📍 7 de Agosto</option>
+                    <option value="paloquemao">📍 Paloquemao</option>
+                    <option value="celta">📍 Celta</option>
+                    <option value="bucaramanga">🏙️ Bucaramanga</option>
+                    <option value="cali">🏙️ Cali</option>
+                    <option value="llanogrande">🏙️ Llano Grande</option>
+                    <option value="barranquilla">🏙️ Barranquilla</option>
+                    <option value="guayabal">🏙️ Guayabal</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="comites-grid" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="tarjeta-sede-item" data-sede="principal" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">SEDE PRINCIPAL / CEDI</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1ytrWTQ09Bo15ryjz_IXmggD-j3fdnGjx&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Sede Principal')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="calle80" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center;">CALLE 80</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1s0Z7v-RHJ8-A0BMTj1lZcW7rT3_hwYCL&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Calle 80')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="sieteagosto" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center;">7 DE AGOSTO</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1fOhY6eIrfWSrZ4MVXMcPizH9i0UUfjQs&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, '7 de Agosto')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="paloquemao" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center;">PALOQUEMAO</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1einSt6OO4k7eGd7ABCDgLd22Ov7IjSWB&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Paloquemao')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="celta" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center;">CELTA</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1boxtuPEy-HJk3Z02ttkPaFl_jbS5P29B&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Celta')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="bucaramanga" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">BUCARAMANGA</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1cb00YfQnAPyT-kr8halxo2ethdE8EYQE&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Bucaramanga')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="cali" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">CALI</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1po0hhuYlJddG6eIyi8d0Yaayse_K_QSK&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Cali')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="llanogrande" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">LLANO GRANDE</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1CjCLonuOYNVPnSf87n4NyfoEXOpB6L0B&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Llano Grande')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="barranquilla" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">BARRANQUILLA</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1dEYdfiWV8KqatZpMuXrQUDKT1wzZzB_C&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Barranquilla')">
+                </div>
+            </div>
+            <div class="tarjeta-sede-item" data-sede="guayabal" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#0d9488; color:#fff; padding:12px; font-weight:bold; text-align:center;">GUAYABAL</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1VoankZYdI1sPVnNAYvXRIPeJfJ-B5twL&sz=w1000" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Guayabal')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="estiloVidaSST" class="sub-seccion" style="display:none; margin-top: 20px;">
+        <span class="btn-volver" onclick="volverMenuSST()" style="cursor:pointer; font-weight:bold; color:#10b981;">← Volver a SST</span>
+        <div class="comites-header" style="background: linear-gradient(135deg, #10b981, #059669); padding: 20px; border-radius: 12px; color: #fff; margin-top: 15px; margin-bottom: 20px;">
+            <h2>Estilo de Vida Saludable</h2>
+            <p>Consulta recomendaciones de bienestar, nutrición y hábitos saludables diseñados para el equipo Arkos.</p>
+        </div>
+        <div class="comites-grid" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="comite-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#10b981; color:#fff; padding:12px; font-weight:bold; text-align:center; text-transform: uppercase;">Guía de Bienestar Integral</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=18XcAytWTrCG9dei4qqTxv3DXf9wc_clO&sz=w1000" alt="Estilo de Vida Saludable" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Estilo de Vida Saludable')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pausasSST" class="sub-seccion" style="display:none; margin-top: 20px;">
+        <span class="btn-volver" onclick="volverMenuSST()" style="cursor:pointer; font-weight:bold; color:#d97706;">← Volver a SST</span>
+        <div class="comites-header" style="background: linear-gradient(135deg, #f59e0b, #d97706); padding: 20px; border-radius: 12px; color: #fff; margin-top: 15px; margin-bottom: 20px;">
+            <h2>Rutinas de Pausas Activas</h2>
+            <p>Tómate unos minutos para estirar y cuidar tu salud postural durante la jornada laboral.</p>
+        </div>
+        <div class="comites-grid" style="display: flex; flex-direction: column; gap: 25px;">
+            <div class="comite-card" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                <div style="background:#d97706; color:#fff; padding:12px; font-weight:bold; text-align:center; text-transform: uppercase;">Ejercicios de Estiramiento</div>
+                <div style="padding: 15px; text-align: center;">
+                    <img src="https://drive.google.com/thumbnail?id=1_p3MKH9Q0GN7boPbmnL5Ms75hF26uio2&sz=w1000" alt="Pausas Activas" style="max-width:100%; height:auto; border-radius: 8px; cursor:pointer;" onclick="if(typeof abrirLightbox === 'function') abrirLightbox(this.src, 'Pausas Activas')">
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<div id="lightboxGlobal" class="lb-overlay" onclick="cerrarLightbox()">
+    <span class="lb-close">&times;</span>
+    <img id="lightboxImg" class="lb-img" src="" alt="">
+    <div id="lightboxTxt" class="lb-lbl"></div>
+</div>
+
+<footer>
+  ARKOS SISTEMAS & ARQUITECTURA S.A.S © 2026 — Dirección de Tecnología y Automatización
+</footer>
+
+</div>
+
+<script>
+const DOMINIO_PERMITIDO = "@arkos.com.co";
+const SESION_KEY = "arkosIntranetSesion";
+
+function verificarSesion() {
+    const sesion = localStorage.getItem(SESION_KEY);
+    if (sesion) {
+        try {
+            const datos = JSON.parse(sesion);
+            if (datos.correo && datos.correo.toLowerCase().endsWith(DOMINIO_PERMITIDO)) {
+                mostrarApp();
+                return;
+            }
+        } catch (e) {}
+    }
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('appContainer').style.display = 'none';
+}
+
+function iniciarSesion() {
+    const input = document.getElementById('loginCorreo');
+    const error = document.getElementById('loginError');
+    const correo = input.value.trim().toLowerCase();
+
+    if (!correo.endsWith(DOMINIO_PERMITIDO)) {
+        error.innerText = `Debes ingresar un correo corporativo válido (${DOMINIO_PERMITIDO})`;
+        return;
+    }
+
+    localStorage.setItem(SESION_KEY, JSON.stringify({ correo, fecha: new Date().toISOString() }));
+    error.innerText = '';
+    mostrarApp();
+}
+
+function mostrarApp() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appContainer').style.display = 'block';
+}
+
+function cerrarSesion() {
+    localStorage.removeItem(SESION_KEY);
+    location.reload();
+}
+
+verificarSesion();
+
+if (!document.getElementById('html2pdf-script')) {
+  const script = document.createElement('script');
+  script.id = 'html2pdf-script';
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+  document.head.appendChild(script);
+}
+
+if (document.getElementById('fechaHdr')) {
+  document.getElementById('fechaHdr').innerText = new Date().toLocaleDateString('es-ES', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+}
+
+function irAInicio() {
+  const secciones = document.querySelectorAll('.seccion-detalle');
+  secciones.forEach(s => s.style.display = 'none');
+  document.getElementById('vista-inicio').style.display = 'block';
+  
+  const menuItems = document.querySelectorAll('.sb-item');
+  menuItems.forEach(i => i.classList.remove('activo'));
+  if (document.getElementById('nav-inicio')) {
+    document.getElementById('nav-inicio').classList.add('activo');
+  }
+}
+
+function mostrarSeccion(idSeccion) {
+  document.getElementById('vista-inicio').style.display = 'none';
+  const secciones = document.querySelectorAll('.seccion-detalle');
+  secciones.forEach(s => s.style.display = 'none');
+  
+  const seccionObjetivo = document.getElementById(idSeccion);
+  if(seccionObjetivo) seccionObjetivo.style.display = 'block';
+  
+  const menuItems = document.querySelectorAll('.sb-item');
+  menuItems.forEach(i => i.classList.remove('activo'));
+  const navItem = document.getElementById('nav-' + idSeccion);
+  if(navItem) navItem.classList.add('activo');
+
+  if(idSeccion === 'sst') { volverMenuSST(); }
+  if(idSeccion === 'th') { volverMenuTH(); }
+}
+
+function abrirCertificaciones() {
+  ocultarSubModulosTH();
+  const certs = document.getElementById('certificaciones');
+  if(certs) certs.classList.add('activo-sub');
+}
+
+function abrirCertificadoLaboral() {
+  ocultarSubModulosTH();
+  const certLab = document.getElementById('certificadoLaboral');
+  if(certLab) certLab.classList.add('activo-sub');
+}
+
+function volverMenuTH() {
+  const subSecciones = document.querySelectorAll('#th .sub-seccion');
+  subSecciones.forEach(sub => {
+    sub.classList.remove('activo-sub');
+  });
+  
+  const menuDeTarjetas = document.getElementById('menuTH');
+  if (menuDeTarjetas) {
+    menuDeTarjetas.classList.add('activo-sub');
+  }
+}
+
+function volverCertificaciones() {
+  ocultarSubModulosTH();
+  const certs = document.getElementById('certificaciones');
+  if(certs) certs.classList.add('activo-sub');
+}
+
+function ocultarSubModulosTH() {
+  const subSecciones = document.querySelectorAll('#th .sub-seccion');
+  subSecciones.forEach(sub => {
+    sub.classList.remove('activo-sub');
+  });
+  
+  const menuDeTarjetas = document.getElementById('menuTH');
+  if (menuDeTarjetas) {
+    menuDeTarjetas.classList.remove('activo-sub');
+  }
+}
+
+function mostrarSubMod(id) {
+  ocultarSubModulosTH();
+  const destino = document.getElementById(id);
+  if (destino) destino.classList.add('activo-sub');
+}
+
+function abrirRiesgos() {
+    document.getElementById('menuSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'none';
+    document.getElementById('riesgosSST').style.display = 'block';
+}
+
+function abrirComites() {
+    document.getElementById('menuSST').style.display = 'none';
+    document.getElementById('riesgosSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'block';
+    document.getElementById('selectorSedes').value = 'todos';
+    filtrarSedesComite();
+}
+
+function abrirEstiloVida() {
+    document.getElementById('menuSST').style.display = 'none';
+    document.getElementById('riesgosSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'block';
+}
+
+function abrirPausas() {
+    document.getElementById('menuSST').style.display = 'none';
+    document.getElementById('riesgosSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'block';
+}
+
+function volverMenuSST() {
+    document.getElementById('riesgosSST').style.display = 'none';
+    document.getElementById('comitesSST').style.display = 'none';
+    document.getElementById('estiloVidaSST').style.display = 'none';
+    document.getElementById('pausasSST').style.display = 'none';
+    document.getElementById('menuSST').style.display = 'block';
+}
+
+function abrirLightbox(src, texto) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightboxTxt').innerText = texto;
+    document.getElementById('lightboxGlobal').classList.add('open');
+}
+function cerrarLightbox() {
+    document.getElementById('lightboxGlobal').classList.remove('open');
+}
+
+function filtrarSedesComite() {
+    var seleccion = document.getElementById('selectorSedes').value;
+    var tarjetas = document.getElementsByClassName('tarjeta-sede-item');
+    for (var i = 0; i < tarjetas.length; i++) {
+        if (seleccion === 'todos' || tarjetas[i].getAttribute('data-sede') === seleccion) {
+            tarjetas[i].style.display = 'block';
+        } else {
+            tarjetas[i].style.display = 'none';
+        }
+    }
+}
+
+function generarCertificado() {
+    const inputCedula = document.getElementById('cedulaEmpleado');
+    const resultadoDiv = document.getElementById('resultadoCertificado');
+    
+    if (!inputCedula || !resultadoDiv) return;
+    
+    const cedula = inputCedula.value.trim();
+    if(cedula === "") {
+        alert("Por favor, ingresa un número de cédula válido.");
+        return;
+    }
+    
+    resultadoDiv.innerHTML = `<p style="color: #4B5563; font-size:13px; margin-top:15px; font-weight: 500;">🔍 Conectando con el servidor...</p>`;
+    
+    const urlMacroGoogle = "https://script.google.com/macros/s/AKfycbzwhcBReZjFvXoCaYz-VR0nwha7Jow9mJ8tXmOoGGCjLdc71qJM5HT3cMZblsj3KVTg/exec";
+    
+    fetch(`${urlMacroGoogle}?cedula=${cedula}`)
+        .then(response => response.json())
+        .then(res => {
+            if (!res.success) {
+                resultadoDiv.innerHTML = `
+                    <div style="border: 1px solid #EF4444; padding: 12px; border-radius: 6px; background: #FEF2F2; margin-top:15px;">
+                        <p style="color: #DC2626; font-weight: 600; margin: 0;">❌ No encontrado</p>
+                        <p style="font-size: 13px; color: #4B5563; margin: 4px 0 0 0;">${res.error || 'La cédula no está registrada.'}</p>
+                    </div>`;
+                return;
+            }
+            
+            let correoOculto = "tu correo registrado";
+            if (res.correoEnviado) {
+                const partes = res.correoEnviado.split("@");
+                correoOculto = partes[0].substring(0, 3) + "...•@" + partes[1];
+            }
+            
+            resultadoDiv.innerHTML = `
+                <div style="border: 1px solid #10B981; padding: 12px; border-radius: 6px; background: #ECFDF5; margin-top:15px;">
+                    <p style="color: #15803D; font-weight: 600; margin: 0 0 5px 0;">🎉 ¡Envío Procesado!</p>
+                    <p style="font-size: 13px; color: #1f2937; margin: 0;">📧 Se envió a: <strong>${correoOculto}</strong></p>
+                </div>`;
+            
+            inputCedula.value = "";
+        })
+        .catch(err => {
+            console.error(err);
+            resultadoDiv.innerHTML = `<p style="color: #DC2626; margin-top:15px;">❌ Error de comunicación.</p>`;
+        });
+}
+
+const URL_PQR_MACRO = "https://script.google.com/macros/s/AKfycbxPBq51BvGkST2eQEFnS0vkv9RnQgzZTTTITzTebvA8MNzOkZliLh2AParfiCPNy2TEnQ/exec";
+
+function toggleAnonimo(checkbox) {
+    const inputNombre = document.getElementById("nombrePQR");
+    const inputCedula = document.getElementById("cedulaPQR");
+    if(checkbox.checked) {
+        if(inputNombre) { inputNombre.value = "Anónimo"; inputNombre.disabled = true; }
+        if(inputCedula) { inputCedula.value = "Oculto"; inputCedula.disabled = true; }
+    } else {
+        if(inputNombre) { inputNombre.value = ""; inputNombre.disabled = false; }
+        if(inputCedula) { inputCedula.value = ""; inputCedula.disabled = false; }
+    }
+}
+
+function enviarRadicado() {
+    const inputNombre   = document.getElementById("nombrePQR");
+    const inputCedula   = document.getElementById("cedulaPQR");
+    const inputAsunto   = document.getElementById("asuntoPQR");
+    const txtTexto      = document.getElementById("descripcionPQR");
+    const selectTipo    = document.getElementById("tipoPQR");
+    const selectArea    = document.getElementById("areaPQR");
+    const checkAnonimo  = document.getElementById("anonimoPQR");
+    const contenedor    = document.getElementById("mensajeResultado");
+    const botonSubmit   = document.getElementById("btnEnviarPqr");
+
+    if (botonSubmit) {
+        botonSubmit.disabled = true;
+        botonSubmit.innerText = "PROCESANDO RADICADO...";
+    }
+
+    const formData = new URLSearchParams();
+    formData.append("nombre", checkAnonimo && checkAnonimo.checked ? "Anónimo" : (inputNombre ? inputNombre.value.trim() : ""));
+    formData.append("cedula", checkAnonimo && checkAnonimo.checked ? "Oculto" : (inputCedula ? inputCedula.value.trim() : ""));
+    formData.append("tipo", selectTipo ? selectTipo.value : "Petición");
+    formData.append("area", selectArea ? selectArea.value : "General");
+    formData.append("asunto", inputAsunto ? inputAsunto.value.trim() : "");
+    formData.append("descripcion", txtTexto ? txtTexto.value.trim() : "");
+    formData.append("anonimo", checkAnonimo && checkAnonimo.checked ? "Sí" : "No");
+
+    fetch(URL_PQR_MACRO, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData.toString()
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success || data.caso) {
+            const numeroCaso = data.caso || "Registrado";
+            if (contenedor) {
+                contenedor.innerHTML = `
+                    <div style="border: 2px solid #10B981; padding: 20px; border-radius: 12px; background: #F0FDF4; margin-top:20px; text-align:center;">
+                        <p style="color: #15803D; font-weight: bold; font-size:16px;">🎉 ¡Radicado Generado Exitosamente!</p>
+                        <div style="font-family: monospace; font-size: 22px; font-weight: 800; background: #fff; border: 2px dashed #10B981; display: inline-block; padding: 8px 20px; border-radius: 8px; color: #047857; margin-top:10px;">${numeroCaso}</div>
+                    </div>`;
+            }
+            const formulario = document.getElementById("pqrFormulario");
+            if(formulario) formulario.reset();
+            if(checkAnonimo) toggleAnonimo(checkAnonimo);
+        }
+    })
+    .catch(err => console.error(err))
+    .finally(() => {
+        if (botonSubmit) {
+            botonSubmit.disabled = false;
+            botonSubmit.innerText = "ENVIAR RADICADO";
+        }
+    });
+}
+
+function consultarRadicado() {
+    const inputCodigo = document.getElementById("codigoBusqueda");
+    const contenedor = document.getElementById("resultadoSeguimiento");
+    
+    const codigo = inputCodigo ? inputCodigo.value.trim() : "";
+    if(!codigo) { alert("Por favor escribe un código de radicado."); return; }
+    
+    fetch(`${URL_PQR_MACRO}?codigo=${encodeURIComponent(codigo)}`, { method: "GET" })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success && contenedor) {
+            contenedor.innerHTML = `
+                <div style="margin-top:15px; border:1px solid #E2E8F0; padding:20px; border-radius:12px; background:#FFF;">
+                    <p style="font-size:14px; color:#334155;"><strong>Caso:</strong> ${codigo.toUpperCase()}</p>
+                    <p style="font-size:14px; color:#334155;"><strong>Estado:</strong> ${data.estado || 'Pendiente'}</p>
+                    <p style="font-size:13px; color:#64748B;">${data.descripcion}</p>
+                </div>`;
+        }
+    });
+}
+
+const VAC_MACRO_URL = "https://script.google.com/macros/s/AKfycbyFAQWYZjagcjHD2iQvjhQtp5vqxOrbMK60NEY7GOrFvbc_ELwkCscDLBKQIz4da_2JBA/exec";
+let vacDatosEmpleado = null;
+
+/* FUNCIÓN DE VACACIONES CORREGIDA PARA DESGLOSAR PERIODOS COMPLETOS */
+function vac_consultarDias() {
+    const inputCed = document.getElementById('vacCedulaConsulta');
+    const resultado = document.getElementById('vacResultado');
+    const cedula = inputCed ? inputCed.value.trim() : '';
+
+    if (!cedula) { alert('Por favor ingresa tu número de cédula.'); return; }
+
+    resultado.innerHTML = `<p style="color: #4B5563; font-size:13px; margin-top:15px;">🔍 Consultando información de vacaciones...</p>`;
+
+    fetch(`${VAC_MACRO_URL}?accion=consultar_dias&cedula=${encodeURIComponent(cedula)}`)
+        .then(r => r.json())
+        .then(data => {
+            if (!data.success) {
+                resultado.innerHTML = `
+                    <div style="border: 1px solid #EF4444; padding: 12px; border-radius: 8px; background: #FEF2F2; margin-top:15px;">
+                        <p style="color: #DC2626; font-weight: 600; margin: 0;">❌ No registrado</p>
+                        <p style="font-size: 13px; color: #4B5563; margin: 4px 0 0 0;">${data.error || 'Cédula no encontrada en el sistema de vacaciones.'}</p>
+                    </div>`;
+                return;
+            }
+            const periodos = data.periodos || [];
+            vacDatosEmpleado = { cedula, nombre: periodos.length > 0 ? periodos[0].empleado : 'Colaborador', periodos };
+            const totalDias = periodos.reduce((a, p) => a + (Number(p.dias) || 0), 0);
+
+            // Generar tabla/desglose por periodos
+            let htmlPeriodos = periodos.map(p => `
+                <tr style="border-bottom:1px solid #E2E8F0;">
+                    <td style="padding:8px 12px;font-size:13px;color:#1E293B;font-weight:600;">${p.periodo}</td>
+                    <td style="padding:8px 12px;font-size:13px;color:#059669;font-weight:700;text-align:right;">${p.dias} días</td>
+                </tr>
+            `).join('');
+
+            resultado.innerHTML = `
+                <div style="border:1px solid #E2E8F0;border-radius:12px;padding:18px;margin-top:16px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                    <p style="font-weight:800;color:#059669;font-size:15px;margin-bottom:8px;">👤 Colaborador: ${vacDatosEmpleado.nombre}</p>
+                    
+                    <div style="margin:12px 0;">
+                        <p style="font-size:12px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Desglose de Periodos Pendientes:</p>
+                        <table style="width:100%;border-collapse:collapse;background:#F8FAFC;border-radius:8px;overflow:hidden;">
+                            <thead>
+                                <tr style="background:#E2E8F0;text-align:left;">
+                                    <th style="padding:6px 12px;font-size:12px;color:#475569;">Periodo Causado</th>
+                                    <th style="padding:6px 12px;font-size:12px;color:#475569;text-align:right;">Días Disponibles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${htmlPeriodos}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p style="font-size:14px;color:#1E293B;margin-top:12px;padding-top:10px;border-top:1px dashed #CBD5E1;">
+                        Total Días Acumulados: <strong style="color:#059669;font-size:16px;">${totalDias} días</strong>
+                    </p>
+
+                    ${totalDias > 0 ? `<button onclick="vac_abrirFormulario()" style="background:#059669;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;margin-top:12px;width:100%;">SOLICITAR VACACIONES EN LÍNEA →</button>` : ''}
+                </div>`;
+        })
+        .catch(err => {
+            console.error(err);
+            resultado.innerHTML = `<p style="color:#DC2626;margin-top:12px;">❌ Error de conexión al consultar vacaciones.</p>`;
+        });
+}
+
+function vac_abrirFormulario() {
+    if (!vacDatosEmpleado) return;
+    document.getElementById('vacFormWrap').style.display = 'block';
+    document.getElementById('vacNombreForm').value = vacDatosEmpleado.nombre;
+    document.getElementById('vacCedulaForm').value = vacDatosEmpleado.cedula;
+
+    const sel = document.getElementById('vacPeriodoForm');
+    sel.innerHTML = vacDatosEmpleado.periodos
+        .filter(p => p.dias > 0)
+        .map(p => `<option value="${p.periodo}" data-dias="${p.dias}">${p.periodo} (${p.dias} días disponibles)</option>`)
+        .join('');
+    
+    vac_actualizarDiasMax();
+}
+
+function vac_actualizarDiasMax() {
+    const sel = document.getElementById('vacPeriodoForm');
+    const opt = sel.options[sel.selectedIndex];
+    const max = opt ? opt.getAttribute('data-dias') : 0;
+    const nota = document.getElementById('vacDiasMaxNota');
+    if (nota) nota.innerText = `Máximo disponible en este periodo: ${max} días`;
+}
+
+function vac_enviarSolicitud() {
+    const btn = document.getElementById('vacBtnEnviar');
+    const nombre = document.getElementById('vacNombreForm').value;
+    const cedula = document.getElementById('vacCedulaForm').value;
+    const periodo = document.getElementById('vacPeriodoForm').value;
+    const fechaInicio = document.getElementById('vacFechaInicioForm').value;
+    const fechaFin = document.getElementById('vacFechaFinForm').value;
+    const dias = document.getElementById('vacDiasForm').value;
+    const correoJefe = document.getElementById('vacCorreoJefeForm').value.trim();
+
+    if (!periodo || !fechaInicio || !fechaFin || !dias || !correoJefe) {
+        alert('Completa los campos requeridos.');
+        return;
+    }
+
+    btn.disabled = true;
+
+    const formData = new URLSearchParams();
+    formData.append('accion', 'crear_solicitud');
+    formData.append('nombre', nombre);
+    formData.append('cedula', cedula);
+    formData.append('periodo', periodo);
+    formData.append('fechaInicio', fechaInicio);
+    formData.append('fechaFin', fechaFin);
+    formData.append('dias', dias);
+    formData.append('correoJefe', correoJefe);
+
+    fetch(VAC_MACRO_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData.toString()
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            alert('¡Solicitud enviada exitosamente!');
+            document.getElementById('vacFormWrap').style.display = 'none';
+        }
+    })
+    .finally(() => btn.disabled = false);
+}
+
+function vac_consultarEstado() {
+    const input = document.getElementById('vacCedulaEstado');
+    const contenedor = document.getElementById('vacEstadoResultado');
+    const cedula = input ? input.value.trim() : '';
+
+    if (!cedula) return;
+
+    fetch(`${VAC_MACRO_URL}?accion=estado&cedula=${encodeURIComponent(cedula)}`)
+        .then(r => r.json())
+        .then(data => {
+            if (data.success && data.solicitudes && contenedor) {
+                contenedor.innerHTML = data.solicitudes.map(s => `
+                    <div style="border:1px solid #E2E8F0;border-radius:10px;padding:12px;margin-top:10px;background:#fff;">
+                        <p style="font-size:13px;margin:0;"><strong>Caso:</strong> ${s.caso} | <strong>Estado:</strong> ${s.estado}</p>
+                    </div>
+                `).join('');
+            }
+        });
+}
+
+const VACANTES = [
+    { titulo: "Vacante 1", imagenId: "1hP-Nqhum-qofgx4VcMOoZFdtOv49ga2S", sede: "Arkos" },
+    { titulo: "Vacante 2", imagenId: "1OcOkpuBAwWZGgKLWzxeWmH5v5rAE_ZXV", sede: "Arkos" },
+    { titulo: "Vacante 3", imagenId: "1-FygjvBcDER1gv-0xR-nARqDTY0Kz1Fz", sede: "Arkos" },
+    { titulo: "Vacante 4", imagenId: "1uBm9upVbhQA3V01weC2M6Eq5gVOaJQiN", sede: "Arkos" },
+    { titulo: "Vacante 5", imagenId: "1so-_kxL1ICGUU2XhUkTuDF8h_ruSekaO", sede: "Arkos" },
+    { titulo: "Vacante 6", imagenId: "1Br_L1oMxdXV09jtnHvJRNSkD_Tw9iJN4", sede: "Arkos" }
+];
+
+function renderVacantes(containerId) {
+    const cont = document.getElementById(containerId);
+    if (!cont) return;
+
+    cont.innerHTML = VACANTES.map(v => {
+        const url = `https://drive.google.com/thumbnail?id=${v.imagenId}&sz=w1000`;
+        return `
+            <div class="com-card">
+                <div class="com-lbl">${v.sede}</div>
+                <div style="padding:15px;text-align:center;">
+                    <img src="${url}" alt="${v.titulo}" style="max-width:100%;height:auto;border-radius:8px;cursor:pointer;" onclick="abrirLightbox('${url}', '${v.titulo}')">
+                </div>
+            </div>`;
+    }).join('');
+}
+
+renderVacantes('vacantesGridHome');
+renderVacantes('vacantesGridTH');
+</script>
+
+</body>
+</html>
